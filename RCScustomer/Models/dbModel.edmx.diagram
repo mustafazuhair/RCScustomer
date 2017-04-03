@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8461e8764424408d93e689c070e04c74" Name="Diagram1" ZoomLevel="106">
+        <EntityTypeShape EntityType="RCSdbModel.CityList" Width="1.5" PointX="3" PointY="78.75" />
+        <EntityTypeShape EntityType="RCSdbModel.Company" Width="1.5" PointX="13.5" PointY="77.5" />
+        <EntityTypeShape EntityType="RCSdbModel.CompanyForm" Width="1.5" PointX="18.75" PointY="79.125" />
+        <EntityTypeShape EntityType="RCSdbModel.CompanyModule" Width="1.5" PointX="18.75" PointY="76.375" />
+        <EntityTypeShape EntityType="RCSdbModel.Customer" Width="1.5" PointX="8.25" PointY="71.25" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerAttachments" Width="1.5" PointX="24.25" PointY="81.125" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerContact" Width="1.5" PointX="10.5" PointY="84.125" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerJob" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerLabor" Width="1.5" PointX="13.5" PointY="70" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerLocation" Width="1.5" PointX="13.5" PointY="74" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerLogin" Width="1.5" PointX="12.75" PointY="84.5" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerMesseging" Width="1.5" PointX="26.25" PointY="86.25" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerNote" Width="1.5" PointX="23.25" PointY="85.5" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerTradeCharge" Width="1.5" PointX="10.5" PointY="69.75" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerTripCharge" Width="1.5" PointX="10.5" PointY="74.5" />
+        <EntityTypeShape EntityType="RCSdbModel.DocumentationSetup" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RCSdbModel.DocumentFor" Width="1.5" PointX="16.75" PointY="100.375" />
+        <EntityTypeShape EntityType="RCSdbModel.DocumentType" Width="1.5" PointX="19" PointY="99.75" />
+        <EntityTypeShape EntityType="RCSdbModel.EmailConfiguration" Width="1.5" PointX="20.25" PointY="143" />
+        <EntityTypeShape EntityType="RCSdbModel.Forms" Width="1.5" PointX="16.5" PointY="61.875" />
+        <EntityTypeShape EntityType="RCSdbModel.ImageFile" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RCSdbModel.Job" Width="1.5" PointX="15.75" PointY="75.75" />
+        <EntityTypeShape EntityType="RCSdbModel.JobAccountManager" Width="1.5" PointX="23.25" PointY="93.75" />
+        <EntityTypeShape EntityType="RCSdbModel.JobConfiguration" Width="1.5" PointX="27" PointY="70.625" />
+        <EntityTypeShape EntityType="RCSdbModel.JobLocation" Width="1.5" PointX="27" PointY="76.125" />
+        <EntityTypeShape EntityType="RCSdbModel.JobSalesInvoice" Width="1.5" PointX="27.25" PointY="81.25" />
+        <EntityTypeShape EntityType="RCSdbModel.JobSalesInvoiceDetail" Width="1.5" PointX="29.5" PointY="78.875" />
+        <EntityTypeShape EntityType="RCSdbModel.JobSignOff" Width="1.5" PointX="18" PointY="69.75" />
+        <EntityTypeShape EntityType="RCSdbModel.JobStatus" Width="1.5" PointX="13.5" PointY="88.25" />
+        <EntityTypeShape EntityType="RCSdbModel.JobStatusUsergroup" Width="1.5" PointX="18" PointY="88.25" />
+        <EntityTypeShape EntityType="RCSdbModel.JobTeam" Width="1.5" PointX="24" PointY="72.5" />
+        <EntityTypeShape EntityType="RCSdbModel.JobTechnician" Width="1.5" PointX="26.25" PointY="90.75" />
+        <EntityTypeShape EntityType="RCSdbModel.JobType" Width="1.5" PointX="13.5" PointY="66.25" />
+        <EntityTypeShape EntityType="RCSdbModel.JobVendor" Width="1.5" PointX="24" PointY="67.5" />
+        <EntityTypeShape EntityType="RCSdbModel.JobWorkOrder" Width="1.5" PointX="21" PointY="66.5" />
+        <EntityTypeShape EntityType="RCSdbModel.Location" Width="1.5" PointX="5.25" PointY="77.875" />
+        <EntityTypeShape EntityType="RCSdbModel.LocationAttachement" Width="1.5" PointX="23.25" PointY="89.5" />
+        <EntityTypeShape EntityType="RCSdbModel.LocationContact" Width="1.5" PointX="7.5" PointY="88.375" />
+        <EntityTypeShape EntityType="RCSdbModel.LocationNotes" Width="1.5" PointX="20.25" PointY="88.75" />
+        <EntityTypeShape EntityType="RCSdbModel.Modules" Width="1.5" PointX="16.5" PointY="65.875" />
+        <EntityTypeShape EntityType="RCSdbModel.RCSmesseging" Width="1.5" PointX="29.25" PointY="86.75" />
+        <EntityTypeShape EntityType="RCSdbModel.SalesChargeType" Width="1.5" PointX="8.25" PointY="63.125" />
+        <EntityTypeShape EntityType="RCSdbModel.SalesStatus" Width="1.5" PointX="25" PointY="98.125" />
+        <EntityTypeShape EntityType="RCSdbModel.StaffList" Width="1.5" PointX="18" PointY="91.75" />
+        <EntityTypeShape EntityType="RCSdbModel.StateList" Width="1.5" PointX="0.75" PointY="78.75" />
+        <EntityTypeShape EntityType="RCSdbModel.Supplier" Width="1.5" PointX="10.5" PointY="78" />
+        <EntityTypeShape EntityType="RCSdbModel.Team" Width="1.5" PointX="21.75" PointY="62.75" />
+        <EntityTypeShape EntityType="RCSdbModel.TeamMember" Width="1.5" PointX="20.25" PointY="94" />
+        <EntityTypeShape EntityType="RCSdbModel.Trade" Width="1.5" PointX="11.25" PointY="65.875" />
+        <EntityTypeShape EntityType="RCSdbModel.Usergroup" Width="1.5" PointX="15.75" PointY="84.875" />
+        <EntityTypeShape EntityType="RCSdbModel.UserGroupForm" Width="1.5" PointX="18" PointY="84.875" />
+        <EntityTypeShape EntityType="RCSdbModel.UserGroupModule" Width="1.5" PointX="21" PointY="85.125" />
+        <EntityTypeShape EntityType="RCSdbModel.Vendor" Width="1.5" PointX="5.25" PointY="71.75" />
+        <EntityTypeShape EntityType="RCSdbModel.VendorAttachement" Width="1.5" PointX="21.25" PointY="80.375" />
+        <EntityTypeShape EntityType="RCSdbModel.VendorContact" Width="1.5" PointX="7.5" PointY="83.25" />
+        <EntityTypeShape EntityType="RCSdbModel.VendorMesseging" Width="1.5" PointX="24.25" PointY="76.5" />
+        <EntityTypeShape EntityType="RCSdbModel.VendorNotes" Width="1.5" PointX="21.25" PointY="76.625" />
+        <EntityTypeShape EntityType="RCSdbModel.VendorTrade" Width="1.5" PointX="13.5" PointY="62.125" />
+        <EntityTypeShape EntityType="RCSdbModel.VendorTradeCharge" Width="1.5" PointX="7.5" PointY="66.75" />
+        <EntityTypeShape EntityType="RCSdbModel.ZIPList" Width="1.5" PointX="8.25" PointY="78.75" />
+        <AssociationConnector Association="RCSdbModel.FK_CityList_StateList" />
+        <AssociationConnector Association="RCSdbModel.FK_Company_CityList" />
+        <AssociationConnector Association="RCSdbModel.FK_Customer_CityList" />
+        <AssociationConnector Association="RCSdbModel.FK_JobLocation_CityList" />
+        <AssociationConnector Association="RCSdbModel.FK_Location_CityList" />
+        <AssociationConnector Association="RCSdbModel.FK_Supplier_CityList" />
+        <AssociationConnector Association="RCSdbModel.FK_Vendor_CityList" />
+        <AssociationConnector Association="RCSdbModel.FK_ZIPList_CityList" />
+        <AssociationConnector Association="RCSdbModel.FK_Company_StateList" />
+        <AssociationConnector Association="RCSdbModel.FK_Company_ZIPList" />
+        <AssociationConnector Association="RCSdbModel.FK_CompanyForm_Company" />
+        <AssociationConnector Association="RCSdbModel.FK_CompanyModule_Company" />
+        <AssociationConnector Association="RCSdbModel.FK_Usergroup_Company" />
+        <AssociationConnector Association="RCSdbModel.FK_CompanyForm_Forms" />
+        <AssociationConnector Association="RCSdbModel.FK_CompanyForm_Modules" />
+        <AssociationConnector Association="RCSdbModel.FK_CompanyModule_Modules" />
+        <AssociationConnector Association="RCSdbModel.FK_Customer_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_Customer_StateList" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerAttachments_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerContact_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerLabor_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerLocation_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerLogin_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerMesseging_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerNote_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerTradeCharge_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerTripCharge_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_Job_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_JobConfiguration_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSignOff_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerAttachments_DocumentType" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerAttachments_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerLogin_CustomerContact" />
+        <AssociationConnector Association="RCSdbModel.FK_Job_CustomerContact" />
+        <AssociationConnector Association="RCSdbModel.FK_JobConfiguration_CustomerContact" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerLabor_Trade" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerLocation_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerMesseging_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerMesseging_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerNote_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerTradeCharge_SalesChargeType" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerTradeCharge_Trade" />
+        <AssociationConnector Association="RCSdbModel.FK_DocumentType_DocumentFor" />
+        <AssociationConnector Association="RCSdbModel.FK_LocationAttachement_DocumentType" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorAttachement_DocumentType" />
+        <AssociationConnector Association="RCSdbModel.FK_EmailConfiguration_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_Forms_Modules" />
+        <AssociationConnector Association="RCSdbModel.FK_UserGroupForm_Forms" />
+        <AssociationConnector Association="RCSdbModel.FK_Job_JobStatus" />
+        <AssociationConnector Association="RCSdbModel.FK_Job_JobType" />
+        <AssociationConnector Association="RCSdbModel.FK_Job_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_Job_LocationContact" />
+        <AssociationConnector Association="RCSdbModel.FK_Job_Trade" />
+        <AssociationConnector Association="RCSdbModel.FK_JobAccountManager_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobConfiguration_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobLocation_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoice_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoiceDetail_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSignOff_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobTeam_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobVendor_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobWorkOrder_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JonTechnician_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_RCSmesseging_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorMesseging_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobAccountManager_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_JobLocation_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_JobLocation_LocationContact" />
+        <AssociationConnector Association="RCSdbModel.FK_JobLocation_StateList" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoice_SalesStatus" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoice_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoiceDetail_JobSalesInvoice" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoiceDetail_SalesChargeType" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSignOff_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_JobStatusUsergroup_JobStatus" />
+        <AssociationConnector Association="RCSdbModel.FK_JobStatusUsergroup_Usergroup" />
+        <AssociationConnector Association="RCSdbModel.FK_JobTeam_Team" />
+        <AssociationConnector Association="RCSdbModel.FK_JonTechnician_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_JobVendor_Trade" />
+        <AssociationConnector Association="RCSdbModel.FK_JobVendor_Vendor" />
+        <AssociationConnector Association="RCSdbModel.FK_JobVendor_VendorContact" />
+        <AssociationConnector Association="RCSdbModel.FK_JobWorkOrder_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_JobWorkOrder_Vendor" />
+        <AssociationConnector Association="RCSdbModel.FK_Location_StateList" />
+        <AssociationConnector Association="RCSdbModel.FK_LocationAttachement_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_LocationContact_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_LocationNotes_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_LocationAttachement_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_LocationNotes_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_UserGroupForm_Modules" />
+        <AssociationConnector Association="RCSdbModel.FK_UserGroupModule_Modules" />
+        <AssociationConnector Association="RCSdbModel.FK_RCSmesseging_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorTradeCharge_SalesChargeType" />
+        <AssociationConnector Association="RCSdbModel.FK_StaffList_Usergroup" />
+        <AssociationConnector Association="RCSdbModel.FK_TeamMember_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorAttachement_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorMesseging_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorNotes_StaffList" />
+        <AssociationConnector Association="RCSdbModel.FK_Supplier_StateList" />
+        <AssociationConnector Association="RCSdbModel.FK_Vendor_StateList" />
+        <AssociationConnector Association="RCSdbModel.FK_ZIPList_StateList" />
+        <AssociationConnector Association="RCSdbModel.FK_Supplier_ZIPList" />
+        <AssociationConnector Association="RCSdbModel.FK_TeamMember_Team" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorTrade_Trade" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorTradeCharge_Trade" />
+        <AssociationConnector Association="RCSdbModel.FK_UserGroupForm_Usergroup" />
+        <AssociationConnector Association="RCSdbModel.FK_UserGroupModule_Usergroup" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorAttachement_Vendor" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorContact_Vendor" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorMesseging_Vendor" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorNotes_Vendor" />
+        <AssociationConnector Association="RCSdbModel.FK_VendorTradeCharge_Vendor" />
+        <EntityTypeShape EntityType="RCSdbModel.CustomerContactMesseging" Width="1.5" PointX="30" PointY="74.25" />
+        <EntityTypeShape EntityType="RCSdbModel.JobRequest" Width="1.5" PointX="15.75" PointY="69.75" />
+        <EntityTypeShape EntityType="RCSdbModel.JobRequestAttachments" Width="1.5" PointX="29.25" PointY="91" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerContactMesseging_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_JobRequest_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerContactMesseging_CustomerContact" />
+        <AssociationConnector Association="RCSdbModel.FK_CustomerContactMesseging_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobRequestAttachments_DocumentType" />
+        <AssociationConnector Association="RCSdbModel.FK_JobRequest_JobType" />
+        <AssociationConnector Association="RCSdbModel.FK_JobRequest_Location" />
+        <AssociationConnector Association="RCSdbModel.FK_JobRequest_LocationContact" />
+        <AssociationConnector Association="RCSdbModel.FK_JobRequest_Trade" />
+        <AssociationConnector Association="RCSdbModel.FK_JobRequestAttachments_JobRequest" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

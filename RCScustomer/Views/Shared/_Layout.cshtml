@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - RCS</title>
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript">
+
+  function preventBack(){window.history.forward();}
+  setTimeout("preventBack()", 0);
+  window.onunload=function(){null};
+    </script>
+</head>
+@using RCScustomer.Models
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    RCS
+                    @*<center><img src="~/Content/ss_logo_small.png" height="50px" /></center>*@
+                </a>
+            </div>
+
+            <div class="notifications-wrapper">
+                <ul class="nav">
+                    <li><div style="padding-left:400px;"></div></li>
+                    <li><img src="@Url.Action("GetCompanyLogo", "ShowImage" ,new{id=GlobalClass.Company.CompanyKey})" alt="User Image" height="70px" /></li>
+
+
+                   
+                    <li style="float:right;"><img src="~/Content/ss_logo_small.png" height="70px" /></li>
+                    <li style="float:right;" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user-plus"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="@Url.Action("MyProfile","Staff")"><i class="fa fa-user-plus"></i> My Profile</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("ChangePass","AssignAccess")"><i class="fa fa-user-plus"></i> Change Password</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="@Url.Action("Logout","Home")"><i class="fa fa-sign-out"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+        <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+
+                    <li>
+                        <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard "></i>Home</a>
+                    </li>
+                 
+
+
+
+                </ul>
+            </div>
+
+        </nav>
+        <!-- /. SIDEBAR MENU (navbar-side) -->
+        <div id="page-wrapper" class="page-wrapper-cls">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="page-head-line">@RenderSection("PageHeader", required: false)</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @RenderBody()
+                        @RenderSection("scripts", required: false)
+                    </div>
+                </div>
+
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <footer>
+        Developed by Suresoft Technology Ltd
+    </footer>
+
+
+
+</body>
+</html>

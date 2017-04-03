@@ -1,0 +1,105 @@
+﻿@model RCScustomer.Models.DashboardClass
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        $('#example4').dataTable();
+    });
+</script>
+@using RCScustomer.Models
+
+
+
+@section PageHeader{
+
+   My RCS Jobs
+
+}
+
+
+
+<div class="row">
+
+    <div class="panel panel-warning">
+        <div class="panel-body">
+            <div class="col-md-6">
+               <label>Name :   </label> @Html.DisplayFor(m=>GlobalClass.LoginUser.Cname)<br />
+                <label>Title :   </label> @Html.DisplayFor(m => GlobalClass.LoginUser.Title)<br />
+            </div>
+            <div class="col-md-6">
+                <label>Customer Name :   </label> @Html.DisplayFor(m => m.CustomerObj.Cname)<br />
+                <label>Customer Address :   </label> @Html.DisplayFor(m => m.CustomerObj.Address)<br />
+                @Html.DisplayFor(m => m.CustomerObj.ZIPcode) <label> , &nbsp;</label> @Html.DisplayFor(m => m.CustomerObj.CityList.CityName)<br />
+                @Html.DisplayFor(m => m.CustomerObj.StateList.StateName)
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+  
+       
+        <table id="example4" class="table table-bordered">
+            <thead>
+                <tr>
+                   
+                    <th>Customer<br />Job Name</th>
+                    <th>Service<br />Location</th><th>Trade</th>
+                    <th>Account<br />Manager</th>
+                    <th>Status</th>
+                    <th>Job Enter<br />Date</th>
+                    <th>Schedule <br />Date</th>
+                   
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.FirstGrid)
+                {
+                    <tr>
+                       
+                        <td>
+                            <a href="@Url.Action("EditJob", "MgtJob", new { id = item.JobKey })">@Html.DisplayFor(modelItem => item.JobName)</a>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServiceLocation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TradeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountManager)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @string.Format("{0:d}", item.EDate)
+                        </td>
+                        <td>
+                            @string.Format("{0:d}", item.SDate)
+                        </td>
+                      
+
+                        <td>
+                            @Html.ActionLink("View Notes", "Details", "MgtNotes", new { id = item.JobKey }, null)
+
+                        
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+  
+</div>
