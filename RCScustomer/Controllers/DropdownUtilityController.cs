@@ -158,18 +158,18 @@ namespace RCScustomer.Controllers
             return Json(users, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetTradeName(string query, Guid CustomerKey)
+        public ActionResult GetTradeName(string query)
         {
-            var users = (from u in db.CustomerLabor
+            var users = (from u in db.Trade
 
-                         where u.CustomerKey == CustomerKey && u.Trade.TName.ToUpper().Contains(query.ToUpper()) && u.Standard > 0
+                         where  u.TName.ToUpper().Contains(query.ToUpper()) 
 
                          && u.IsDelete == false
-                         orderby u.Trade.TName
+                         orderby u.TName
                          select new
                          {
-                             label = u.Trade.TName,
-                             value = u.Trade.ID
+                             label = u.TName,
+                             value = u.ID
 
                          }).ToList();
             return Json(users, JsonRequestBehavior.AllowGet);
@@ -194,13 +194,6 @@ namespace RCScustomer.Controllers
             return Json(users, JsonRequestBehavior.AllowGet);
         }
 
-
-      
-
-       
-
-       
-
         public ActionResult GetCityStateName(string query, int CityKey)
         {
             var users = (from u in db.StateList
@@ -220,11 +213,51 @@ namespace RCScustomer.Controllers
         }
 
 
+        public ActionResult GetLocationContactName(string query, Guid LocationKey)
+        {
+            var users = (from lc in db.LocationContact
+                         join l in db.Location on lc.LocationKey equals l.LocationKey
+                         join c in db.CityList on l.CityKey equals c.CityKey
+                         join s in db.StateList on l.StateCode equals s.PKey
 
-     
+                         //where lc.Cname.ToUpper().Contains(query.ToUpper()) && lc.IsDelete == false
+                         //&& lc.IsDefault == true && l.LocationKey == LocationKey
+                         where lc.LocationKey == LocationKey
+                         orderby lc.Cname
+                         select new
+                         {
+                             label = lc.Cname,
+                             value = lc.ContactKey,
+                             LocationContactAddress = l.Address,
+                             LocationContactZipCode = l.ZIPcode,
+                             LocationContactCityName = c.CityName,
+                             LocationContactStateName = s.StateName
+
+                         }).ToList();
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
 
 
-       
+        public ActionResult GetLocationName(string query)
+        {
+           
+
+            var users = (from u in db.Location
+
+                         where  u.Lname.ToUpper().Contains(query.ToUpper())
+                         && u.IsDelete == false
+                         orderby u.Lname
+                         select new
+                         {
+                             label = u.Lname,
+                             value = u.LocationKey,
+                             LocationName = u.Lname,
+                             
+
+                         }).ToList();
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
