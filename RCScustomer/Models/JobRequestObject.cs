@@ -25,12 +25,27 @@ namespace RCScustomer.Models
         [Display(Name = "Service Needed*")]
         [Required(ErrorMessage = "Service Needed is required")]
         public string ServiceNeeded { get; set; }
+
+
+
+        [Display(Name = "DNE Amount")]
         public Nullable<decimal> DNEamount { get; set; }
-        public string SpecialNote { get; set; }
+
+        [Display(Name = "Service Date")]
         public Nullable<System.DateTime> ServiceDate { get; set; }
+
+        [Display(Name = "Service By Time")]
         public string ServiceByTime { get; set; }
+
+        [Display(Name = "Special Note")]
+        public string SpecialNote { get; set; }
+
+        [Display(Name = "SVC Location Contact")]
         public string SVCLocationContact { get; set; }
+
+        [Display(Name = "Svc Location Contact Phone")]
         public string SvcLocationContactPhone { get; set; }
+
         public Nullable<System.DateTime> EntryDatetime { get; set; }
         public Nullable<bool> IsRequest { get; set; }
 
