@@ -320,7 +320,7 @@ $(function () {
             $.ajax({
                 url: '/DropdownUtility/GetTradeName', type: "GET", dataType: "json",
                 //query will be the param used by your action method
-                data: { query: request.term, CustomerKey: $("#CustomerKey").val() },
+                data: { query: request.term},
                 term: extractLast(request.term),
                 success: function (data) {
                     response($.map(data, function (item) {
@@ -444,12 +444,12 @@ $(function () {
             $.ajax({
                 url: '/DropdownUtility/GetLocationName', type: "GET", dataType: "json",
                 //query will be the param used by your action method
-                data: { query: request.term, CustomerKey: $("#CustomerKey").val() },
+                data: { query: request.term },
                 // data: { query: request.term },
                 term: extractLast(request.term),
                 success: function (data) {
                     response($.map(data, function (item) {
-                        return { LocationName: item.LocationName ,JobName: item.JobName, label: item.label, value: item.value };
+                        return { LocationName: item.LocationName ,  label: item.label, value: item.value };
                     }))
                 }
             })
@@ -472,7 +472,7 @@ $(function () {
             // add the selected item
             terms.push(ui.item.label);
             $("#LocationKey").val(ui.item.value);
-            $("#JobName").val(ui.item.JobName);
+           
             $("#LocationName").val(ui.item.LocationName);
             
             // add placeholder to get the comma-and-space at the end
