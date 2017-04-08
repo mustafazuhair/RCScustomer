@@ -14,8 +14,21 @@ namespace RCScustomer.Controllers
     {
         // GET: ShowImage
         private RCSdbEntities db = new RCSdbEntities();
-      
-      
+        public ActionResult GetJobRequestFileAttachement(Guid id)
+        {
+
+            JobRequestAttachments obj = db.JobRequestAttachments.Find(id);
+
+            if (obj.DocFile != null)
+                return File(obj.DocFile, obj.FileType);
+            else
+            {
+                ImageFile faoimagefile = db.ImageFile.Single(f => f.ImageFileKey == 1);
+                return File(faoimagefile.FileContent, faoimagefile.FileType);
+            }
+        }
+
+
         public ActionResult GetCustomerFileAttachement(Guid id)
         {
 

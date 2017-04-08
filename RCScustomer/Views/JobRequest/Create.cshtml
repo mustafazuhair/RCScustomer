@@ -11,6 +11,24 @@
 {
     <script src="~/Scripts/scStateCity.js"></script>
 }
+<script type="text/javascript">
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    $(function () {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            enabled: true,
+            yearRange: 'c-80:c+900'
+        });
+    });
+</script>
 
 
 
@@ -204,7 +222,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ServiceDate, htmlAttributes: new { @class = "control-label col-md-3" })
                                     <div class="col-md-7">
-                                        @Html.EditorFor(model => model.ServiceDate, new { htmlAttributes = new { id = "ServiceDate", @class = "form-control" } })
+                                        @Html.EditorFor(model => model.ServiceDate, new { htmlAttributes = new { id = "ServiceDate", @class = "form-control datepicker" } })
                                     </div>
 
                                 </div>

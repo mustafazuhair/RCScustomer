@@ -792,11 +792,11 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\JobRequest\Create.cshtml" />
     <Content Include="Views\JobRequest\EditJobRequest.cshtml" />
+    <Content Include="Views\JobRequestFile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\DropdownUtility\" />
-    <Folder Include="Views\JobRequestFile\" />
     <Folder Include="Views\ShowImage\" />
     <Folder Include="Views\Utility\" />
   </ItemGroup>

@@ -8,6 +8,8 @@ namespace RCScustomer.Models
     public class JobRequestAttachmentMain
     {
         public List<JobRequestAttachmentsObject> JobRequestAttachmentsList { get; set; }
-        public List<DocumentTypeObject> DocumentTypeObjectList { get; set; }
+        public JobRequestAttachmentsObject fileObj { get; set; }
+        public JobRequest RequestObj { get; set; }
+        public Guid? DocumentTypeKey { get; set; }
     }
 }

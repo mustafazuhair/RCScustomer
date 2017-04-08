@@ -61,6 +61,77 @@ namespace RCScustomer.DAL
             return docTypeList;
         }
 
+        public JobRequestAttachmentMain GetJobFileAttachmentObjects(Guid id)
+        {
+            JobRequestAttachmentMain obj = new JobRequestAttachmentMain();
+            try
+            {
+                obj.RequestObj = db.JobRequest.Find(id);
+                var temp = from x in db.JobRequestAttachments
+                           where x.RequestKey == id 
+
+                           select new JobRequestAttachmentsObject
+                           {
+                               PKey = x.PKey,
+                               RequestKey = x.RequestKey,
+                               DocumentTypeKey = x.DocumentTypeKey,
+                               DocFile = x.DocFile,
+                               Filename = x.Filename,
+                               FileType = x.FileType,
+                               DocumentName = x.DocumentType.TName
+
+                           };
+                obj.JobRequestAttachmentsList = new List<JobRequestAttachmentsObject>();
+                obj.JobRequestAttachmentsList = temp.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                string fall = ex.ToString();
+            }
+            return obj;
+        }
+        public DataReturn SaveAttachmentInRequest(JobRequestAttachmentMain model)
+        {
+            DataReturn obj = new DataReturn();
+            try
+            {
+
+                JobRequestAttachments fj = db.JobRequestAttachments.SingleOrDefault(m => m.RequestKey == model.RequestObj.RequestKey && m.DocumentTypeKey == model.DocumentTypeKey);
+                if (fj == null)
+                {
+                }
+                else
+                {
+                    db.JobRequestAttachments.Remove(fj);
+                    db.SaveChanges();
+                    db = new RCSdbEntities();
+                }
+                JobRequestAttachments invoice = new JobRequestAttachments();
+                
+                invoice.PKey = Guid.NewGuid();
+                invoice.RequestKey = (Guid)model.RequestObj.RequestKey;
+                invoice.DocumentTypeKey = model.DocumentTypeKey;
+               
+                invoice.DocFile = model.fileObj.DocFile;
+                invoice.Filename = model.fileObj.Filename;
+                invoice.FileType = model.fileObj.FileType;
+
+              
+                db.JobRequestAttachments.Add(invoice);
+                db.SaveChanges();
+
+                obj.flag = 1;
+                obj.mess = "Data has been updated successfully.";
+            }
+            catch (Exception ex)
+            {
+                obj.mess = ex.ToString();
+                obj.flag = 0;
+            }
+            obj.key = model.RequestObj.RequestKey;
+            return obj;
+        }
         internal JobRequestObject GetJobrequestDetails(Guid requestKey)
         {
             JobRequest j = db.JobRequest.Find(requestKey);

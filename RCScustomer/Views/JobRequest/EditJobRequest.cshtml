@@ -2,7 +2,7 @@
 
 
 @{
-    ViewBag.Title = "Job";
+    ViewBag.Title = "Job Request";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,7 +30,7 @@
                         <a href="#2a" data-toggle="pill">Optional Information</a>
                     </li>
                     <li>
-                        <a href="#3a" data-toggle="pill">Files and attachment</a>
+                        <a href="@Url.Action("Index", "JobRequestFile", new { Model.RequestKey })">Files and attachment</a>
                     </li>
 
                 </ul>
@@ -271,11 +271,7 @@
 
         </div>
 
-        <div class="tab-pane fade" id="3a">
-            <h3>Please Save the Job request first</h3>
-
-        </div>
-
+     
 
 
     </div>

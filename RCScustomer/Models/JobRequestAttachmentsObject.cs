@@ -13,5 +13,6 @@ namespace RCScustomer.Models
         public byte[] DocFile { get; set; }
         public string FileType { get; set; }
         public string Filename { get; set; }
+        public string DocumentName { get; set; }
     }
 }
