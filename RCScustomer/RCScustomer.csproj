@@ -200,6 +200,7 @@
     <Compile Include="Controllers\DropdownUtilityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobRequestController.cs" />
+    <Compile Include="Controllers\JobRequestFileController.cs" />
     <Compile Include="Controllers\ShowImageController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="DAL\DashboardSetup.cs" />
@@ -282,6 +283,7 @@
     <Compile Include="Models\DocumentType.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentTypeObject.cs" />
     <Compile Include="Models\EmailConfiguration.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
@@ -308,9 +310,11 @@
     <Compile Include="Models\JobRequest.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\JobRequestAttachmentMain.cs" />
     <Compile Include="Models\JobRequestAttachments.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\JobRequestAttachmentsObject.cs" />
     <Compile Include="Models\JobRequestObject.cs" />
     <Compile Include="Models\JobSalesInvoice.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
@@ -787,10 +791,12 @@
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\JobRequest\Create.cshtml" />
+    <Content Include="Views\JobRequest\EditJobRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\DropdownUtility\" />
+    <Folder Include="Views\JobRequestFile\" />
     <Folder Include="Views\ShowImage\" />
     <Folder Include="Views\Utility\" />
   </ItemGroup>

@@ -42,5 +42,50 @@ namespace RCScustomer.DAL
             }
             return model;
         }
+
+        internal List<DocumentTypeObject> GetAllDocumntType()
+        {
+            List<DocumentTypeObject> docTypeList = new List<DocumentTypeObject>();
+            var temp = from p in db.DocumentType
+                       select new DocumentTypeObject
+                       {
+
+                           ID = p.ID,
+                           TName = p.TName,
+                           CompanyKey = p.CompanyKey,
+                           DocumentForID = p.DocumentForID
+                       };
+
+                       docTypeList = temp.ToList();
+
+            return docTypeList;
+        }
+
+        internal JobRequestObject GetJobrequestDetails(Guid requestKey)
+        {
+            JobRequest j = db.JobRequest.Find(requestKey);
+
+            JobRequestObject model = new JobRequestObject();
+
+            model.RequestKey = j.RequestKey;
+            model.LocationKey = j.LocationKey;
+            model.LocationName = j.Location.Lname;
+            model.CustomerKey = j.CustomerKey;
+           // model.CustomerName = j.Customer.Cname;
+            model.LocationContactKey = j.LocationContactKey;
+            model.TradeKey = j.TradeKey;
+            model.TradeName = j.Trade.TName;
+            model.JobPriorityKey = j.JobPriorityKey;
+            model.JobPriority = j.JobType.TName;
+            model.ServiceNeeded = j.ServiceNeeded;
+            model.DNEamount = j.DNEamount;
+            model.SpecialNote = j.SpecialNote;
+            model.ServiceDate = j.ServiceDate;
+            model.ServiceByTime = j.ServiceByTime;
+            model.SVCLocationContact = j.SVCLocationContact;
+            model.SvcLocationContactPhone = j.SvcLocationContactPhone;
+            model.EntryDatetime = j.EntryDatetime;
+            return model;
+        }
     }
 }
