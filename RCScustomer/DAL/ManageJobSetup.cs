@@ -218,6 +218,11 @@ namespace RCScustomer.DAL
             _job.LocationContactStateName = jobEntity.Location.StateList.StateName;
             _job.LocationContactZipCode = jobEntity.Location.ZIPcode;
 
+            //_job.RCSAccountManagerName = jobEntity.JobAccountManager;
+            //_job.RCSAccountManagerEmail = jobEntity.JobAccountManager;
+            //_job.RCSAccountManagerPhone = jobEntity.JobAccountManager;
+            //_job.RCSAccountManagerExt = jobEntity.JobAccountManager;
+
 
             List<System.Guid> _teamList = new List<System.Guid>();
 

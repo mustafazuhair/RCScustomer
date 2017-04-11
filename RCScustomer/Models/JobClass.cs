@@ -113,6 +113,18 @@ namespace RCScustomer.Models
         public string CheckIn { get; set; }
 
         public string CheckOut { get; set; }
-         
+
+        [Display(Name = "Name")]
+        public string RCSAccountManagerName { get; set; }
+
+        [Display(Name = "Email")]
+        public string RCSAccountManagerEmail { get; set; }
+
+        [Display(Name = "Phone")]
+        public string RCSAccountManagerPhone { get; set; }
+
+        [Display(Name = "Ext")]
+        public string RCSAccountManagerExt { get; set; }
+
     }
 }

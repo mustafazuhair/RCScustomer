@@ -182,10 +182,70 @@
             </div>
 
 
-            <div class="panel-footer">
-                <a href="#2a" data-toggle="pill" class="btn btn-primary">Next >></a>
+            
+        </div>
+    </div>
 
-                @*|| @Html.ActionLink("Back to List", "Index")*@
+
+    <div class="row">
+        <div class="panel panel-default ">
+            <div class="panel-heading">RCS Account Manager Details</div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.JobKey, new { id = "JobKey" })
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RCSAccountManagerName, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-7">
+                                @*@Html.DropDownList("LocationKey", null, htmlAttributes: new { id = "LocationKey", @required = "required", @class = "form-control" })*@
+                                @Html.EditorFor(model => model.RCSAccountManagerName, new { htmlAttributes = new { id = "RCSAccountManagerName", @class = "form-control", disabled = "disabled" } })
+                                @*@Html.HiddenFor(model => model.RCSAccountManagerName, new { id = "RCSAccountManagerName" })
+                                @Html.ValidationMessageFor(model => model.RCSAccountManagerName, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RCSAccountManagerEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.RCSAccountManagerEmail, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                @*@Html.ValidationMessageFor(model => model.LocationContactAddress, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RCSAccountManagerPhone, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-6">
+                                @*@Html.DropDownList("CContactKey", null, htmlAttributes: new { id = "CContactKey", @required = "required", @class = "form-control" })*@
+                                @Html.EditorFor(model => model.RCSAccountManagerPhone, new { htmlAttributes = new { id = "RCSAccountManagerPhone", @class = "form-control", disabled = "disabled" } })
+                                @*@Html.HiddenFor(model => model.CContactKey, new { id = "CContactKey" })
+                                @Html.ValidationMessageFor(model => model.CContactKey, "", new { @class = "text-danger" })*@
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RCSAccountManagerExt, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-6">
+                                @*@Html.DropDownList("CContactKey", null, htmlAttributes: new { id = "CContactKey", @required = "required", @class = "form-control" })*@
+                                @Html.EditorFor(model => model.RCSAccountManagerExt, new { htmlAttributes = new { id = "RCSAccountManagerExt", @class = "form-control", disabled = "disabled" } })
+                                @*@Html.HiddenFor(model => model.CContactKey, new { id = "CContactKey" })
+                @Html.ValidationMessageFor(model => model.CContactKey, "", new { @class = "text-danger" })*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel-footer">
+                <a href="#2a" data-toggle="pill" class="btn btn-primary">Notes & Activity >></a>
+
             </div>
         </div>
     </div>
