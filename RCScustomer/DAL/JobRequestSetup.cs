@@ -144,8 +144,12 @@ namespace RCScustomer.DAL
             model.LocationKey = j.LocationKey;
             model.LocationName = j.Location.Lname;
             model.CustomerKey = j.CustomerKey;
-           // model.CustomerName = j.Customer.Cname;
             model.LocationContactKey = j.LocationContactKey;
+            model.LocationContactName = j.LocationContact.Cname;
+            model.LocationContactAddress = j.Location.Address;
+            model.LocationContactCityName = j.Location.CityList.CityName;
+            model.LocationContactStateName = j.Location.StateList.StateName;
+            model.LocationContactZipCode = j.Location.ZIPcode;
             model.TradeKey = j.TradeKey;
             model.TradeName = j.Trade.TName;
             model.JobPriorityKey = j.JobPriorityKey;
@@ -158,6 +162,41 @@ namespace RCScustomer.DAL
             model.SVCLocationContact = j.SVCLocationContact;
             model.SvcLocationContactPhone = j.SvcLocationContactPhone;
             model.EntryDatetime = j.EntryDatetime;
+            return model;
+        }
+
+        internal DataReturn UpdateMainData(JobRequestObject obj)
+        {
+            DataReturn model = new DataReturn();
+            try
+            {
+                JobRequest _job = db.JobRequest.Find(obj.RequestKey);
+                 
+                _job.LocationKey = obj.LocationKey;
+                _job.CustomerKey = GlobalClass.LoginUser.CustomerKey;
+                _job.LocationContactKey = obj.LocationContactKey;
+                _job.TradeKey = obj.TradeKey;
+                _job.JobPriorityKey = obj.JobPriorityKey;
+                _job.ServiceNeeded = obj.ServiceNeeded;
+                _job.DNEamount = obj.DNEamount;
+                _job.SpecialNote = obj.SpecialNote;
+                _job.ServiceDate = obj.ServiceDate;
+                _job.ServiceByTime = obj.ServiceByTime;
+                _job.SVCLocationContact = obj.SVCLocationContact;
+                _job.SvcLocationContactPhone = obj.SvcLocationContactPhone;
+                _job.EntryDatetime = DateTime.Now;
+                _job.IsRequest = true;
+                db.SaveChanges();
+                model.flag = 1;
+                model.key = _job.RequestKey;
+                model.mess = "Data has been Update successfully.";
+
+            }
+            catch (Exception ex)
+            {
+                model.flag = 0;
+                model.mess = ex.Message.ToString();
+            }
             return model;
         }
     }

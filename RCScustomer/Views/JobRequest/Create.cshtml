@@ -165,7 +165,7 @@
 
                               
                         <div class="form-group">
-                            @Html.LabelFor(model => model.JobPriorityKey, "Job Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.JobPriorityKey, "Job PRIORITY", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("JobPriorityKey", null, htmlAttributes: new { @required = "required", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.JobPriorityKey, "", new { @class = "text-danger" })

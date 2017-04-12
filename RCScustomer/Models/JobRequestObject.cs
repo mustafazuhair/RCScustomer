@@ -14,11 +14,12 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> LocationContactKey { get; set; }
         public Nullable<System.Guid> TradeKey { get; set; }
 
+        [Required(ErrorMessage = "Job Priority is required")]
         public Nullable<System.Guid> JobPriorityKey { get; set; }
 
 
         [Display(Name = "Job Priority*")]
-        [Required(ErrorMessage = "Job Priority is required")]
+        
         public string JobPriority { get; set; }
 
 

@@ -42,16 +42,25 @@ namespace RCScustomer.Controllers
 
             if (GlobalClass.SystemSession)
             {
-                DataReturn data = manage.SaveMainData(model);
-                ViewBag.mess = data.mess;
-                if (data.flag == 1)
-                    return RedirectToAction("EditJobRequest", new { id = data.key });
 
-                else
+                foreach (ModelState modelState in ViewData.ModelState.Values)
                 {
-                    return View(model);
+                    foreach (ModelError error in modelState.Errors)
+                    {
+                        //DoSomethingWith(error);
+                    }
                 }
-                
+
+                if (ModelState.IsValid)
+                {
+                    DataReturn data = manage.SaveMainData(model);
+                    ViewBag.mess = data.mess;
+                    if (data.flag == 1)
+                        return RedirectToAction("EditJobRequest", new { id = data.key });
+                }
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+                return View(model);
+
             }
             else
             {
@@ -66,9 +75,10 @@ namespace RCScustomer.Controllers
         {
             if (GlobalClass.SystemSession)
             {
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
                 JobRequestObject model = new JobRequestObject();
                 model = manage.GetJobrequestDetails(id);
-                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+              
                 return View(model);
             }
             else
@@ -86,10 +96,15 @@ namespace RCScustomer.Controllers
         {
             if (GlobalClass.SystemSession)
             {
-                //JobRequestObject model = new JobRequestObject();
-                //model = manage.GetJobrequestDetails(id);
-                //ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
-                return View(model);
+                if (ModelState.IsValid)
+                {
+                    DataReturn data = manage.UpdateMainData(model);
+                    ViewBag.mess = data.mess;
+                    if (data.flag == 1)
+                        return RedirectToAction("EditJobRequest", new { id = data.key });
+                }
+                    return View(model);
+               
             }
             else
             {

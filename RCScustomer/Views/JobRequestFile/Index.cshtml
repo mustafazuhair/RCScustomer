@@ -15,11 +15,10 @@
             <div class="panel-heading">
                 <ul class="nav nav-pills">
                     <li>                       
-                        <a href="@Url.Action("EditJobRequest", "JobRequest", new { Model.RequestObj.RequestKey })">Main</a>
+                        <a href="@Url.Action("EditJobRequest", "JobRequest", new { id = Model.RequestObj.RequestKey })">Main</a>
                     </li>
                     <li>
-                        <a href="@Url.Action("EditJobRequest", "JobRequest", new { Model.RequestObj.RequestKey })">Optional Information</a>
-                        <a href="#2a" data-toggle="pill">Optional Information</a>
+                        <a href="@Url.Action("EditJobRequest", "JobRequest", new { id = Model.RequestObj.RequestKey })">Optional Information</a>
                     </li>
                     <li class="active">
                         <a href="#2a" data-toggle="pill">Files and attachment</a>
@@ -106,12 +105,6 @@
                 </table>
             </div>
         </div>
-
-
-        
-
-
-
 
     </div>
 }
