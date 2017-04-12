@@ -9,70 +9,103 @@ namespace RCScustomer.DAL
     public class ManageJobSetup
     {
         private RCSdbEntities db = new RCSdbEntities();
+        public List<RCSExcel> CustomerCommunicationForDownload(Guid id)
+        {
+            List<RCSExcel> mainlist = new List<RCSExcel>();
+            try
+            {
+                Job job = db.Job.Find(id);
+                var temp = (from x in db.CustomerMesseging
+                            where x.JobKey == id && x.IsDelete == false
+                            select new RCSExcel
+                            {
 
-        public DataReturn SaveMainData(JobClass obj)
+                                Jobname = x.Job.JobName,
+                                Customer = x.Customer.Cname,
+                                AddedOn = x.AddedOn,
+                                Comment = x.Comment,
+                                Title = x.Title,
+                                Designation = x.StaffList.Designation,
+                                Staffname = x.StaffList.PName
+                            }).OrderByDescending(m => m.AddedOn).ToList();
+                if (temp.Count() > 0)
+                {
+                    mainlist = temp;
+                }
+                else
+                {
+                    RCSExcel obj = new RCSExcel();
+                    obj.Jobname = "None";
+                    obj.AddedOn = System.DateTime.Now;
+                    obj.Comment = "--";
+                    obj.Customer = "--";
+                    obj.Title = "--";
+                    obj.Designation = "--";
+                    obj.Staffname = "--";
+                    mainlist.Add(obj);
+                }
+                var tempContact = from x in db.CustomerContactMesseging where x.JobKey == id && x.IsDelete == false select x;
+                if (tempContact.Count() > 0)
+                {
+                    foreach (var item in tempContact)
+                    {
+                        RCSExcel obj = new RCSExcel();
+                        obj.Jobname = item.Job.JobName;
+                        obj.Customer = item.Customer.Cname;
+                        obj.AddedOn = item.AddedOn;
+                        obj.Comment = item.Comment;
+                        obj.Title = item.Title;
+                        obj.Designation = item.CustomerContact.Title;
+                        obj.Staffname = item.CustomerContact.Cname;
+
+                        mainlist.Add(obj);
+                    }
+                }
+                mainlist.OrderByDescending(m => m.AddedOn);
+            }
+            catch (Exception ex)
+            {
+                string srt = ex.Message.ToString();
+            }
+            return mainlist;
+        }
+
+        public CustomerNoteClass FillCustomer_sNotes(Guid id)
+        {
+            CustomerNoteClass obj = new CustomerNoteClass();
+            CustomerMesseging cust = db.CustomerMesseging.Find(id);
+            obj.NoteKey = cust.PKey;
+            obj.Comment = cust.Comment;
+            obj.AddedBy = cust.AddedBy;
+            obj.AddedOn = cust.AddedOn;
+            obj.Title = cust.AddedOn.ToString();
+            obj.IsDelete = cust.IsDelete;
+            return obj;
+        }
+        public DataReturn SaveCustomermessegingData(RCSMessegeClass obj)
         {
             DataReturn model = new DataReturn();
             try
             {
-                Job _job = new Job();
-                _job.JobKey = Guid.NewGuid();
-                _job.JobName = obj.JobName;
-                _job.CustomerKey = obj.CustomerKey;
-                _job.CContactKey = obj.CContactKey;
-                _job.CustomerDNE = obj.CustomerDNE;
-                _job.JobTypeKey = obj.JobTypeKey;
-                _job.TradeKey = obj.TradeKey;
-                _job.EntryDate = obj.EntryDate;
-                _job.JobStatusKey = obj.JobStatusKey;
-                _job.PO = obj.PO;
-                _job.Description = obj.Description;
-                _job.IVRTrackingNo = obj.IVRTrackingNo;
-                _job.IVRPin = obj.IVRPin;
-                _job.ScheduleDate = obj.ScheduleDate;
-                _job.ReturnScheduleDate = obj.ReturnScheduleDate;
-                _job.LocationKey = obj.LocationKey;
-                _job.LocationContactKey = obj.LocationContactKey;
-                db.Job.Add(_job);
+                CustomerContactMesseging cust = new CustomerContactMesseging();
+                cust.PKey = Guid.NewGuid();
+
+                cust.JobKey = obj.mainObj.JobKey;
+                cust.AddedBy = GlobalClass.LoginUser.ContactKey;
+                cust.AddedOn = obj.mainObj.AddedOn;
+                cust.Comment = obj.mainObj.Comment;
+                cust.Title = "Update for Job: " + obj.Job.JobName;
+                cust.IsDelete = false;
+                cust.Remarks = "";
+                cust.CustomerKey = obj.VendorKey;
+
+                db.CustomerContactMesseging.Add(cust);
                 db.SaveChanges();
 
-                model.key = _job.JobKey;
-                if (obj.ToTeamKey.Count() > 0)
-                {
-                    foreach (var item in obj.ToTeamKey)
-                    {
-                        db = new RCSdbEntities();
-                        JobTeam team = new JobTeam();
-                        team.Addedon = System.DateTime.Now;
-                        team.IsDelete = false;
-                        team.JobKey = (Guid)model.key;
-                        team.PKey = Guid.NewGuid();
-                        team.TeamKey = Guid.Parse(item.ToString());
-                        team.Remarks = "";
-                        db.JobTeam.Add(team);
-                        db.SaveChanges();
-                        var mem = db.TeamMember.Where(m => m.IsDelete == false).ToList();
-                        if (mem.Count() > 0)
-                        {
-                            foreach (var mitem in mem)
-                            {
-                                db = new RCSdbEntities();
-                                JobAccountManager m = new JobAccountManager();
-                                m.Addedon = System.DateTime.Now;
-                                m.IsDelete = false;
-                                m.JobKey = (Guid)model.key;
-                                m.PKey = Guid.NewGuid();
-                                m.PersonnelKey = mitem.PersonnelKey;
-                                team.Remarks = "";
-                                db.JobAccountManager.Add(m);
-                                db.SaveChanges();
-                            }
-
-                        }
-                    }
-                }
                 model.flag = 1;
                 model.mess = "Data has been saved successfully.";
+                model.key = cust.PKey;
+
             }
             catch (Exception ex)
             {
@@ -82,91 +115,24 @@ namespace RCScustomer.DAL
             return model;
         }
 
-        public DataReturn UpdateJobMainData(JobClass obj)
+        public DataReturn UpdateCustomermessegingData(RCSMessegeClass obj)
         {
             DataReturn model = new DataReturn();
             try
             {
-                Job _job = db.Job.Find(obj.JobKey);
-
-                _job.JobName = obj.JobName;
-                _job.CustomerKey = obj.CustomerKey;
-                _job.CContactKey = obj.CContactKey;
-                _job.CustomerDNE = obj.CustomerDNE;
-                _job.JobTypeKey = obj.JobTypeKey;
-                _job.TradeKey = obj.TradeKey;
-                _job.EntryDate = obj.EntryDate;
-                _job.JobStatusKey = obj.JobStatusKey;
-                _job.PO = obj.PO;
-                _job.Description = obj.Description;
-                _job.IVRTrackingNo = obj.IVRTrackingNo;
-                _job.IVRPin = obj.IVRPin;
-                _job.ScheduleDate = obj.ScheduleDate;
-                _job.ReturnScheduleDate = obj.ReturnScheduleDate;
-                _job.LocationKey = obj.LocationKey;
-                _job.LocationContactKey = obj.LocationContactKey;
+                CustomerContactMesseging cust =db.CustomerContactMesseging.Find(obj.mainObj.PKey);
+               
+                cust.AddedOn = obj.mainObj.AddedOn;
+                cust.Comment = obj.mainObj.Comment;
+               
+                cust.Remarks = "Updated on "+System.DateTime.Now.ToString()+" by "+GlobalClass.LoginUser.Cname;
+               
                 db.SaveChanges();
 
-                model.key = _job.JobKey;
-
-                // Delete Existing Job Team
-
-                using (var db = new RCSdbEntities())
-                {
-                    var JobTeams = db.JobTeam.Where(f => f.JobKey == model.key).ToList();
-                    JobTeams.ForEach(a => a.IsDelete = true);
-                    db.SaveChanges();
-                }
-
-
-
-                // Delete Existing Accout Manager
-
-                using (var db = new RCSdbEntities())
-                {
-                    var JobAccountManager = db.JobAccountManager.Where(f => f.JobKey == model.key).ToList();
-                    JobAccountManager.ForEach(a => a.IsDelete = true);
-                    db.SaveChanges();
-                }
-
-
-
-                if (obj.ToTeamKey.Count() > 0)
-                {
-                    foreach (var item in obj.ToTeamKey)
-                    {
-                        db = new RCSdbEntities();
-                        JobTeam team = new JobTeam();
-                        team.Addedon = System.DateTime.Now;
-                        team.IsDelete = false;
-                        team.JobKey = (Guid)model.key;
-                        team.PKey = Guid.NewGuid();
-                        team.TeamKey = Guid.Parse(item.ToString());
-                        team.Remarks = "";
-                        db.JobTeam.Add(team);
-                        db.SaveChanges();
-                        var mem = db.TeamMember.Where(m => m.IsDelete == false).ToList();
-                        if (mem.Count() > 0)
-                        {
-                            foreach (var mitem in mem)
-                            {
-                                db = new RCSdbEntities();
-                                JobAccountManager m = new JobAccountManager();
-                                m.Addedon = System.DateTime.Now;
-                                m.IsDelete = false;
-                                m.JobKey = (Guid)model.key;
-                                m.PKey = Guid.NewGuid();
-                                m.PersonnelKey = mitem.PersonnelKey;
-                                team.Remarks = "";
-                                db.JobAccountManager.Add(m);
-                                db.SaveChanges();
-                            }
-
-                        }
-                    }
-                }
                 model.flag = 1;
                 model.mess = "Data has been saved successfully.";
+                model.key = cust.PKey;
+
             }
             catch (Exception ex)
             {
@@ -175,7 +141,98 @@ namespace RCScustomer.DAL
             }
             return model;
         }
+        public List<RCSMessegeMain> LoadCustomerMesseginglist(Guid id)
+        {
+            List<RCSMessegeMain> model = new List<RCSMessegeMain>();
+            try
+            {
 
+                var temp = (from x in db.CustomerMesseging
+                            where x.JobKey == id && x.IsDelete == false
+                            select new RCSMessegeMain
+                            {
+                                PKey = x.PKey,
+                                JobKey = x.JobKey,
+                                AddedBy = x.AddedBy,
+                                AddedOn = x.AddedOn,
+                                Comment = x.Comment,
+                                Title = x.Title,
+                                Designation = x.StaffList.Designation,
+                                Staffname = x.StaffList.PName,
+                                vendorName = x.Customer.Cname,
+                                VendorKey = x.CustomerKey
+                            }).OrderByDescending(m => m.AddedOn).ToList();
+                model = temp;
+
+            }
+            catch (Exception ex)
+            {
+
+                string mess = ex.Message.ToString();
+
+            }
+            return model;
+        }
+        public RCSMessegeClass LoadCustomerMessegingData(Guid id)
+        {
+            RCSMessegeClass model = new RCSMessegeClass();
+            model.Messege = new DataReturn();
+            model.Messege.mess = "customer communication Details";
+            model.Messege.flag = 1;
+            model.mainObj = new RCSMessegeMain();
+            model.mainObj.JobKey = id;
+            model.Job = db.Job.Find(id);
+            model.VendorKey = model.Job.CustomerKey;
+            model.mailList = new List<RCSMessegeMain>();
+            try
+            {
+                var temp = (from x in db.CustomerMesseging
+                            where x.JobKey == id && x.IsDelete == false
+                            select new RCSMessegeMain
+                            {
+                                PKey = x.PKey,
+                                JobKey = x.JobKey,
+                                AddedBy = x.AddedBy,
+                                AddedOn = x.AddedOn,
+                                Comment = x.Comment,
+                                Title = x.Title,
+                                Designation = x.StaffList.Designation,
+                                Staffname = x.StaffList.PName,
+                                VendorKey = x.CustomerKey,
+                                vendorName = x.Customer.Cname,
+                                IsAdmin = true
+                            }).OrderByDescending(m => m.AddedOn).ToList();
+                model.mailList = temp;
+                var tempContact = from x in db.CustomerContactMesseging where x.JobKey == id && x.IsDelete == false select x;
+                if (tempContact.Count() > 0)
+                {
+                    foreach (var item in tempContact)
+                    {
+                        RCSMessegeMain obj = new RCSMessegeMain();
+                        obj.PKey = item.PKey;
+                        obj.JobKey = item.JobKey;
+                        obj.AddedBy = item.AddedBy;
+                        obj.AddedOn = item.AddedOn;
+                        obj.Comment = item.Comment.Count() > 50 ? item.Comment.Substring(0, 50) + "...." : item.Comment;
+                        obj.Title = item.Title;
+                        obj.Designation = item.CustomerContact.Title;
+                        obj.Staffname = item.CustomerContact.Cname;
+                        obj.VendorKey = item.CustomerKey;
+                        obj.vendorName = item.Customer.Cname;
+                        obj.IsAdmin = false;
+                        model.mailList.Add(obj);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                model.Messege.mess = ex.Message.ToString();
+                model.Messege.flag = 0;
+            }
+            model.mailList.OrderByDescending(m => m.AddedOn);
+            return model;
+        }
         internal JobClass FillMainJob(Guid id)
         {
             JobClass _job = new JobClass();
@@ -198,17 +255,17 @@ namespace RCScustomer.DAL
 
 
             _job.CustomerDNE = jobEntity.CustomerDNE;
-            _job.JobTypeKey = jobEntity.JobTypeKey;
+            _job.Priority = jobEntity.JobType.TName;
             _job.TradeKey = jobEntity.TradeKey;
             _job.TradeName = jobEntity.Trade.TName;
-            _job.EntryDate = jobEntity.EntryDate;
-            _job.JobStatusKey = jobEntity.JobStatusKey;
+            _job.EntryDate = jobEntity.EntryDate.Value.ToShortDateString();
+            _job.JobStatusName = jobEntity.JobStatus.TName;
             _job.PO = jobEntity.PO;
             _job.Description = jobEntity.Description;
             _job.IVRTrackingNo = jobEntity.IVRTrackingNo;
             _job.IVRPin = jobEntity.IVRPin;
-            _job.ScheduleDate = jobEntity.ScheduleDate;
-            _job.ReturnScheduleDate = jobEntity.ReturnScheduleDate;
+            _job.ScheduleDate = jobEntity.ScheduleDate.Value.ToShortDateString();
+            _job.ReturnScheduleDate = jobEntity.ReturnScheduleDate.Value.ToShortDateString();
             _job.LocationKey = jobEntity.LocationKey;
             _job.LocationName = jobEntity.Location.Lname;
             _job.LocationContactKey = jobEntity.LocationContactKey;
@@ -218,23 +275,27 @@ namespace RCScustomer.DAL
             _job.LocationContactStateName = jobEntity.Location.StateList.StateName;
             _job.LocationContactZipCode = jobEntity.Location.ZIPcode;
 
-            //_job.RCSAccountManagerName = jobEntity.JobAccountManager;
-            //_job.RCSAccountManagerEmail = jobEntity.JobAccountManager;
-            //_job.RCSAccountManagerPhone = jobEntity.JobAccountManager;
-            //_job.RCSAccountManagerExt = jobEntity.JobAccountManager;
-
-
-            List<System.Guid> _teamList = new List<System.Guid>();
-
-            List<JobTeam> _JobTeamEntity = db.JobTeam.Where(m => m.JobKey == id && m.IsDelete == false).ToList();
-
-            foreach (JobTeam item in _JobTeamEntity)
+           var asd = (from z in db.JobTeam
+                      join y in db.TeamMember on z.TeamKey equals y.ID
+                      where z.IsDelete == false && y.IsDelete == false && y.IsAccountManager == true && z.JobKey == id
+                      select y.StaffList).ToList();
+            if (asd == null)
             {
-                _teamList.Add(item.TeamKey);
+                _job.RCSAccountManagerName = "";
+                _job.RCSAccountManagerEmail = "";
+                _job.RCSAccountManagerPhone = "";
+             
             }
-
-            _job.ToTeamKey = _teamList.AsEnumerable();
-
+            else
+            {
+                foreach(var item in asd)
+                {
+                    _job.RCSAccountManagerName = item.PName;
+                    _job.RCSAccountManagerEmail = item.Mail;
+                    _job.RCSAccountManagerPhone = item.Mobile;
+                  
+                }
+            }
             return _job;
         }
 

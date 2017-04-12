@@ -126,16 +126,16 @@
 
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.LocationContactStateName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
+                                    @Html.LabelFor(model => model.LocationContactStateName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
                                         @Html.EditorFor(model => model.LocationContactStateName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                                         @Html.ValidationMessageFor(model => model.LocationContactStateName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.LocationContactZipCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
+                                    @Html.LabelFor(model => model.LocationContactZipCode, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
                                         @Html.EditorFor(model => model.LocationContactZipCode, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                                         @Html.ValidationMessageFor(model => model.LocationContactZipCode, "", new { @class = "text-danger" })
                                     </div>
@@ -242,24 +242,24 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.SpecialNote, htmlAttributes: new { @class = "control-label col-md-3" })
-                                    <div class="col-md-7">
+                                    @Html.LabelFor(model => model.SpecialNote, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
                                         @Html.EditorFor(model => model.SpecialNote, new { htmlAttributes = new { id = "SpecialNote", @class = "form-control" } })
                                     </div>
 
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.SVCLocationContact, htmlAttributes: new { @class = "control-label col-md-3" })
-                                    <div class="col-md-7">
+                                    @Html.LabelFor(model => model.SVCLocationContact, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
                                         @Html.EditorFor(model => model.SVCLocationContact, new { htmlAttributes = new { id = "SVCLocationContact", @class = "form-control" } })
                                     </div>
 
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.SvcLocationContactPhone, htmlAttributes: new { @class = "control-label col-md-3" })
-                                    <div class="col-md-7">
+                                    @Html.LabelFor(model => model.SvcLocationContactPhone, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
                                         @Html.EditorFor(model => model.SvcLocationContactPhone, new { htmlAttributes = new { id = "SvcLocationContactPhone", @class = "form-control" } })
                                     </div>
 

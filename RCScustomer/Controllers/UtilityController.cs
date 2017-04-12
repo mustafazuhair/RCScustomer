@@ -13,7 +13,17 @@ namespace RCScustomer.Controllers
     {
         // GET: Utility
         private RCSdbEntities db = new RCSdbEntities();
+        public ActionResult LoadCustomerMessege(Guid SelectID)
+        {
+            ManageJobSetup cd = new ManageJobSetup();
 
+            JsonResult result = new JsonResult();
+            CustomerNoteClass obj = new CustomerNoteClass();
+            obj = cd.FillCustomer_sNotes(SelectID);
+            result.Data = obj;
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return result;
+        }
         public ActionResult UpdateJobStatus(Guid JobStatusKey, Guid JobKey)
         {
             JsonResult result = new JsonResult();

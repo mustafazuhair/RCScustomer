@@ -1,0 +1,179 @@
+﻿@model RCScustomer.Models.RCSMessegeClass
+@{
+    ViewBag.Title = "NotesAndActivity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+
+   
+
+    $(document).ready(function (e) {
+
+        $('#Comment').val("");
+        $('#AddedOn').val("");
+        $('#savenEmail').show();
+        $('#save').show();
+
+
+
+        $(".discussion-comment").click(function (event) {
+            //alert($(this).attr("discussion-bit"));
+            $('#PKey').val($(this).attr("discussion-id"));
+
+            var w = "#PKey";
+
+            var url = '@Url.Content("~/")' + "Utility/LoadCustomerMessege";
+            $.getJSON(url, { SelectID: $(w).val() }, function (data) {
+
+                $('#AddedOn').val(data["Title"]);
+                $('#Comment').val(data["Comment"]);
+                $('#savenEmail').hide();
+                $('#save').hide();
+
+
+            });
+
+
+        });
+    });
+        $(function () {
+            $('#example2').dataTable();
+        });
+        $(function () {
+            $(".datetimepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                enabled: true,
+                yearRange: 'c-80:c+900'
+            });
+        });
+</script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h3>@ViewBag.mess</h3>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-pills">
+                    <li>
+                        <a href="@Url.Action("ViewJobDetails", "JobDetails",new { id=Model.Job.JobKey})">Job Info</a>
+                    </li>
+                    <li class="active">
+                        <a href="#1a" data-toggle="pill">Notes and Activity</a>
+                    </li>
+                    
+
+                    <li>
+                        <a href="@Url.Action("FilesandAttachments", "JobDetails",new { id=Model.Job.JobKey})">Files and Attachments</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="1a">
+            <div class="row">
+                <div class="panel panel-default ">
+                    <div class="panel-heading"><h3>@Html.DisplayFor(model => model.Job.JobName) >> @ViewBag.title</h3></div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.mainObj.PKey, new { id = "PKey" })
+                            @Html.HiddenFor(model => model.mainObj.JobKey, new { id = "JobKey" })
+                            @Html.HiddenFor(model => model.Job.JobName, new { id = "JobName" })
+                            @Html.HiddenFor(model => model.VendorKey, new { id = "VendorKey" })
+
+                            <div class="col-md-4">
+                             
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.mainObj.AddedOn, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.mainObj.AddedOn, new { htmlAttributes = new { id = "AddedOn", @class = "datepicker form-control" } })
+                                        @Html.ValidationMessageFor(model => model.mainObj.AddedOn, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.mainObj.Comment, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextAreaFor(model => model.mainObj.Comment, 6, 70, new { id = "Comment", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.mainObj.Comment, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        @*<input type="submit" id="savenEmail" name="savenEmail" value="Add Activity & email" class="btn btn-primary" />*@
+                        <input type="submit" id="save" name="save" value="Add Activity" class="btn btn-primary" />
+                        <input type="submit" id="refresh" name="refresh" value="Refresh" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">recent activity</div>
+                    <table id="example2" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Date and Time</th>
+                                <th>Done By</th>
+                               
+
+                                <th>Description</th>
+
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.mailList)
+                            {
+                                <tr>
+                                  
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AddedOn)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Staffname) <label>-</label>
+                                        @Html.DisplayFor(modelItem => item.Designation)
+                                    </td>
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Comment)
+                                    </td>
+                                    <td>
+
+                                        <a class="discussion-comment" discussion-bit="@item.IsAdmin" discussion-id="@item.PKey" href="#">View full description</a>
+                                       
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                    <div class="panel-footer">
+                        <a href="@Url.Action("DownloadCustomerCommunication", "JobDetails", new { id = Model.mainObj.JobKey })">Export to Excel</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+}

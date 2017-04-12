@@ -1,11 +1,13 @@
-﻿using RCScustomer.DAL;
+﻿
+using RCScustomer.DAL;
 using RCScustomer.Models;
 using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using RCScustomer.ExcelConvertor;
 namespace RCScustomer.Controllers
 {
     public class JobDetailsController : Controller
@@ -14,7 +16,26 @@ namespace RCScustomer.Controllers
         private RCSdbEntities db = new RCSdbEntities();
 
         private ManageJobSetup manage = new ManageJobSetup();
+        private ExcelUtility excelutility = new ExcelUtility();
         // GET: JobDetails
+        public ActionResult DownloadCustomerCommunication(Guid id)
+        {
+            List<RCSExcel> mainlist = new List<RCSExcel>();
+            Job job = db.Job.Find(id);
+
+            mainlist = manage.CustomerCommunicationForDownload(id);
+            DataTable dt = excelutility.ConvertToDataTable(mainlist);
+          
+            FileClass file = new FileClass();
+            file = excelutility.WriteDataTableToExcel(dt, job.JobName, "Customer Communication");
+            if (file.FileContent != null)
+                return File(file.FileContent, "application/vnd.ms-excel");
+            else
+            {
+                ImageFile faoimagefile = db.ImageFile.Single(f => f.ImageFileKey == 1);
+                return File(faoimagefile.FileContent, faoimagefile.FileType);
+            }
+        }
         public ActionResult Index()
         {
             return View();
@@ -27,63 +48,79 @@ namespace RCScustomer.Controllers
 
             if (GlobalClass.SystemSession)
             {
-                ViewBag.mess = "Job Profile";
+               
                 JobClass model = new JobClass();
                 model = manage.FillMainJob(id);
-                ViewBag.JobTypeKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName", model.JobTypeKey);
-                var jobStatuslist = (from x in db.JobStatus
-                                     join y in db.JobStatusUsergroup on x.ID equals y.JobStatusID
-                                     where x.IsDelete == false
-                                     select x);
-                ViewBag.JobStatusKey = new SelectList(jobStatuslist.ToList(), "ID", "TName", model.JobStatusKey);
+                ViewBag.mess = "MY RCS JOB "+model.JobName;
+                ViewBag.mesg = "THE FOLLOWING ARE READONLY INFORMATION PERTAINING TO THE JOB - " + model.JobName;
+                return View(model);
+            }
+            else
+            {
+                Exception e = new Exception("Sorry, your Session has Expired");
+                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+            }
+        }
 
+        public ActionResult NotesandActivity(Guid id)
+        {
+            if (GlobalClass.SystemSession)
+            {
+                ViewBag.mess = " ";
+               
+                RCSMessegeClass model = new RCSMessegeClass();             
+                model = manage.LoadCustomerMessegingData(id);
+                ViewBag.mess = "MY RCS JOB " + model.Job.JobName+" - Activities.";
+                ViewBag.title = "Activities Related to JOB - " + model.Job.JobName;
 
+                return View(model);
+            }
+            else
+            {
+                Exception e = new Exception("Sorry, your Session has Expired");
+                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+            }
+        }
 
-                // Main Team List
-                List<SelectListItem> listSelectListItems = new List<SelectListItem>();
-                foreach (Team city in db.Team.Where(m => m.IsDelete == false).OrderBy(m => m.TName))
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NotesandActivity(RCSMessegeClass model, string save, string savenEmail)
+        {
+            if (GlobalClass.SystemSession)
+            {
+                ViewBag.mess = "MY RCS JOB " + model.Job.JobName + " - Activities.";
+                ViewBag.title = "Activities Related to JOB - " + model.Job.JobName;
+
+                if (ModelState.IsValid)
                 {
-                    SelectListItem selectList = new SelectListItem()
+                    if (!string.IsNullOrEmpty(save))
                     {
-                        Text = city.TName,
-                        Value = city.ID.ToString(),
-                    };
-                    listSelectListItems.Add(selectList);
-                }
-
-                List<SelectListItem> existListSelectListItems = new List<SelectListItem>();
-                if (model.ToTeamKey != null)
-
-                {
-
-                    foreach (var item in listSelectListItems)
-                    {
-                        foreach (var toitem in model.ToTeamKey)
+                        if (model.mainObj.PKey == null || model.mainObj.PKey == Guid.Empty)
                         {
-                            if (item.Value == toitem.ToString())
-                            {
-                                existListSelectListItems.Add(item);
-                            }
+                            DataReturn data = manage.SaveCustomermessegingData(model);
+                            ViewBag.mess = data.mess;
+                            model = manage.LoadCustomerMessegingData((Guid)model.mainObj.JobKey);
+                        }
+                        else
+                        {
+                            DataReturn data = manage.UpdateCustomermessegingData(model);
+                            ViewBag.mess = data.mess;
+                            model = manage.LoadCustomerMessegingData((Guid)model.mainObj.JobKey);
                         }
                     }
-
+                    if (!string.IsNullOrEmpty(savenEmail))
+                    {
+                        //DataReturn data = manage.SaveCustomermessegingData(model);
+                        //CustomerMesseging lastObj = db.CustomerMesseging.Find(data.key);
+                        //bool f = Mail.SendEmailToCustomerForJobUpdate(lastObj);
+                        //ViewBag.mess = data.mess;
+                        //model = manage.LoadCustomerMessegingData((Guid)model.mainObj.JobKey);
+                    }
 
                 }
-
-                // Final From List
-                List<SelectListItem> fromlistSelectListItems = new List<SelectListItem>();
-                fromlistSelectListItems = listSelectListItems.Where(o => !existListSelectListItems.Contains(o)).ToList();
-
-                // Final To List
-                List<SelectListItem> tolistSelectListItems = new List<SelectListItem>();
-                tolistSelectListItems = listSelectListItems.Where(o => existListSelectListItems.Contains(o)).ToList();
-
-
-                model.FromTeamKeyList = fromlistSelectListItems; // Assign From Team  List
-                model.ToTeamKeyList = tolistSelectListItems;
-
-
-
+             
+                model.mailList = new List<RCSMessegeMain>();
+                model.mailList = manage.LoadCustomerMesseginglist((Guid)model.mainObj.JobKey);
                 return View(model);
             }
             else

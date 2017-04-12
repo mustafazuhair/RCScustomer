@@ -77,6 +77,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -289,6 +292,7 @@
     <Compile Include="Models\EmailConfiguration.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ExcelConvertor\ExcelUtility.cs" />
     <Compile Include="Models\Forms.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
@@ -364,6 +368,7 @@
     <Compile Include="Models\Modules.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RCSMessegeClass.cs" />
     <Compile Include="Models\RCSmesseging.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
@@ -797,6 +802,7 @@
     <Content Include="Views\JobRequest\EditJobRequest.cshtml" />
     <Content Include="Views\JobRequestFile\Index.cshtml" />
     <Content Include="Views\JobDetails\ViewJobDetails.cshtml" />
+    <Content Include="Views\JobDetails\NotesandActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

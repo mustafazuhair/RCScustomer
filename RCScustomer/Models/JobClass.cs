@@ -32,9 +32,7 @@ namespace RCScustomer.Models
         [Required(ErrorMessage = "PO is required")]
         public string PO { get; set; }
 
-        [Display(Name = "Description*")]
-        [Required(ErrorMessage = "Description is required")]
-        public string Description { get; set; }
+       
 
         [Display(Name = "IVR Tracking No*")]
         [Required(ErrorMessage = "IVR Tracking No is required")]
@@ -63,27 +61,27 @@ namespace RCScustomer.Models
 
         [Display(Name = "Job Status*")]
         public string JobStatusName { get; set; }
+        [Display(Name = "Job Priority*")]
+        public string Priority { get; set; }
 
-        [DataType(DataType.Date)]
-        [Required(ErrorMessage = "Entry Date is required")]
+
+      
         [Display(Name = "Entry Date*")]
-        public Nullable<System.DateTime> EntryDate { get; set; }
+        public string EntryDate { get; set; }
 
         [Display(Name = "IVR Pin*")]
         [Required(ErrorMessage = "IVRPin is required")]
         public string IVRPin { get; set; }
 
-        [DataType(DataType.Date)]
-        [Display(Name = "Schedule Date*")]
-        [Required(ErrorMessage = "Schedule Date is required")]
-        public Nullable<System.DateTime> ScheduleDate { get; set; }
+       
+        [Display(Name = "Initial Site Visit Schedule Date*")]       
+        public string ScheduleDate { get; set; }
 
-        [DataType(DataType.Date)]
-        [Display(Name = "Return Schedule Date*")]
-        [Required(ErrorMessage = "Return Schedule Date is required")]
-        public Nullable<System.DateTime> ReturnScheduleDate { get; set; }
+      
+        [Display(Name = "Return Site Visit Schedule Date*")]      
+        public string ReturnScheduleDate { get; set; }
 
-        [Display(Name = "Service Location*")]
+        [Display(Name = "Contact*")]
         public string LocationContactName { get; set; }
 
         [Required(ErrorMessage = "Location Contact is required")]
@@ -100,6 +98,16 @@ namespace RCScustomer.Models
 
         [Display(Name = "Zip*")]
         public string LocationContactZipCode { get; set; }
+        [Display(Name = "Name")]
+        public string RCSManager { get; set; }
+        [Display(Name = "Email")]
+        public string RCSEmail { get; set; }
+        [Display(Name = "PHONE")]
+        public string RCSPhone { get; set; }
+        [Display(Name = "EXT")]
+        public string RCSEXT { get; set; }
+        [Display(Name = "Service Needed / Job Description")]
+        public string Description { get; set; }
         public string mess { get; set; }
         public System.Guid JobKey { get; set; }
         
