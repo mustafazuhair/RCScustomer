@@ -88,5 +88,9 @@ namespace RCScustomer.Models
         public virtual DbSet<CustomerContactMesseging> CustomerContactMesseging { get; set; }
         public virtual DbSet<JobRequest> JobRequest { get; set; }
         public virtual DbSet<JobRequestAttachments> JobRequestAttachments { get; set; }
+        public virtual DbSet<GridTitle> GridTitle { get; set; }
+        public virtual DbSet<GridTitleDetail> GridTitleDetail { get; set; }
+        public virtual DbSet<JobEmail> JobEmail { get; set; }
+        public virtual DbSet<JobFile> JobFile { get; set; }
     }
 }

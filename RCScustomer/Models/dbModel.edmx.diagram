@@ -190,6 +190,15 @@
         <AssociationConnector Association="RCSdbModel.FK_JobRequest_LocationContact" />
         <AssociationConnector Association="RCSdbModel.FK_JobRequest_Trade" />
         <AssociationConnector Association="RCSdbModel.FK_JobRequestAttachments_JobRequest" />
+        <EntityTypeShape EntityType="RCSdbModel.GridTitle" Width="1.5" PointX="13.875" PointY="91.75" />
+        <EntityTypeShape EntityType="RCSdbModel.GridTitleDetail" Width="1.5" PointX="16.125" PointY="88.5" />
+        <EntityTypeShape EntityType="RCSdbModel.JobEmail" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RCSdbModel.JobFile" Width="1.5" PointX="27.625" PointY="94.5" />
+        <AssociationConnector Association="RCSdbModel.FK_JobFile_DocumentType" />
+        <AssociationConnector Association="RCSdbModel.FK_GridTitleDetail_GridTitle" />
+        <AssociationConnector Association="RCSdbModel.FK_GridTitleDetail_JobStatus" />
+        <AssociationConnector Association="RCSdbModel.FK_JobFile_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobFile_StaffList" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

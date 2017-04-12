@@ -9,6 +9,85 @@ namespace RCScustomer.DAL
     public class ManageJobSetup
     {
         private RCSdbEntities db = new RCSdbEntities();
+        public DataReturn SaveAttachmentInJobFile(JobFileClass model)
+        {
+            DataReturn obj = new DataReturn();
+            try
+            {
+
+                JobFile fj = db.JobFile.SingleOrDefault(m => m.JobKey == model.JobKey && m.DocumentTypeKey == model.DocumentTypeKey);
+                if (fj == null)
+                {
+                }
+                else
+                {
+                    db.JobFile.Remove(fj);
+                    db.SaveChanges();
+                    db = new RCSdbEntities();
+                }
+                JobFile invoice = new JobFile();
+                Job job = db.Job.Find(model.JobKey);
+
+                invoice.FileKey = Guid.NewGuid();
+                invoice.JobKey = (Guid)model.JobKey;
+                invoice.DocumentTypeKey = model.DocumentTypeKey;
+                //invoice.AddedBy = GlobalClass.LoginUser.PersonnelKey;
+                invoice.AddedOn = System.DateTime.Now;
+                if (string.IsNullOrEmpty(model.Comment)) invoice.Comment = "--";
+                else invoice.Comment = model.Comment;
+                invoice.Title = model.Title;
+                invoice.Remarks = db.DocumentType.Find(model.DocumentTypeKey).TName + " is Added by "+GlobalClass.LoginUser.Cname;
+
+                invoice.FileContent = model.FileContent;
+                invoice.FileType = model.FileType;
+                invoice.IsDelete = false;
+                db.JobFile.Add(invoice);
+                db.SaveChanges();
+
+                obj.flag = 1;
+                obj.mess = "Data has been updated successfully.";
+            }
+            catch (Exception ex)
+            {
+                obj.mess = ex.ToString();
+                obj.flag = 0;
+            }
+            obj.key = model.JobKey;
+            return obj;
+        }
+        public JobFileClass GetJobFileAttachments(Guid id)
+        {
+            JobFileClass obj = new JobFileClass();
+            try
+            {
+                obj.Joblist = new List<JobFileClass>();
+                var temp = from x in db.JobFile
+                           where x.JobKey == id && x.IsDelete == false
+
+                           select new JobFileClass
+                           {
+                               FileKey = x.FileKey,
+                               JobKey = x.JobKey,
+                               JobName = x.Job.JobName,
+                               DocumentTypeKey = x.DocumentTypeKey,
+                               AddedBy = x.AddedBy,
+                               AddedOn = x.AddedOn,
+                               Comment = x.Comment,
+                               Title = x.Title,
+                               Remarks = x.Remarks,
+                               IsDelete = x.IsDelete,
+                               DocumentTypeName = x.DocumentType.TName
+
+                           };
+                obj.Joblist = temp.OrderByDescending(m => m.AddedOn).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                string fall = ex.ToString();
+            }
+            return obj;
+        }
         public List<RCSExcel> CustomerCommunicationForDownload(Guid id)
         {
             List<RCSExcel> mainlist = new List<RCSExcel>();
@@ -73,7 +152,7 @@ namespace RCScustomer.DAL
         public CustomerNoteClass FillCustomer_sNotes(Guid id)
         {
             CustomerNoteClass obj = new CustomerNoteClass();
-            CustomerMesseging cust = db.CustomerMesseging.Find(id);
+            CustomerContactMesseging cust = db.CustomerContactMesseging.Find(id);
             obj.NoteKey = cust.PKey;
             obj.Comment = cust.Comment;
             obj.AddedBy = cust.AddedBy;

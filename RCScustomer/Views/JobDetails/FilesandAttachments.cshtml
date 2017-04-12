@@ -1,0 +1,127 @@
+﻿@model RCScustomer.Models.JobFileClass
+@{
+    ViewBag.Title = "FilesAndAttachments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#DocumentTypeKey").val("");
+        $("#Comment").val("");
+
+
+    });
+</script>
+@using (Html.BeginForm("FilesandAttachments", "JobDetails", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h3>@ViewBag.mess</h3>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-pills">
+                    <li>
+                        <a href="@Url.Action("ViewJobDetails", "JobDetails",new { id=Model.JobKey})">Job Info</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("NotesandActivity", "JobDetails",new { id=Model.JobKey})">Notes and Activity</a>
+                    </li>
+                    <li class="active">
+                        <a href="#1a" data-toggle="pill">Files and Attachments</a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="1a">
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">@Html.DisplayFor(model => model.JobName) >> Job File & Attachements</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.JobKey, new { id = "JobKey" })
+                            @Html.HiddenFor(model => model.JobName, new { id = "JobName" })
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DocumentTypeKey, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("DocumentTypeKey", null, htmlAttributes: new { @required = "required", id = "DocumentTypeKey", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.DocumentTypeKey, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        <input type="file" name="file" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { id = "Comment", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <input type="submit" name="Save" id="Save" value="Save this File" class="btn btn-primary" />
+                        @Html.ActionLink("Refresh", "Index", "MgtJobFile", new { id = Model.JobKey }, new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-warning">
+                    <div class="panel-heading"><center><h4>Files Under this Job</h4></center></div>
+                    <table id="example2" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Document Type</th>
+                                <th>Document Name</th>
+                                <th>Comment</th>
+
+                                <th>View Files</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Joblist)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DocumentTypeName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Comment)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("View File", "GetJobFileAttachement", "ShowImage", new { id = item.FileKey }, new { target = "_blank" })
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+                                            }

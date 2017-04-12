@@ -3,10 +3,15 @@
     ViewBag.Title = "NotesAndActivity";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/Content/datetimepicker-master/build/jquery.datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Content/datetimepicker-master/build/jquery.datetimepicker.full.js"></script>
 <script type="text/javascript">
 
-   
+    $(function () {
+        $('#AddedOn').datetimepicker({
+            step: 5
+        });
+    });
 
     $(document).ready(function (e) {
 
@@ -18,7 +23,9 @@
 
 
         $(".discussion-comment").click(function (event) {
-            //alert($(this).attr("discussion-bit"));
+           // alert($(this).attr("discussioned"));
+            //var k = $(this).attr("discussioned");
+            //alert($(k).val());
             $('#PKey').val($(this).attr("discussion-id"));
 
             var w = "#PKey";
@@ -40,14 +47,7 @@
         $(function () {
             $('#example2').dataTable();
         });
-        $(function () {
-            $(".datetimepicker").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                enabled: true,
-                yearRange: 'c-80:c+900'
-            });
-        });
+       
 </script>
 @using (Html.BeginForm())
 {
@@ -154,8 +154,17 @@
                                         @Html.DisplayFor(modelItem => item.Comment)
                                     </td>
                                     <td>
+                                        @{
+                                            if (item.IsAdmin == true)
+                                            {
 
-                                        <a class="discussion-comment" discussion-bit="@item.IsAdmin" discussion-id="@item.PKey" href="#">View full description</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="discussion-comment" discussion-bit="@item.IsAdmin" discussion-id="@item.PKey" href="#">View full description</a>
+                                            }
+                                        }
+                                       
                                        
                                     </td>
 

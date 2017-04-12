@@ -31,6 +31,7 @@ namespace RCScustomer.Models
             this.RCSmesseging = new HashSet<RCSmesseging>();
             this.VendorMesseging = new HashSet<VendorMesseging>();
             this.CustomerContactMesseging = new HashSet<CustomerContactMesseging>();
+            this.JobFile = new HashSet<JobFile>();
         }
     
         public System.Guid JobKey { get; set; }
@@ -50,6 +51,7 @@ namespace RCScustomer.Models
         public Nullable<System.DateTime> ReturnScheduleDate { get; set; }
         public Nullable<System.Guid> LocationKey { get; set; }
         public Nullable<System.Guid> LocationContactKey { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual CustomerContact CustomerContact { get; set; }
@@ -86,5 +88,7 @@ namespace RCScustomer.Models
         public virtual ICollection<VendorMesseging> VendorMesseging { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerContactMesseging> CustomerContactMesseging { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobFile> JobFile { get; set; }
     }
 }

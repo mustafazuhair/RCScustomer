@@ -297,6 +297,12 @@
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GlobalClass.cs" />
+    <Compile Include="Models\GridTitle.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GridTitleDetail.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImageFile.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
@@ -309,6 +315,12 @@
     </Compile>
     <Compile Include="Models\JobClass.cs" />
     <Compile Include="Models\JobConfiguration.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobEmail.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobFile.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\JobLocation.cs">
@@ -803,6 +815,7 @@
     <Content Include="Views\JobRequestFile\Index.cshtml" />
     <Content Include="Views\JobDetails\ViewJobDetails.cshtml" />
     <Content Include="Views\JobDetails\NotesandActivity.cshtml" />
+    <Content Include="Views\JobDetails\FilesandAttachments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

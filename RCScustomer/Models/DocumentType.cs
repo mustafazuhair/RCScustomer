@@ -21,6 +21,7 @@ namespace RCScustomer.Models
             this.LocationAttachement = new HashSet<LocationAttachement>();
             this.VendorAttachement = new HashSet<VendorAttachement>();
             this.JobRequestAttachments = new HashSet<JobRequestAttachments>();
+            this.JobFile = new HashSet<JobFile>();
         }
     
         public System.Guid ID { get; set; }
@@ -38,5 +39,7 @@ namespace RCScustomer.Models
         public virtual ICollection<VendorAttachement> VendorAttachement { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobRequestAttachments> JobRequestAttachments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobFile> JobFile { get; set; }
     }
 }

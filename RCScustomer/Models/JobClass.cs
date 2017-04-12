@@ -135,4 +135,29 @@ namespace RCScustomer.Models
         public string RCSAccountManagerExt { get; set; }
 
     }
+
+    public class JobFileClass
+    {
+
+        public Nullable<System.Guid> FileKey { get; set; }
+        public Nullable<System.Guid> JobKey { get; set; }
+        [Display(Name = "Document Type :")]
+        public Nullable<System.Guid> DocumentTypeKey { get; set; }
+        public Nullable<System.Guid> AddedBy { get; set; }
+        public Nullable<System.DateTime> AddedOn { get; set; }
+        [Display(Name = "Comments : ")]
+        public string Comment { get; set; }
+        [Display(Name = "Attachment(s):")]
+        public string Title { get; set; }
+        public string Remarks { get; set; }
+        public byte[] FileContent { get; set; }
+        public string FileType { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
+
+        public string DocumentTypeName { get; set; }
+        public string JobName { get; set; }
+        public string Staffname { get; set; }
+
+        public List<JobFileClass> Joblist { get; set; }
+    }
 }

@@ -277,6 +277,21 @@
           <Property Name="FormView" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" />
         </EntityType>
+        <EntityType Name="GridTitle">
+          <Key>
+            <PropertyRef Name="GridKey" />
+          </Key>
+          <Property Name="GridKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GridName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="GridTitleDetail">
+          <Key>
+            <PropertyRef Name="DetailKey" />
+          </Key>
+          <Property Name="DetailKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GridKey" Type="int" />
+          <Property Name="JobStatusKey" Type="uniqueidentifier" />
+        </EntityType>
         <EntityType Name="ImageFile">
           <Key>
             <PropertyRef Name="ImageFileKey" />
@@ -307,6 +322,7 @@
           <Property Name="ReturnScheduleDate" Type="datetime" />
           <Property Name="LocationKey" Type="uniqueidentifier" />
           <Property Name="LocationContactKey" Type="uniqueidentifier" />
+          <Property Name="IsDelete" Type="bit" />
         </EntityType>
         <EntityType Name="JobAccountManager">
           <Key>
@@ -339,6 +355,30 @@
           <Property Name="IsDateVisible" Type="bit" />
           <Property Name="IsServiceLicationVisible" Type="bit" />
           <Property Name="IsCustomerDetailVisible" Type="bit" />
+        </EntityType>
+        <EntityType Name="JobEmail">
+          <Key>
+            <PropertyRef Name="Pkey" />
+          </Key>
+          <Property Name="Pkey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="JobKey" Type="uniqueidentifier" />
+          <Property Name="NoofEmails" Type="int" />
+        </EntityType>
+        <EntityType Name="JobFile">
+          <Key>
+            <PropertyRef Name="FileKey" />
+          </Key>
+          <Property Name="FileKey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="JobKey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DocumentTypeKey" Type="uniqueidentifier" />
+          <Property Name="AddedBy" Type="uniqueidentifier" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="FileContent" Type="image" />
+          <Property Name="FileType" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" />
         </EntityType>
         <EntityType Name="JobLocation">
           <Key>
@@ -448,6 +488,7 @@
           <Property Name="TName" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CompanyKey" Type="uniqueidentifier" />
+          <Property Name="Jlevel" Type="int" />
         </EntityType>
         <EntityType Name="JobStatusUsergroup">
           <Key>
@@ -1318,6 +1359,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GridTitleDetail_GridTitle">
+          <End Role="GridTitle" Type="Self.GridTitle" Multiplicity="0..1" />
+          <End Role="GridTitleDetail" Type="Self.GridTitleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GridTitle">
+              <PropertyRef Name="GridKey" />
+            </Principal>
+            <Dependent Role="GridTitleDetail">
+              <PropertyRef Name="GridKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GridTitleDetail_JobStatus">
+          <End Role="JobStatus" Type="Self.JobStatus" Multiplicity="0..1" />
+          <End Role="GridTitleDetail" Type="Self.GridTitleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GridTitleDetail">
+              <PropertyRef Name="JobStatusKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Job_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="Job" Type="Self.Job" Multiplicity="*" />
@@ -1459,6 +1524,42 @@
             </Principal>
             <Dependent Role="JobConfiguration">
               <PropertyRef Name="JobKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobFile_DocumentType">
+          <End Role="DocumentType" Type="Self.DocumentType" Multiplicity="0..1" />
+          <End Role="JobFile" Type="Self.JobFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JobFile">
+              <PropertyRef Name="DocumentTypeKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobFile_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="JobFile" Type="Self.JobFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobKey" />
+            </Principal>
+            <Dependent Role="JobFile">
+              <PropertyRef Name="JobKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobFile_StaffList">
+          <End Role="StaffList" Type="Self.StaffList" Multiplicity="0..1" />
+          <End Role="JobFile" Type="Self.JobFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffList">
+              <PropertyRef Name="PersonnelKey" />
+            </Principal>
+            <Dependent Role="JobFile">
+              <PropertyRef Name="AddedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2360,10 +2461,14 @@
           <EntitySet Name="DocumentType" EntityType="Self.DocumentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailConfiguration" EntityType="Self.EmailConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Forms" EntityType="Self.Forms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GridTitle" EntityType="Self.GridTitle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GridTitleDetail" EntityType="Self.GridTitleDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImageFile" EntityType="Self.ImageFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobAccountManager" EntityType="Self.JobAccountManager" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobConfiguration" EntityType="Self.JobConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobEmail" EntityType="Self.JobEmail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobFile" EntityType="Self.JobFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobLocation" EntityType="Self.JobLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobRequest" EntityType="Self.JobRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobRequestAttachments" EntityType="Self.JobRequestAttachments" Schema="dbo" store:Type="Tables" />
@@ -2550,6 +2655,14 @@
             <End Role="Modules" EntitySet="Modules" />
             <End Role="Forms" EntitySet="Forms" />
           </AssociationSet>
+          <AssociationSet Name="FK_GridTitleDetail_GridTitle" Association="Self.FK_GridTitleDetail_GridTitle">
+            <End Role="GridTitle" EntitySet="GridTitle" />
+            <End Role="GridTitleDetail" EntitySet="GridTitleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GridTitleDetail_JobStatus" Association="Self.FK_GridTitleDetail_JobStatus">
+            <End Role="JobStatus" EntitySet="JobStatus" />
+            <End Role="GridTitleDetail" EntitySet="GridTitleDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_Job_Customer" Association="Self.FK_Job_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Job" EntitySet="Job" />
@@ -2597,6 +2710,18 @@
           <AssociationSet Name="FK_JobConfiguration_Job" Association="Self.FK_JobConfiguration_Job">
             <End Role="Job" EntitySet="Job" />
             <End Role="JobConfiguration" EntitySet="JobConfiguration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobFile_DocumentType" Association="Self.FK_JobFile_DocumentType">
+            <End Role="DocumentType" EntitySet="DocumentType" />
+            <End Role="JobFile" EntitySet="JobFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobFile_Job" Association="Self.FK_JobFile_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="JobFile" EntitySet="JobFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobFile_StaffList" Association="Self.FK_JobFile_StaffList">
+            <End Role="StaffList" EntitySet="StaffList" />
+            <End Role="JobFile" EntitySet="JobFile" />
           </AssociationSet>
           <AssociationSet Name="FK_JobLocation_CityList" Association="Self.FK_JobLocation_CityList">
             <End Role="CityList" EntitySet="CityList" />
@@ -3447,6 +3572,30 @@
             <End Role="JobRequest" EntitySet="JobRequest" />
             <End Role="JobRequestAttachments" EntitySet="JobRequestAttachments" />
           </AssociationSet>
+          <EntitySet Name="GridTitle" EntityType="RCSdbModel.GridTitle" />
+          <EntitySet Name="GridTitleDetail" EntityType="RCSdbModel.GridTitleDetail" />
+          <EntitySet Name="JobEmail" EntityType="RCSdbModel.JobEmail" />
+          <EntitySet Name="JobFile" EntityType="RCSdbModel.JobFile" />
+          <AssociationSet Name="FK_JobFile_DocumentType" Association="RCSdbModel.FK_JobFile_DocumentType">
+            <End Role="DocumentType" EntitySet="DocumentType" />
+            <End Role="JobFile" EntitySet="JobFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GridTitleDetail_GridTitle" Association="RCSdbModel.FK_GridTitleDetail_GridTitle">
+            <End Role="GridTitle" EntitySet="GridTitle" />
+            <End Role="GridTitleDetail" EntitySet="GridTitleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GridTitleDetail_JobStatus" Association="RCSdbModel.FK_GridTitleDetail_JobStatus">
+            <End Role="JobStatus" EntitySet="JobStatus" />
+            <End Role="GridTitleDetail" EntitySet="GridTitleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobFile_Job" Association="RCSdbModel.FK_JobFile_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="JobFile" EntitySet="JobFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobFile_StaffList" Association="RCSdbModel.FK_JobFile_StaffList">
+            <End Role="StaffList" EntitySet="StaffList" />
+            <End Role="JobFile" EntitySet="JobFile" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CityList">
           <Key>
@@ -3734,6 +3883,7 @@
           <NavigationProperty Name="LocationAttachement" Relationship="RCSdbModel.FK_LocationAttachement_DocumentType" FromRole="DocumentType" ToRole="LocationAttachement" />
           <NavigationProperty Name="VendorAttachement" Relationship="RCSdbModel.FK_VendorAttachement_DocumentType" FromRole="DocumentType" ToRole="VendorAttachement" />
           <NavigationProperty Name="JobRequestAttachments" Relationship="RCSdbModel.FK_JobRequestAttachments_DocumentType" FromRole="DocumentType" ToRole="JobRequestAttachments" />
+          <NavigationProperty Name="JobFile" Relationship="RCSdbModel.FK_JobFile_DocumentType" FromRole="DocumentType" ToRole="JobFile" />
         </EntityType>
         <EntityType Name="EmailConfiguration">
           <Key>
@@ -3827,6 +3977,8 @@
           <NavigationProperty Name="RCSmesseging" Relationship="RCSdbModel.FK_RCSmesseging_Job" FromRole="Job" ToRole="RCSmesseging" />
           <NavigationProperty Name="VendorMesseging" Relationship="RCSdbModel.FK_VendorMesseging_Job" FromRole="Job" ToRole="VendorMesseging" />
           <NavigationProperty Name="CustomerContactMesseging" Relationship="RCSdbModel.FK_CustomerContactMesseging_Job" FromRole="Job" ToRole="CustomerContactMesseging" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <NavigationProperty Name="JobFile" Relationship="RCSdbModel.FK_JobFile_Job" FromRole="Job" ToRole="JobFile" />
         </EntityType>
         <EntityType Name="JobAccountManager">
           <Key>
@@ -3959,6 +4111,8 @@
           <Property Name="CompanyKey" Type="Guid" />
           <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_Job_JobStatus" FromRole="JobStatus" ToRole="Job" />
           <NavigationProperty Name="JobStatusUsergroup" Relationship="RCSdbModel.FK_JobStatusUsergroup_JobStatus" FromRole="JobStatus" ToRole="JobStatusUsergroup" />
+          <Property Name="Jlevel" Type="Int32" />
+          <NavigationProperty Name="GridTitleDetail" Relationship="RCSdbModel.FK_GridTitleDetail_JobStatus" FromRole="JobStatus" ToRole="GridTitleDetail" />
         </EntityType>
         <EntityType Name="JobStatusUsergroup">
           <Key>
@@ -4243,6 +4397,7 @@
           <NavigationProperty Name="VendorAttachement" Relationship="RCSdbModel.FK_VendorAttachement_StaffList" FromRole="StaffList" ToRole="VendorAttachement" />
           <NavigationProperty Name="VendorMesseging" Relationship="RCSdbModel.FK_VendorMesseging_StaffList" FromRole="StaffList" ToRole="VendorMesseging" />
           <NavigationProperty Name="VendorNotes" Relationship="RCSdbModel.FK_VendorNotes_StaffList" FromRole="StaffList" ToRole="VendorNotes" />
+          <NavigationProperty Name="JobFile" Relationship="RCSdbModel.FK_JobFile_StaffList" FromRole="StaffList" ToRole="JobFile" />
         </EntityType>
         <EntityType Name="StateList">
           <Key>
@@ -6025,6 +6180,111 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="GridTitle">
+          <Key>
+            <PropertyRef Name="GridKey" />
+          </Key>
+          <Property Name="GridKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GridName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GridTitleDetail" Relationship="RCSdbModel.FK_GridTitleDetail_GridTitle" FromRole="GridTitle" ToRole="GridTitleDetail" />
+        </EntityType>
+        <EntityType Name="GridTitleDetail">
+          <Key>
+            <PropertyRef Name="DetailKey" />
+          </Key>
+          <Property Name="DetailKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GridKey" Type="Int32" />
+          <Property Name="JobStatusKey" Type="Guid" />
+          <NavigationProperty Name="GridTitle" Relationship="RCSdbModel.FK_GridTitleDetail_GridTitle" FromRole="GridTitleDetail" ToRole="GridTitle" />
+          <NavigationProperty Name="JobStatus" Relationship="RCSdbModel.FK_GridTitleDetail_JobStatus" FromRole="GridTitleDetail" ToRole="JobStatus" />
+        </EntityType>
+        <EntityType Name="JobEmail">
+          <Key>
+            <PropertyRef Name="Pkey" />
+          </Key>
+          <Property Name="Pkey" Type="Guid" Nullable="false" />
+          <Property Name="JobKey" Type="Guid" />
+          <Property Name="NoofEmails" Type="Int32" />
+        </EntityType>
+        <EntityType Name="JobFile">
+          <Key>
+            <PropertyRef Name="FileKey" />
+          </Key>
+          <Property Name="FileKey" Type="Guid" Nullable="false" />
+          <Property Name="JobKey" Type="Guid" Nullable="false" />
+          <Property Name="DocumentTypeKey" Type="Guid" />
+          <Property Name="AddedBy" Type="Guid" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FileContent" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FileType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <NavigationProperty Name="DocumentType" Relationship="RCSdbModel.FK_JobFile_DocumentType" FromRole="JobFile" ToRole="DocumentType" />
+          <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_JobFile_Job" FromRole="JobFile" ToRole="Job" />
+          <NavigationProperty Name="StaffList" Relationship="RCSdbModel.FK_JobFile_StaffList" FromRole="JobFile" ToRole="StaffList" />
+        </EntityType>
+        <Association Name="FK_JobFile_DocumentType">
+          <End Type="RCSdbModel.DocumentType" Role="DocumentType" Multiplicity="0..1" />
+          <End Type="RCSdbModel.JobFile" Role="JobFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JobFile">
+              <PropertyRef Name="DocumentTypeKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GridTitleDetail_GridTitle">
+          <End Type="RCSdbModel.GridTitle" Role="GridTitle" Multiplicity="0..1" />
+          <End Type="RCSdbModel.GridTitleDetail" Role="GridTitleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GridTitle">
+              <PropertyRef Name="GridKey" />
+            </Principal>
+            <Dependent Role="GridTitleDetail">
+              <PropertyRef Name="GridKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GridTitleDetail_JobStatus">
+          <End Type="RCSdbModel.JobStatus" Role="JobStatus" Multiplicity="0..1" />
+          <End Type="RCSdbModel.GridTitleDetail" Role="GridTitleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GridTitleDetail">
+              <PropertyRef Name="JobStatusKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobFile_Job">
+          <End Type="RCSdbModel.Job" Role="Job" Multiplicity="1" />
+          <End Type="RCSdbModel.JobFile" Role="JobFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobKey" />
+            </Principal>
+            <Dependent Role="JobFile">
+              <PropertyRef Name="JobKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobFile_StaffList">
+          <End Type="RCSdbModel.StaffList" Role="StaffList" Multiplicity="0..1" />
+          <End Type="RCSdbModel.JobFile" Role="JobFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffList">
+              <PropertyRef Name="PersonnelKey" />
+            </Principal>
+            <Dependent Role="JobFile">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6322,6 +6582,7 @@
           <EntitySetMapping Name="Job">
             <EntityTypeMapping TypeName="RCSdbModel.Job">
               <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="LocationContactKey" ColumnName="LocationContactKey" />
                 <ScalarProperty Name="LocationKey" ColumnName="LocationKey" />
                 <ScalarProperty Name="ReturnScheduleDate" ColumnName="ReturnScheduleDate" />
@@ -6452,6 +6713,7 @@
           <EntitySetMapping Name="JobStatus">
             <EntityTypeMapping TypeName="RCSdbModel.JobStatus">
               <MappingFragment StoreEntitySet="JobStatus">
+                <ScalarProperty Name="Jlevel" ColumnName="Jlevel" />
                 <ScalarProperty Name="CompanyKey" ColumnName="CompanyKey" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="TName" ColumnName="TName" />
@@ -6960,6 +7222,49 @@
                 <ScalarProperty Name="DocumentTypeKey" ColumnName="DocumentTypeKey" />
                 <ScalarProperty Name="RequestKey" ColumnName="RequestKey" />
                 <ScalarProperty Name="PKey" ColumnName="PKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GridTitle">
+            <EntityTypeMapping TypeName="RCSdbModel.GridTitle">
+              <MappingFragment StoreEntitySet="GridTitle">
+                <ScalarProperty Name="GridName" ColumnName="GridName" />
+                <ScalarProperty Name="GridKey" ColumnName="GridKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GridTitleDetail">
+            <EntityTypeMapping TypeName="RCSdbModel.GridTitleDetail">
+              <MappingFragment StoreEntitySet="GridTitleDetail">
+                <ScalarProperty Name="JobStatusKey" ColumnName="JobStatusKey" />
+                <ScalarProperty Name="GridKey" ColumnName="GridKey" />
+                <ScalarProperty Name="DetailKey" ColumnName="DetailKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobEmail">
+            <EntityTypeMapping TypeName="RCSdbModel.JobEmail">
+              <MappingFragment StoreEntitySet="JobEmail">
+                <ScalarProperty Name="NoofEmails" ColumnName="NoofEmails" />
+                <ScalarProperty Name="JobKey" ColumnName="JobKey" />
+                <ScalarProperty Name="Pkey" ColumnName="Pkey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobFile">
+            <EntityTypeMapping TypeName="RCSdbModel.JobFile">
+              <MappingFragment StoreEntitySet="JobFile">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="FileContent" ColumnName="FileContent" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="DocumentTypeKey" ColumnName="DocumentTypeKey" />
+                <ScalarProperty Name="JobKey" ColumnName="JobKey" />
+                <ScalarProperty Name="FileKey" ColumnName="FileKey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

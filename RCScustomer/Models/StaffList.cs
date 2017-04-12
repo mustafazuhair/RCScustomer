@@ -31,6 +31,7 @@ namespace RCScustomer.Models
             this.VendorAttachement = new HashSet<VendorAttachement>();
             this.VendorMesseging = new HashSet<VendorMesseging>();
             this.VendorNotes = new HashSet<VendorNotes>();
+            this.JobFile = new HashSet<JobFile>();
         }
     
         public System.Guid PersonnelKey { get; set; }
@@ -78,5 +79,7 @@ namespace RCScustomer.Models
         public virtual ICollection<VendorMesseging> VendorMesseging { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VendorNotes> VendorNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobFile> JobFile { get; set; }
     }
 }
