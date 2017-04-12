@@ -41,6 +41,7 @@ namespace RCScustomer.Controllers
             if (GlobalClass.SystemSession)
             {
                 ViewBag.mess = "";
+                model.fileObj = new JobRequestAttachmentsObject();
                 model.fileObj.RequestKey = model.RequestObj.RequestKey;
                 if (ModelState.IsValid)
                 {

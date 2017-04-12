@@ -33,7 +33,9 @@ namespace RCScustomer.DAL
                 db.JobRequest.Add(_job);
                 db.SaveChanges();
                 model.flag = 1;
+                model.key = _job.RequestKey;
                 model.mess = "Data has been saved successfully.";
+
             }
             catch (Exception ex)
             {

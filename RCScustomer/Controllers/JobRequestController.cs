@@ -78,5 +78,25 @@ namespace RCScustomer.Controllers
             }
         }
 
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditJobRequest(JobRequestObject model)
+        {
+            if (GlobalClass.SystemSession)
+            {
+                //JobRequestObject model = new JobRequestObject();
+                //model = manage.GetJobrequestDetails(id);
+                //ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+                return View(model);
+            }
+            else
+            {
+                Exception e = new Exception("Sorry, your Session has Expired");
+                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+            }
+        }
+
     }
 }
