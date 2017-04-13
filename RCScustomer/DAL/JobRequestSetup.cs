@@ -45,6 +45,41 @@ namespace RCScustomer.DAL
             return model;
         }
 
+        internal List<JobRequestObject> GetAllJobRequestForThisCustomer()
+        {
+            List<JobRequestObject> docTypeList = new List<JobRequestObject>();
+            var temp = from j in db.JobRequest
+                       where j.IsRequest == true && j.CustomerKey == GlobalClass.CustomerDetail.CustomerKey
+                       select new JobRequestObject
+                       {
+                           RequestKey = j.RequestKey,
+                           LocationKey = j.LocationKey,
+                           LocationName = j.Location.Lname,
+                           CustomerKey = j.CustomerKey,
+                           LocationContactKey = j.LocationContactKey,
+                           LocationContactName = j.LocationContact.Cname,
+                           LocationContactAddress = j.Location.Address,
+                           LocationContactCityName = j.Location.CityList.CityName,
+                           LocationContactStateName = j.Location.StateList.StateName,
+                           LocationContactZipCode = j.Location.ZIPcode,
+                           TradeKey = j.TradeKey,
+                           TradeName = j.Trade.TName,
+                           JobPriorityKey = j.JobPriorityKey,
+                           JobPriority = j.JobType.TName,
+                           ServiceNeeded = j.ServiceNeeded,
+                           DNEamount = j.DNEamount,
+                           SpecialNote = j.SpecialNote,
+                           ServiceDate = j.ServiceDate,
+                           ServiceByTime = j.ServiceByTime,
+                           SVCLocationContact = j.SVCLocationContact,
+                           SvcLocationContactPhone = j.SvcLocationContactPhone,
+                           EntryDatetime = j.EntryDatetime
+                       };
+            docTypeList = temp.ToList();
+
+            return docTypeList;
+        }
+
         internal List<DocumentTypeObject> GetAllDocumntType()
         {
             List<DocumentTypeObject> docTypeList = new List<DocumentTypeObject>();

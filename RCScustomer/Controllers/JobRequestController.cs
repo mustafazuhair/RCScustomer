@@ -15,7 +15,18 @@ namespace RCScustomer.Controllers
         // GET: JobRequest
         public ActionResult Index()
         {
-            return View();
+            if (GlobalClass.SystemSession)
+            {
+                DashBoardJobRequest model = new DashBoardJobRequest();
+                model.JobRequestList = new List<JobRequestObject>();
+                model.JobRequestList = manage.GetAllJobRequestForThisCustomer();
+                return View(model);
+            }
+            else
+            {
+                Exception e = new Exception("Sorry, your Session has Expired");
+                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+            }
         }
 
 
