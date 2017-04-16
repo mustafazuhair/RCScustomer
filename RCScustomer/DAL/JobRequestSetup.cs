@@ -49,7 +49,7 @@ namespace RCScustomer.DAL
         {
             List<JobRequestObject> docTypeList = new List<JobRequestObject>();
             var temp = from j in db.JobRequest
-                       where j.IsRequest == true && j.CustomerKey == GlobalClass.CustomerDetail.CustomerKey
+                       where j.CustomerKey == GlobalClass.CustomerDetail.CustomerKey
                        select new JobRequestObject
                        {
                            RequestKey = j.RequestKey,
@@ -73,9 +73,11 @@ namespace RCScustomer.DAL
                            ServiceByTime = j.ServiceByTime,
                            SVCLocationContact = j.SVCLocationContact,
                            SvcLocationContactPhone = j.SvcLocationContactPhone,
-                           EntryDatetime = j.EntryDatetime
+                           EntryDatetime = j.EntryDatetime,
+                           RequestStatus = j.IsRequest == true ? "Request" : "Job Added",
+                           IsRequest=j.IsRequest
                        };
-            docTypeList = temp.ToList();
+            docTypeList = temp.OrderByDescending(m=>m.EntryDatetime).ToList();
 
             return docTypeList;
         }

@@ -16,7 +16,7 @@ namespace RCScustomer.Models
 
         [Required(ErrorMessage = "Job Priority is required")]
         public Nullable<System.Guid> JobPriorityKey { get; set; }
-
+        public string RequestStatus { get; set; }
 
         [Display(Name = "Job Priority*")]
         
