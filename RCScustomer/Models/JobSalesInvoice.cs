@@ -18,6 +18,7 @@ namespace RCScustomer.Models
         public JobSalesInvoice()
         {
             this.JobSalesInvoiceDetail = new HashSet<JobSalesInvoiceDetail>();
+            this.JobSalesInvoiceEstimateStatus = new HashSet<JobSalesInvoiceEstimateStatus>();
         }
     
         public System.Guid InvoiceKey { get; set; }
@@ -36,5 +37,7 @@ namespace RCScustomer.Models
         public virtual StaffList StaffList { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobSalesInvoiceDetail> JobSalesInvoiceDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobSalesInvoiceEstimateStatus> JobSalesInvoiceEstimateStatus { get; set; }
     }
 }

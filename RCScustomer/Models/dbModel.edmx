@@ -454,6 +454,20 @@
           <Property Name="Qty" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Amt" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="JobSalesInvoiceEstimateStatus">
+          <Key>
+            <PropertyRef Name="Pkey" />
+          </Key>
+          <Property Name="Pkey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="InvoiceKey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CustomerKey" Type="uniqueidentifier" />
+          <Property Name="JobKey" Type="uniqueidentifier" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+          <Property Name="Accept" Type="bit" />
+          <Property Name="Decline" Type="bit" />
+          <Property Name="Resubmit" Type="bit" />
+        </EntityType>
         <EntityType Name="JobSignOff">
           <Key>
             <PropertyRef Name="SignoffKey" />
@@ -1779,6 +1793,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JobSalesInvoiceEstimateStatus_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="JobSalesInvoiceEstimateStatus" Type="Self.JobSalesInvoiceEstimateStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerKey" />
+            </Principal>
+            <Dependent Role="JobSalesInvoiceEstimateStatus">
+              <PropertyRef Name="CustomerKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobSalesInvoiceEstimateStatus_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="0..1" />
+          <End Role="JobSalesInvoiceEstimateStatus" Type="Self.JobSalesInvoiceEstimateStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobKey" />
+            </Principal>
+            <Dependent Role="JobSalesInvoiceEstimateStatus">
+              <PropertyRef Name="JobKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice">
+          <End Role="JobSalesInvoice" Type="Self.JobSalesInvoice" Multiplicity="1" />
+          <End Role="JobSalesInvoiceEstimateStatus" Type="Self.JobSalesInvoiceEstimateStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobSalesInvoice">
+              <PropertyRef Name="InvoiceKey" />
+            </Principal>
+            <Dependent Role="JobSalesInvoiceEstimateStatus">
+              <PropertyRef Name="InvoiceKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_JobSignOff_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="JobSignOff" Type="Self.JobSignOff" Multiplicity="*" />
@@ -2474,6 +2524,7 @@
           <EntitySet Name="JobRequestAttachments" EntityType="Self.JobRequestAttachments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobSalesInvoice" EntityType="Self.JobSalesInvoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobSalesInvoiceDetail" EntityType="Self.JobSalesInvoiceDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobSalesInvoiceEstimateStatus" EntityType="Self.JobSalesInvoiceEstimateStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobSignOff" EntityType="Self.JobSignOff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobStatus" EntityType="Self.JobStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobStatusUsergroup" EntityType="Self.JobStatusUsergroup" Schema="dbo" store:Type="Tables" />
@@ -2794,6 +2845,18 @@
           <AssociationSet Name="FK_JobSalesInvoiceDetail_SalesChargeType" Association="Self.FK_JobSalesInvoiceDetail_SalesChargeType">
             <End Role="SalesChargeType" EntitySet="SalesChargeType" />
             <End Role="JobSalesInvoiceDetail" EntitySet="JobSalesInvoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSalesInvoiceEstimateStatus_Customer" Association="Self.FK_JobSalesInvoiceEstimateStatus_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="JobSalesInvoiceEstimateStatus" EntitySet="JobSalesInvoiceEstimateStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSalesInvoiceEstimateStatus_Job" Association="Self.FK_JobSalesInvoiceEstimateStatus_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="JobSalesInvoiceEstimateStatus" EntitySet="JobSalesInvoiceEstimateStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice" Association="Self.FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice">
+            <End Role="JobSalesInvoice" EntitySet="JobSalesInvoice" />
+            <End Role="JobSalesInvoiceEstimateStatus" EntitySet="JobSalesInvoiceEstimateStatus" />
           </AssociationSet>
           <AssociationSet Name="FK_JobSignOff_Customer" Association="Self.FK_JobSignOff_Customer">
             <End Role="Customer" EntitySet="Customer" />
@@ -3596,6 +3659,19 @@
             <End Role="StaffList" EntitySet="StaffList" />
             <End Role="JobFile" EntitySet="JobFile" />
           </AssociationSet>
+          <EntitySet Name="JobSalesInvoiceEstimateStatus" EntityType="RCSdbModel.JobSalesInvoiceEstimateStatus" />
+          <AssociationSet Name="FK_JobSalesInvoiceEstimateStatus_Customer" Association="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="JobSalesInvoiceEstimateStatus" EntitySet="JobSalesInvoiceEstimateStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSalesInvoiceEstimateStatus_Job" Association="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="JobSalesInvoiceEstimateStatus" EntitySet="JobSalesInvoiceEstimateStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice" Association="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice">
+            <End Role="JobSalesInvoice" EntitySet="JobSalesInvoice" />
+            <End Role="JobSalesInvoiceEstimateStatus" EntitySet="JobSalesInvoiceEstimateStatus" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CityList">
           <Key>
@@ -3699,6 +3775,7 @@
           <NavigationProperty Name="JobSignOff" Relationship="RCSdbModel.FK_JobSignOff_Customer" FromRole="Customer" ToRole="JobSignOff" />
           <NavigationProperty Name="CustomerContactMesseging" Relationship="RCSdbModel.FK_CustomerContactMesseging_Customer" FromRole="Customer" ToRole="CustomerContactMesseging" />
           <NavigationProperty Name="JobRequest" Relationship="RCSdbModel.FK_JobRequest_Customer" FromRole="Customer" ToRole="JobRequest" />
+          <NavigationProperty Name="JobSalesInvoiceEstimateStatus" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Customer" FromRole="Customer" ToRole="JobSalesInvoiceEstimateStatus" />
         </EntityType>
         <EntityType Name="CustomerAttachments">
           <Key>
@@ -3979,6 +4056,7 @@
           <NavigationProperty Name="CustomerContactMesseging" Relationship="RCSdbModel.FK_CustomerContactMesseging_Job" FromRole="Job" ToRole="CustomerContactMesseging" />
           <Property Name="IsDelete" Type="Boolean" />
           <NavigationProperty Name="JobFile" Relationship="RCSdbModel.FK_JobFile_Job" FromRole="Job" ToRole="JobFile" />
+          <NavigationProperty Name="JobSalesInvoiceEstimateStatus" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Job" FromRole="Job" ToRole="JobSalesInvoiceEstimateStatus" />
         </EntityType>
         <EntityType Name="JobAccountManager">
           <Key>
@@ -4055,6 +4133,7 @@
           <NavigationProperty Name="SalesStatus" Relationship="RCSdbModel.FK_JobSalesInvoice_SalesStatus" FromRole="JobSalesInvoice" ToRole="SalesStatus" />
           <NavigationProperty Name="StaffList" Relationship="RCSdbModel.FK_JobSalesInvoice_StaffList" FromRole="JobSalesInvoice" ToRole="StaffList" />
           <NavigationProperty Name="JobSalesInvoiceDetail" Relationship="RCSdbModel.FK_JobSalesInvoiceDetail_JobSalesInvoice" FromRole="JobSalesInvoice" ToRole="JobSalesInvoiceDetail" />
+          <NavigationProperty Name="JobSalesInvoiceEstimateStatus" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice" FromRole="JobSalesInvoice" ToRole="JobSalesInvoiceEstimateStatus" />
         </EntityType>
         <EntityType Name="JobSalesInvoiceDetail">
           <Key>
@@ -6285,6 +6364,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="JobSalesInvoiceEstimateStatus">
+          <Key>
+            <PropertyRef Name="Pkey" />
+          </Key>
+          <Property Name="Pkey" Type="Guid" Nullable="false" />
+          <Property Name="InvoiceKey" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomerKey" Type="Guid" />
+          <Property Name="JobKey" Type="Guid" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Accept" Type="Boolean" />
+          <Property Name="Decline" Type="Boolean" />
+          <Property Name="Resubmit" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Customer" FromRole="JobSalesInvoiceEstimateStatus" ToRole="Customer" />
+          <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Job" FromRole="JobSalesInvoiceEstimateStatus" ToRole="Job" />
+          <NavigationProperty Name="JobSalesInvoice" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice" FromRole="JobSalesInvoiceEstimateStatus" ToRole="JobSalesInvoice" />
+        </EntityType>
+        <Association Name="FK_JobSalesInvoiceEstimateStatus_Customer">
+          <End Type="RCSdbModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="RCSdbModel.JobSalesInvoiceEstimateStatus" Role="JobSalesInvoiceEstimateStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerKey" />
+            </Principal>
+            <Dependent Role="JobSalesInvoiceEstimateStatus">
+              <PropertyRef Name="CustomerKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobSalesInvoiceEstimateStatus_Job">
+          <End Type="RCSdbModel.Job" Role="Job" Multiplicity="0..1" />
+          <End Type="RCSdbModel.JobSalesInvoiceEstimateStatus" Role="JobSalesInvoiceEstimateStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobKey" />
+            </Principal>
+            <Dependent Role="JobSalesInvoiceEstimateStatus">
+              <PropertyRef Name="JobKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice">
+          <End Type="RCSdbModel.JobSalesInvoice" Role="JobSalesInvoice" Multiplicity="1" />
+          <End Type="RCSdbModel.JobSalesInvoiceEstimateStatus" Role="JobSalesInvoiceEstimateStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobSalesInvoice">
+              <PropertyRef Name="InvoiceKey" />
+            </Principal>
+            <Dependent Role="JobSalesInvoiceEstimateStatus">
+              <PropertyRef Name="InvoiceKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7265,6 +7397,21 @@
                 <ScalarProperty Name="DocumentTypeKey" ColumnName="DocumentTypeKey" />
                 <ScalarProperty Name="JobKey" ColumnName="JobKey" />
                 <ScalarProperty Name="FileKey" ColumnName="FileKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobSalesInvoiceEstimateStatus">
+            <EntityTypeMapping TypeName="RCSdbModel.JobSalesInvoiceEstimateStatus">
+              <MappingFragment StoreEntitySet="JobSalesInvoiceEstimateStatus">
+                <ScalarProperty Name="Resubmit" ColumnName="Resubmit" />
+                <ScalarProperty Name="Decline" ColumnName="Decline" />
+                <ScalarProperty Name="Accept" ColumnName="Accept" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="JobKey" ColumnName="JobKey" />
+                <ScalarProperty Name="CustomerKey" ColumnName="CustomerKey" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="InvoiceKey" ColumnName="InvoiceKey" />
+                <ScalarProperty Name="Pkey" ColumnName="Pkey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

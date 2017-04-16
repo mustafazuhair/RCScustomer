@@ -203,6 +203,7 @@
     <Compile Include="Controllers\DropdownUtilityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobDetailsController.cs" />
+    <Compile Include="Controllers\JobEstimateController.cs" />
     <Compile Include="Controllers\JobRequestController.cs" />
     <Compile Include="Controllers\JobRequestFileController.cs" />
     <Compile Include="Controllers\ShowImageController.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="DAL\DashboardSetup.cs" />
     <Compile Include="DAL\JobRequestSetup.cs" />
     <Compile Include="DAL\ManageCustomerSetup.cs" />
+    <Compile Include="DAL\ManageJobEstimates.cs" />
     <Compile Include="DAL\ManageJobSetup.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -294,6 +296,7 @@
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ExcelConvertor\ExcelUtility.cs" />
+    <Compile Include="Models\EstimateClass.cs" />
     <Compile Include="Models\Forms.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
@@ -340,6 +343,9 @@
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\JobSalesInvoiceDetail.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobSalesInvoiceEstimateStatus.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\JobSignOff.cs">
@@ -824,6 +830,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\DropdownUtility\" />
+    <Folder Include="Views\JobEstimate\" />
     <Folder Include="Views\ShowImage\" />
     <Folder Include="Views\Utility\" />
   </ItemGroup>

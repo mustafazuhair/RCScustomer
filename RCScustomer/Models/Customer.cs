@@ -31,6 +31,7 @@ namespace RCScustomer.Models
             this.JobSignOff = new HashSet<JobSignOff>();
             this.CustomerContactMesseging = new HashSet<CustomerContactMesseging>();
             this.JobRequest = new HashSet<JobRequest>();
+            this.JobSalesInvoiceEstimateStatus = new HashSet<JobSalesInvoiceEstimateStatus>();
         }
     
         public System.Guid CustomerKey { get; set; }
@@ -77,5 +78,7 @@ namespace RCScustomer.Models
         public virtual ICollection<CustomerContactMesseging> CustomerContactMesseging { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobRequest> JobRequest { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobSalesInvoiceEstimateStatus> JobSalesInvoiceEstimateStatus { get; set; }
     }
 }

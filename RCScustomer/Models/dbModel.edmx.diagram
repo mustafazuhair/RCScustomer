@@ -199,6 +199,10 @@
         <AssociationConnector Association="RCSdbModel.FK_GridTitleDetail_JobStatus" />
         <AssociationConnector Association="RCSdbModel.FK_JobFile_Job" />
         <AssociationConnector Association="RCSdbModel.FK_JobFile_StaffList" />
+        <EntityTypeShape EntityType="RCSdbModel.JobSalesInvoiceEstimateStatus" Width="1.5" PointX="32.5" PointY="76.5" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Customer" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Job" />
+        <AssociationConnector Association="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
