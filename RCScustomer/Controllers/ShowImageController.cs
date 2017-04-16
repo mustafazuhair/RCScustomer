@@ -18,7 +18,6 @@ namespace RCScustomer.Controllers
         {
 
             JobFile obj = db.JobFile.Find(id);
-
             if (obj.FileContent != null)
             {
 
