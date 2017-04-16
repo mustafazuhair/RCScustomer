@@ -1,0 +1,104 @@
+﻿@model RCScustomer.Models.DashBoardJobRequest
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#example4').dataTable();
+    });
+</script>
+
+@section PageHeader{
+
+    My RCS Jobs
+
+}
+<div class="row">
+
+
+
+    <table id="example4" class="table table-bordered">
+        <thead>
+            <tr>
+
+                 
+                <th>Location Name</th>
+                <th>Location Contact Name</th>
+                <th> Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Trade</th>
+                <th>Job Priority</th>
+                <th>Service Needed</th>
+                <th>DNE amount</th>
+                <th>Special Note</th>
+                <th>Service Date</th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.JobRequestList)
+            {
+                <tr>
+
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocationContactName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocationContactAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocationContactCityName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocationContactStateName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocationContactZipCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TradeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobPriority)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServiceNeeded)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DNEamount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SpecialNote)
+                    </td>
+                   
+                    <td>
+                        @string.Format("{0:d}", item.ServiceDate)
+                    </td>
+
+
+                    <td>
+                        @Html.ActionLink("Edit", "EditJobRequest", "JobRequest", new { id = item.RequestKey }, null)
+                        
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+
+

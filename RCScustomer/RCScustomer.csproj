@@ -264,6 +264,7 @@
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DashboardJobClass.cs" />
+    <Compile Include="Models\DashBoardJobRequest.cs" />
     <Compile Include="Models\dbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -818,6 +819,7 @@
     <Content Include="Views\JobDetails\ViewJobDetails.cshtml" />
     <Content Include="Views\JobDetails\NotesandActivity.cshtml" />
     <Content Include="Views\JobDetails\FilesandAttachments.cshtml" />
+    <Content Include="Views\JobRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

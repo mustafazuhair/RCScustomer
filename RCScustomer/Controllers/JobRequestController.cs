@@ -15,7 +15,18 @@ namespace RCScustomer.Controllers
         // GET: JobRequest
         public ActionResult Index()
         {
-            return View();
+            if (GlobalClass.SystemSession)
+            {
+                DashBoardJobRequest model = new DashBoardJobRequest();
+                model.JobRequestList = new List<JobRequestObject>();
+                model.JobRequestList = manage.GetAllJobRequestForThisCustomer();
+                return View(model);
+            }
+            else
+            {
+                Exception e = new Exception("Sorry, your Session has Expired");
+                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+            }
         }
 
 
@@ -42,16 +53,25 @@ namespace RCScustomer.Controllers
 
             if (GlobalClass.SystemSession)
             {
-                DataReturn data = manage.SaveMainData(model);
-                ViewBag.mess = data.mess;
-                if (data.flag == 1)
-                    return RedirectToAction("EditJobRequest", new { id = data.key });
 
-                else
+                foreach (ModelState modelState in ViewData.ModelState.Values)
                 {
-                    return View(model);
+                    foreach (ModelError error in modelState.Errors)
+                    {
+                        //DoSomethingWith(error);
+                    }
                 }
-                
+
+                if (ModelState.IsValid)
+                {
+                    DataReturn data = manage.SaveMainData(model);
+                    ViewBag.mess = data.mess;
+                    if (data.flag == 1)
+                        return RedirectToAction("EditJobRequest", new { id = data.key });
+                }
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+                return View(model);
+
             }
             else
             {
@@ -66,9 +86,10 @@ namespace RCScustomer.Controllers
         {
             if (GlobalClass.SystemSession)
             {
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
                 JobRequestObject model = new JobRequestObject();
                 model = manage.GetJobrequestDetails(id);
-                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+              
                 return View(model);
             }
             else
@@ -86,10 +107,15 @@ namespace RCScustomer.Controllers
         {
             if (GlobalClass.SystemSession)
             {
-                //JobRequestObject model = new JobRequestObject();
-                //model = manage.GetJobrequestDetails(id);
-                //ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
-                return View(model);
+                if (ModelState.IsValid)
+                {
+                    DataReturn data = manage.UpdateMainData(model);
+                    ViewBag.mess = data.mess;
+                    if (data.flag == 1)
+                        return RedirectToAction("EditJobRequest", new { id = data.key });
+                }
+                    return View(model);
+               
             }
             else
             {
