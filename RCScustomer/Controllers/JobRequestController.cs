@@ -100,10 +100,10 @@ namespace RCScustomer.Controllers
         {
             if (GlobalClass.SystemSession)
             {
-                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+               
                 JobRequestObject model = new JobRequestObject();
                 model = manage.GetJobrequestDetails(id);
-              
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName",model.JobPriorityKey);
                 return View(model);
             }
             else

@@ -78,12 +78,9 @@ namespace RCScustomer.Models
 
         public string mess { get; set; }
 
-        public virtual Customer Customer { get; set; }
-        public virtual JobType JobType { get; set; }
-        public virtual Location Location { get; set; }
-        public virtual LocationContact LocationContact { get; set; }
-        public virtual Trade Trade { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+      
+       
+   
         public virtual ICollection<JobRequestAttachments> JobRequestAttachments { get; set; }
     }
 }
