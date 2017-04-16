@@ -14,7 +14,7 @@ namespace RCScustomer.Controllers
         // GET: JobEstimate
         private RCSdbEntities db = new RCSdbEntities();
         private ManageJobEstimates manage = new ManageJobEstimates();
-        // GET: JobRequest
+        // GET: JobEstimate
         public ActionResult Index()
         {
             if (GlobalClass.SystemSession)
@@ -22,6 +22,22 @@ namespace RCScustomer.Controllers
                List<EstimateClass> model = new List<EstimateClass>();
                 
                 model = manage.GetAllJobEstimatesForThisCustomer();
+                return View(model);
+            }
+            else
+            {
+                Exception e = new Exception("Sorry, your Session has Expired");
+                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+            }
+        }
+        public ActionResult ViewEstimates(Guid id)
+        {
+            if (GlobalClass.SystemSession)
+            {
+                PreviewSalesInvoiceClass model = new PreviewSalesInvoiceClass();
+                model.InvoiceDetailList = new List<JobSalesInvoiceClass>();
+                model = manage.FillSalesInvoiceOrEstimateDataForPreview(id);
+                ViewBag.mess = "";
                 return View(model);
             }
             else

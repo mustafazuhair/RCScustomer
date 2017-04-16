@@ -826,11 +826,12 @@
     <Content Include="Views\JobDetails\NotesandActivity.cshtml" />
     <Content Include="Views\JobDetails\FilesandAttachments.cshtml" />
     <Content Include="Views\JobRequest\Index.cshtml" />
+    <Content Include="Views\JobEstimate\Index.cshtml" />
+    <Content Include="Views\JobEstimate\ViewEstimates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\DropdownUtility\" />
-    <Folder Include="Views\JobEstimate\" />
     <Folder Include="Views\ShowImage\" />
     <Folder Include="Views\Utility\" />
   </ItemGroup>

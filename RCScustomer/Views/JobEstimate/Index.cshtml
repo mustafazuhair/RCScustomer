@@ -1,0 +1,75 @@
+﻿@model IEnumerable<RCScustomer.Models.EstimateClass>
+
+@{
+    ViewBag.Title = "Estimates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#example4').dataTable();
+    });
+</script>
+
+@section PageHeader{
+
+   Estimates Received
+
+}
+<div class="row">
+
+
+
+    <table id="example4" class="table table-bordered">
+        <thead>
+            <tr>
+
+
+                <th>Service Location</th>
+                <th>Trade</th>
+                <th>Customer Job Name</th>
+                <th>Status</th>
+                <th>Entry Date</th>
+                <th>View</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TradeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Jobname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SalesStatusName)
+                    </td>
+                   
+
+
+
+                    <td>
+                       
+
+                        @Html.ActionLink("View Estimates", "ViewEstimates", "JobEstimate", new { id = item.InvoiceKey }, null)
+                    </td>
+
+
+                </tr>
+                            }
+        </tbody>
+    </table>
+
+
+</div>
+
+

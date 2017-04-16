@@ -1,0 +1,231 @@
+﻿@model RCScustomer.Models.PreviewSalesInvoiceClass
+
+@{
+    ViewBag.Title = "Estimates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using RCScustomer.Models
+<script type="text/javascript">
+    $(function () {
+        $('#example4').dataTable();
+    });
+</script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h3>@ViewBag.mess</h3>
+    @Html.HiddenFor(m => m.EstimateObj.InvoiceKey)
+    @Html.HiddenFor(m => m.EstimateObj.Pkey)
+
+    <div class="row">
+        <div class="col-xs-12">
+
+
+            <div class="row invoice-info">
+                <div class="col-sm-5 invoice-col">
+                    <div class="row">
+                        <img src="@Url.Action("GetCompanyLogo", "ShowImage" ,new{id=GlobalClass.Company.CompanyKey})" alt="User Image" height="70px" />
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"> &nbsp;</div>
+                        <div class="col-sm-10 padHeader">
+                            <br />
+                            @Html.DisplayFor(m => GlobalClass.Company.CompanyAddress)<br />
+                            @Html.DisplayFor(m => GlobalClass.Company.CityList.CityName) @Html.DisplayFor(m => GlobalClass.Company.ZIPList.ZIP)<br />
+                            @Html.DisplayFor(m => GlobalClass.Company.StateList.StateName)<br />
+                            @Html.DisplayFor(m => GlobalClass.Company.CompanyPhone) <label>OFFICE</label><br />
+                            @Html.DisplayFor(m => GlobalClass.Company.CompanyFax) <label>FAX</label><br />
+                            @Html.DisplayFor(m => GlobalClass.Company.ContactEmail)
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-sm-2 invoice-col">
+                    &nbsp;
+                </div>
+                <div class="col-sm-5 invoice-col">
+                    <br /><br />
+                    <h4>@Html.DisplayFor(m => m.Estimatestatus)</h4>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-11">
+
+
+            <div class="row invoice-info">
+
+                <div class="col-sm-6 invoice-col">
+                    @{
+                        if (Model.config.IsServiceLicationVisible == false)
+                        {
+                            <label class="Underline">SERVICE LOCATION</label><br />
+                            @Html.DisplayFor(m => m.ServiceLocation.Lname)<br />
+                            @Html.DisplayFor(m => m.ServiceLocation.Address)<br />
+                            @Html.DisplayFor(m => m.ServiceLocation.ZIPcode)<br />
+                            @Html.DisplayFor(m => m.LocationCity)<br />
+                            @Html.DisplayFor(m => m.locationState)<br />
+                        }
+                    }
+                    @{
+                        if (Model.config.IsCustomerPOVisible == false)
+                        {
+                            <label class="Underline">CUSTOMER PO : </label>
+                            @Html.DisplayFor(m => m.Customer.ZIPcode)
+                        }
+                    }
+
+
+                </div>
+                @{
+                    if (Model.config.IsCustomerDetailVisible == false)
+                    {
+
+                        <div class="col-sm-6 invoice-col">
+                            <label class="Underline">CUSTOMER</label><br />
+                            @Html.DisplayFor(m => m.Customer.Cname)<br />
+
+                            @Html.DisplayFor(m => m.Customer.Address)<br />
+                            @{
+                                if (Model.config.IsCustomerPOVisible == false)
+                                {
+                                    <label class="Underline">CUSTOMER PO : </label>
+                                    @Html.DisplayFor(m => m.Customer.ZIPcode)
+                                }
+                            }
+
+                            @Html.DisplayFor(m => m.Customer.ZIPcode)<br />
+
+                            @Html.DisplayFor(m => m.CustomerCity)<br />
+                            @Html.DisplayFor(m => m.CustomerState)<br />
+                            <label class="Underline">CLIENT CONTACT : </label>
+                            @{
+                                if (Model.config.IsClientPOVisible == false)
+                                {
+                                    @Html.DisplayFor(m => m.CContact.Cname)<br />
+                                }
+                            }
+
+                        </div>
+                                }
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-xs-11">
+            <table class="table table-bordered">
+
+                <thead><tr><th>DESCRIPTION</th><th>QTY</th><th>COST</th><th>TOTAL</th></tr></thead>
+                <tbody>
+                    @{
+                        if (Model.config.IsInvoiceDetailVisible == false)
+                        {
+                            foreach (var item in Model.InvoiceDetailList)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(m => item.ChargeTypeName)    <label>  </label>@Html.DisplayFor(m => item.Description)</td>
+                                    <td>@Html.DisplayFor(m => item.Qty) </td>
+                                    <td>@Html.DisplayFor(m => item.Rate)</td>
+                                    <td>@Html.DisplayFor(m => item.Amt) </td>
+
+                                </tr>
+                            }
+                        }
+                    }
+                    <tr>
+                        <td colspan="2">@MvcHtmlString.Create(Model.Remark)</td>
+                        <td><label>TOTAL</label></td>
+                        <td><label>$ </label> @Html.DisplayFor(m => m.Total)</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-11">
+
+
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    @{
+                        if (Model.config.IsCustomerNameVisible == false)
+                        {
+                            <label>CUSTOMER NAME </label>
+                            @Html.DisplayFor(m => m.Customer.Cname)
+                        }
+                    }
+
+                </div>
+                @{
+                    if (Model.config.IsCustomerSignVisible == false)
+                    {
+                        <div class="col-sm-4 invoice-col">
+                            <label>CUSTOMER SIGNATURE </label><br />
+                            @Html.DisplayFor(m => m.config.CustomerSign)<br />
+                            _____________________________
+
+                        </div>
+                    }
+                }
+
+                <div class="col-sm-3 invoice-col">
+                    <label>DATE : </label>
+                    _______________________
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="panel panel-default ">
+            <div class="panel-heading">Respond</div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                  
+                    <div class="col-md-12">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Remark,"Note", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-7">
+                                @Html.DisplayFor(model => model.EstimateObj.Remark)
+                                @Html.TextAreaFor(model => model.Remark, 5, 12, new { id = "Remark", @class = "form-control" })
+                                @Html.HiddenFor(model => model.EstimateObj.Remark)
+                                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+                            </div>
+                        </div>   
+                        <div class="form-group">
+                          
+                            <div class="col-md-7">
+                                @Html.RadioButtonFor(model => model.EstimateStatus,1) Accept Estimate As Approved
+                                @Html.RadioButtonFor(model => model.EstimateStatus, 2) Decline Estimate 
+                                @Html.RadioButtonFor(model => model.EstimateStatus, 3) Resubmit Estimates
+                                @Html.ValidationMessageFor(model => model.EstimateStatus, "", new { @class = "text-danger" })
+                            </div>
+                        </div>              
+                     </div>                    
+                </div>
+            </div>
+            <div class="panel-footer">              
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("GO Back", "Index", "JobEstimate", null, null)
+                </div>
+        </div>
+    </div>
+
+
+                    }
+
