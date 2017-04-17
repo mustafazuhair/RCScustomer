@@ -51,6 +51,7 @@ namespace RCScustomer.Controllers
         {
             if (GlobalClass.SystemSession)
             {
+
                 ViewBag.mess = "";
                 if (ModelState.IsValid)
                 {
