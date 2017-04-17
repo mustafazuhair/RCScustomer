@@ -46,5 +46,46 @@ namespace RCScustomer.Controllers
                 return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
             }
         }
+        [HttpPost]
+        public ActionResult ViewEstimates(PreviewSalesInvoiceClass model)
+        {
+            if (GlobalClass.SystemSession)
+            {
+                ViewBag.mess = "";
+                if (ModelState.IsValid)
+                {
+                    DataReturn data = new DataReturn();
+                    data = manage.SaveEstimateRemarks(model);
+                    ViewBag.mess = data.mess;
+                    model.EstimateObj.IsNew = false;
+                }
+                PreviewSalesInvoiceClass obj = new PreviewSalesInvoiceClass();
+                obj.InvoiceDetailList = new List<JobSalesInvoiceClass>();
+                obj = manage.FillSalesEstimateDataForPreview(model.EstimateObj.InvoiceKey);
+                
+                obj.EstimateObj = new EstimateClass();
+                obj.EstimateObj.InvoiceKey = model.EstimateObj.InvoiceKey;
+                obj.EstimateObj.Pkey = model.EstimateObj.Pkey;
+                obj.EstimateObj.Remark = model.EstimateObj.Remark;
+                obj.EstimateStatus = model.EstimateStatus;
+                obj.EstimateObj.IsNew = model.EstimateObj.IsNew;
+                obj.EstimateObj.JobKey = model.EstimateObj.JobKey;
+                model = obj;
+                return View(model);
+            }
+            else
+            {
+                Exception e = new Exception("Sorry, your Session has Expired");
+                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+            }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

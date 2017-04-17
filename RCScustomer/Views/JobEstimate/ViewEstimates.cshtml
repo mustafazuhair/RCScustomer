@@ -10,12 +10,7 @@
         $('#example4').dataTable();
     });
 </script>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <h3>@ViewBag.mess</h3>
-    @Html.HiddenFor(m => m.EstimateObj.InvoiceKey)
-    @Html.HiddenFor(m => m.EstimateObj.Pkey)
+
 
     <div class="row">
         <div class="col-xs-12">
@@ -23,9 +18,9 @@
 
             <div class="row invoice-info">
                 <div class="col-sm-5 invoice-col">
-                    <div class="row">
+                    @*<div class="row">
                         <img src="@Url.Action("GetCompanyLogo", "ShowImage" ,new{id=GlobalClass.Company.CompanyKey})" alt="User Image" height="70px" />
-                    </div>
+                    </div>*@
                     <div class="row">
                         <div class="col-sm-2"> &nbsp;</div>
                         <div class="col-sm-10 padHeader">
@@ -46,7 +41,7 @@
                 </div>
                 <div class="col-sm-5 invoice-col">
                     <br /><br />
-                    <h4>@Html.DisplayFor(m => m.Estimatestatus)</h4>
+                    <h4>@Html.DisplayFor(m => m.Estimate_status)</h4>
 
                 </div>
             </div>
@@ -189,38 +184,52 @@
         </div>
     </div>
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
+    <h3>@ViewBag.mess</h3>
+    @Html.HiddenFor(m => m.EstimateObj.InvoiceKey)
+    @Html.HiddenFor(m => m.EstimateObj.Pkey)
+    @Html.HiddenFor(m => m.EstimateObj.JobKey)
+    @Html.HiddenFor(m => m.EstimateObj.IsNew)
     <div class="row">
         <div class="panel panel-default ">
             <div class="panel-heading">Respond</div>
             <div class="panel-body">
                 <div class="form-horizontal">
-                  
+                  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="col-md-12">
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Remark,"Note", htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-7">
-                                @Html.DisplayFor(model => model.EstimateObj.Remark)
-                                @Html.TextAreaFor(model => model.Remark, 5, 12, new { id = "Remark", @class = "form-control" })
-                                @Html.HiddenFor(model => model.EstimateObj.Remark)
-                                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+                              
+                                @Html.TextAreaFor(model => model.EstimateObj.Remark, 5, 12, new { id = "Remark", @class = "form-control" })
+                              
+                                @Html.ValidationMessageFor(model => model.EstimateObj.Remark, "", new { @class = "text-danger" })
                             </div>
                         </div>   
                         <div class="form-group">
                           
                             <div class="col-md-7">
-                                @Html.RadioButtonFor(model => model.EstimateStatus,1) Accept Estimate As Approved
-                                @Html.RadioButtonFor(model => model.EstimateStatus, 2) Decline Estimate 
-                                @Html.RadioButtonFor(model => model.EstimateStatus, 3) Resubmit Estimates
+                                @Html.RadioButtonFor(model => model.EstimateStatus,1)  Accept Estimate As Approved<br />
+                                @Html.RadioButtonFor(model => model.EstimateStatus, 2) Decline Estimate <br />
+                                @Html.RadioButtonFor(model => model.EstimateStatus, 3) Resubmit Estimates<br />
                                 @Html.ValidationMessageFor(model => model.EstimateStatus, "", new { @class = "text-danger" })
                             </div>
                         </div>              
                      </div>                    
                 </div>
             </div>
-            <div class="panel-footer">              
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="panel-footer"> 
+                @{
+                    if (Model.EstimateObj.IsNew == true)
+                    {
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    }
+                }             
+                
                 @Html.ActionLink("GO Back", "Index", "JobEstimate", null, null)
                 </div>
         </div>

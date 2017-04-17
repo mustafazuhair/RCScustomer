@@ -126,7 +126,7 @@ namespace RCScustomer.Controllers
                     DataReturn data = manage.UpdateMainData(model);
                     ViewBag.mess = data.mess;
                     if (data.flag == 1)
-                        return RedirectToAction("EditJobRequest", new { id = data.key });
+                        model = manage.GetJobrequestDetails(model.RequestKey);
                 }
                 ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName",model.JobPriorityKey);
                 return View(model);

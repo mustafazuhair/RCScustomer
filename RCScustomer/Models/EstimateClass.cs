@@ -53,7 +53,7 @@ namespace RCScustomer.Models
         public DataReturn datareturn { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
-        [Required(ErrorMessage = "Note is Compulsory.")]
+       
         public string Remark { get; set; }
         [Required(ErrorMessage = "Please Select one.")]
         public int EstimateStatus { get; set; }
@@ -61,7 +61,7 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> JobKey { get; set; }
         public Nullable<System.Guid> JobStatusKey { get; set; }
         public Nullable<bool> IsEstimate { get; set; }
-        public string Estimatestatus { get; set; }
+        public string Estimate_status { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Guid? TradeKey { get; set; }
         public int? InvoiceType { get; set; }
@@ -96,6 +96,7 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> CustomerKey { get; set; }
         public Nullable<System.Guid> SalesStatusKey { get; set; }
         public Nullable<System.Guid> JobKey { get; set; }
+        [Required(ErrorMessage = "Note is Compulsory.")]
         public string Remark { get; set; }
         public Nullable<bool> Accept { get; set; }
         public Nullable<bool> Decline { get; set; }
