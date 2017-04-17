@@ -78,9 +78,14 @@ namespace RCScustomer.Models
 
         public string mess { get; set; }
 
-      
-       
-   
+        public string CustomerName { get; set; }
+
+
+        
+
+
+
         public virtual ICollection<JobRequestAttachments> JobRequestAttachments { get; set; }
+        public List<JobRequestAttachmentsObject> JobRequestAttachmentsObjectList { get; internal set; }
     }
 }

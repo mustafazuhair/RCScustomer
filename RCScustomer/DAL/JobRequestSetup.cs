@@ -173,6 +173,33 @@ namespace RCScustomer.DAL
         }
         internal JobRequestObject GetJobrequestDetails(Guid requestKey)
         {
+            //JobRequest j = db.JobRequest.Find(requestKey);
+
+            //JobRequestObject model = new JobRequestObject();
+
+            //model.RequestKey = j.RequestKey;
+            //model.LocationKey = j.LocationKey;
+            //model.LocationName = j.Location.Lname;
+            //model.CustomerKey = j.CustomerKey;
+            //model.LocationContactKey = j.LocationContactKey;
+            //model.LocationContactName = j.LocationContact.Cname;
+            //model.LocationContactAddress = j.Location.Address;
+            //model.LocationContactCityName = j.Location.CityList.CityName;
+            //model.LocationContactStateName = j.Location.StateList.StateName;
+            //model.LocationContactZipCode = j.Location.ZIPcode;
+            //model.TradeKey = j.TradeKey;
+            //model.TradeName = j.Trade.TName;
+            //model.JobPriorityKey = j.JobPriorityKey;
+            //model.JobPriority = j.JobType.TName;
+            //model.ServiceNeeded = j.ServiceNeeded;
+            //model.DNEamount = j.DNEamount;
+            //model.SpecialNote = j.SpecialNote;
+            //model.ServiceDate = j.ServiceDate;
+            //model.ServiceByTime = j.ServiceByTime;
+            //model.SVCLocationContact = j.SVCLocationContact;
+            //model.SvcLocationContactPhone = j.SvcLocationContactPhone;
+            //model.EntryDatetime = j.EntryDatetime;
+            //return model;
             JobRequest j = db.JobRequest.Find(requestKey);
 
             JobRequestObject model = new JobRequestObject();
@@ -181,12 +208,14 @@ namespace RCScustomer.DAL
             model.LocationKey = j.LocationKey;
             model.LocationName = j.Location.Lname;
             model.CustomerKey = j.CustomerKey;
+            model.CustomerName = j.Customer.Cname;
             model.LocationContactKey = j.LocationContactKey;
             model.LocationContactName = j.LocationContact.Cname;
-            model.LocationContactAddress = j.Location.Address;
-            model.LocationContactCityName = j.Location.CityList.CityName;
-            model.LocationContactStateName = j.Location.StateList.StateName;
-            model.LocationContactZipCode = j.Location.ZIPcode;
+            model.LocationContactAddress = j.LocationContact.Location.Address;
+            model.LocationContactCityName = j.LocationContact.Location.CityList.CityName;
+            model.LocationContactStateName = j.LocationContact.Location.StateList.StateName;
+            model.LocationContactZipCode = j.LocationContact.Location.ZIPcode;
+
             model.TradeKey = j.TradeKey;
             model.TradeName = j.Trade.TName;
             model.JobPriorityKey = j.JobPriorityKey;
@@ -199,7 +228,35 @@ namespace RCScustomer.DAL
             model.SVCLocationContact = j.SVCLocationContact;
             model.SvcLocationContactPhone = j.SvcLocationContactPhone;
             model.EntryDatetime = j.EntryDatetime;
+            model.JobRequestAttachmentsObjectList = new List<JobRequestAttachmentsObject>();
+            model.JobRequestAttachmentsObjectList = GetJobRequestAttachmentList(requestKey);
+
+
             return model;
+        }
+
+        private List<JobRequestAttachmentsObject> GetJobRequestAttachmentList(Guid requestKey)
+        {
+            List<JobRequestAttachmentsObject> obj = new List<JobRequestAttachmentsObject>();
+
+            var temp = from x in db.JobRequestAttachments
+                       where x.RequestKey == requestKey
+                       select new JobRequestAttachmentsObject
+                       {
+
+                           PKey = x.PKey,
+                           RequestKey = x.RequestKey,
+                           DocumentTypeKey = x.DocumentTypeKey,
+                           DocFile = x.DocFile,
+                           Filename = x.Filename,
+                           FileType = x.FileType,
+                           DocumentName = x.DocumentType.TName
+
+                       };
+
+            obj = temp.ToList();
+
+            return obj;
         }
 
         internal DataReturn UpdateMainData(JobRequestObject obj)

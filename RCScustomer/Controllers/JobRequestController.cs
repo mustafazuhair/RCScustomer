@@ -33,7 +33,9 @@ namespace RCScustomer.Controllers
         {
             if (GlobalClass.SystemSession)
             {
-                DashBoardJobRequest model = new DashBoardJobRequest();              
+                JobRequestObject model = new JobRequestObject();
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+                model = manage.GetJobrequestDetails(id);
                 return View(model);
             }
             else
