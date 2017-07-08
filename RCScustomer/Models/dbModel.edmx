@@ -117,6 +117,8 @@
           <Property Name="IsDelete" Type="bit" />
           <Property Name="Remarks" Type="nvarchar(max)" />
           <Property Name="CustomerKey" Type="uniqueidentifier" />
+          <Property Name="AddedByName" Type="nvarchar(max)" />
+          <Property Name="IsMessegeNew" Type="bit" />
         </EntityType>
         <EntityType Name="CustomerJob">
           <Key>
@@ -411,6 +413,7 @@
           <Property Name="FileType" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="FileName" Type="nvarchar(max)" />
+          <Property Name="IsFileNew" Type="bit" />
         </EntityType>
         <EntityType Name="JobLocation">
           <Key>
@@ -6252,6 +6255,8 @@
           <NavigationProperty Name="Customer" Relationship="RCSdbModel.FK_CustomerContactMesseging_Customer" FromRole="CustomerContactMesseging" ToRole="Customer" />
           <NavigationProperty Name="CustomerContact" Relationship="RCSdbModel.FK_CustomerContactMesseging_CustomerContact" FromRole="CustomerContactMesseging" ToRole="CustomerContact" />
           <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_CustomerContactMesseging_Job" FromRole="CustomerContactMesseging" ToRole="Job" />
+          <Property Name="AddedByName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsMessegeNew" Type="Boolean" />
         </EntityType>
         <EntityType Name="JobRequest">
           <Key>
@@ -6461,6 +6466,7 @@
           <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_JobFile_Job" FromRole="JobFile" ToRole="Job" />
           <NavigationProperty Name="StaffList" Relationship="RCSdbModel.FK_JobFile_StaffList" FromRole="JobFile" ToRole="StaffList" />
           <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsFileNew" Type="Boolean" />
         </EntityType>
         <Association Name="FK_JobFile_DocumentType">
           <End Type="RCSdbModel.DocumentType" Role="DocumentType" Multiplicity="0..1" />
@@ -7554,6 +7560,8 @@
           <EntitySetMapping Name="CustomerContactMesseging">
             <EntityTypeMapping TypeName="RCSdbModel.CustomerContactMesseging">
               <MappingFragment StoreEntitySet="CustomerContactMesseging">
+                <ScalarProperty Name="IsMessegeNew" ColumnName="IsMessegeNew" />
+                <ScalarProperty Name="AddedByName" ColumnName="AddedByName" />
                 <ScalarProperty Name="CustomerKey" ColumnName="CustomerKey" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
@@ -7631,6 +7639,7 @@
           <EntitySetMapping Name="JobFile">
             <EntityTypeMapping TypeName="RCSdbModel.JobFile">
               <MappingFragment StoreEntitySet="JobFile">
+                <ScalarProperty Name="IsFileNew" ColumnName="IsFileNew" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="FileType" ColumnName="FileType" />

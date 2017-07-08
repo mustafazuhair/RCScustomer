@@ -26,6 +26,7 @@ namespace RCScustomer.Models
         public string FileType { get; set; }
         public Nullable<bool> IsDelete { get; set; }
         public string FileName { get; set; }
+        public Nullable<bool> IsFileNew { get; set; }
     
         public virtual DocumentType DocumentType { get; set; }
         public virtual Job Job { get; set; }
