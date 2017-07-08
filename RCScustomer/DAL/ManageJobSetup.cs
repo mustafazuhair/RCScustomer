@@ -41,6 +41,7 @@ namespace RCScustomer.DAL
                 invoice.FileContent = model.FileContent;
                 invoice.FileType = model.FileType;
                 invoice.IsDelete = false;
+                invoice.IsFileNew = false;
                 db.JobFile.Add(invoice);
                 db.SaveChanges();
 
@@ -177,6 +178,7 @@ namespace RCScustomer.DAL
                 cust.IsDelete = false;
                 cust.Remarks = "";
                 cust.CustomerKey = obj.VendorKey;
+                cust.IsMessegeNew = false;
 
                 db.CustomerContactMesseging.Add(cust);
                 db.SaveChanges();
