@@ -69,15 +69,7 @@ namespace RCScustomer.Controllers
             result.Data = temp;
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
-        }
-        
-     
-       
-       
-        
-       
-     
-      
+        }  
 
         public ActionResult LoadCustomerNotes(Guid SelectID)
         {
@@ -132,6 +124,16 @@ namespace RCScustomer.Controllers
         {
             JsonResult result = new JsonResult();
             var temp = from x in db.StaffList where x.Username == user select x;
+            if (temp.Count() > 0) result.Data = 99;
+            else
+                result.Data = 1;
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return result;
+        }
+        public ActionResult CheckCustomerCreate(string user)
+        {
+            JsonResult result = new JsonResult();
+            var temp = from x in db.CustomerLogin where x.Username == user && x.UserKey!=GlobalClass.UserDetail.UserKey select x;
             if (temp.Count() > 0) result.Data = 99;
             else
                 result.Data = 1;

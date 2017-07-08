@@ -12,14 +12,14 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> LocationKey { get; set; }
         public Nullable<System.Guid> CustomerKey { get; set; }
         public Nullable<System.Guid> LocationContactKey { get; set; }
+        public Nullable<System.Guid> CContactKey { get; set; }
         public Nullable<System.Guid> TradeKey { get; set; }
 
         [Required(ErrorMessage = "Job Priority is required")]
         public Nullable<System.Guid> JobPriorityKey { get; set; }
         public string RequestStatus { get; set; }
 
-        [Display(Name = "Job Priority*")]
-        
+        [Display(Name = "Job Priority*")]        
         public string JobPriority { get; set; }
 
 
@@ -27,12 +27,13 @@ namespace RCScustomer.Models
         [Required(ErrorMessage = "Service Needed is required")]
         public string ServiceNeeded { get; set; }
 
-
+      
+        public string ServiceNeededByOrOn { get; set; }
 
         [Display(Name = "DNE Amount")]
         public Nullable<decimal> DNEamount { get; set; }
 
-        [Display(Name = "Service Date")]
+        [Display(Name = "Service Needed by")]
         public Nullable<System.DateTime> ServiceDate { get; set; }
 
         [Display(Name = "Service By Time")]
@@ -55,9 +56,12 @@ namespace RCScustomer.Models
         public string LocationName { get; set; }
 
 
-        [Display(Name = "Contact*")]
-        [Required(ErrorMessage = "Job request Contact is required")]
+        [Display(Name = "Contact*")]       
         public string LocationContactName { get; set; }
+
+        [Display(Name = "Contact*")]
+        [Required(ErrorMessage = "Contact is required")]
+        public string ContactName { get; set; }
 
         [Display(Name = "Address*")]
         public string LocationContactAddress { get; set; }
@@ -73,7 +77,7 @@ namespace RCScustomer.Models
 
 
         [Display(Name = "Trade*")]
-        [Required(ErrorMessage = "Trade Name is required")]
+        //[Required(ErrorMessage = "Trade Name is required")]
         public string TradeName { get; set; }
 
         public string mess { get; set; }

@@ -18,8 +18,10 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> CustomerKey { get; set; }
         public Nullable<System.Guid> LocationKey { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+        public Nullable<System.Guid> CContactKey { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }
+        public virtual CustomerContact CustomerContact { get; set; }
     }
 }

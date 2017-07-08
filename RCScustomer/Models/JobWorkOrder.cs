@@ -51,6 +51,8 @@ namespace RCScustomer.Models
         public Nullable<bool> IsVendor { get; set; }
         public Nullable<bool> IsVisitDate { get; set; }
         public Nullable<bool> IsReturnDate { get; set; }
+        public Nullable<bool> IsVendorPh { get; set; }
+        public Nullable<bool> IsLocationPh { get; set; }
     
         public virtual Job Job { get; set; }
         public virtual Location Location { get; set; }

@@ -14,50 +14,43 @@
 
 
 @section PageHeader{
-
-   My RCS Jobs
-
-}
-
 <div class="row">
 
-    <div class="panel panel-warning">
-        <div class="panel-body">
-            <div class="col-md-6">
-                <h5><a href="@Url.Action("Setup","UserHome")"><i class="glyphicon glyphicon-cog"></i> Settings</a></h5>
-            </div>
+    <div class="col-md-6">
+        My RCS Jobs
+    </div>
+
             <div class="col-md-6">
                 <h5><a href="@Url.Action("Create","JobRequest")"><i class="glyphicon glyphicon-bell"></i> New Service Request</a></h5>
             </div>
 
-        </div>
-    </div>
+      
 
 </div>
 
-<div class="row">
-
-    <div class="panel panel-warning">
-        <div class="panel-body">
-            <div class="col-md-6">
-               <label>Name :   </label> @Html.DisplayFor(m=>GlobalClass.LoginUser.Cname)<br />
-                <label>Title :   </label> @Html.DisplayFor(m => GlobalClass.LoginUser.Title)<br />
-            </div>
-            <div class="col-md-6">
-                <label>Customer Name :   </label> @Html.DisplayFor(m => m.CustomerObj.Cname)<br />
-                <label>Customer Address :   </label> @Html.DisplayFor(m => m.CustomerObj.Address)<br />
-                @Html.DisplayFor(m => m.CustomerObj.ZIPcode) <label> , &nbsp;</label> @Html.DisplayFor(m => m.CustomerObj.CityList.CityName)<br />
-                @Html.DisplayFor(m => m.CustomerObj.StateList.StateName)
-            </div>
-
-        </div>
-    </div>
-
-</div>
-
-<div class="row">
 
   
+
+}
+
+
+
+<div class="row">
+
+            <div class="col-md-6">
+                <h4>
+                    <label>Welcome :   </label> @Html.DisplayFor(m => GlobalClass.LoginUser.Cname)
+                    <label> ( </label> @Html.DisplayFor(m => m.CustomerObj.Cname) @*@Html.DisplayFor(m => GlobalClass.LoginUser.Title)*@ <label> ) </label>
+                </h4>
+            </div>
+       
+
+
+</div>
+
+<div class="row">
+   
+ 
        
         <table id="example4" class="table table-bordered">
             <thead>

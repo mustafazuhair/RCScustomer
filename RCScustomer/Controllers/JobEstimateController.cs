@@ -27,7 +27,7 @@ namespace RCScustomer.Controllers
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
         public ActionResult ViewEstimates(Guid id)
@@ -43,7 +43,7 @@ namespace RCScustomer.Controllers
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
         [HttpPost]
@@ -57,7 +57,7 @@ namespace RCScustomer.Controllers
                 {
                     DataReturn data = new DataReturn();
                     data = manage.SaveEstimateRemarks(model);
-                    ViewBag.mess = data.mess;
+                    ViewBag.mess = data.mess;                   
                     model.EstimateObj.IsNew = false;
                 }
                 PreviewSalesInvoiceClass obj = new PreviewSalesInvoiceClass();
@@ -68,6 +68,7 @@ namespace RCScustomer.Controllers
                 obj.EstimateObj.InvoiceKey = model.EstimateObj.InvoiceKey;
                 obj.EstimateObj.Pkey = model.EstimateObj.Pkey;
                 obj.EstimateObj.Remark = model.EstimateObj.Remark;
+                obj.EstimateObj.ViewRemark = model.EstimateObj.Remark;
                 obj.EstimateStatus = model.EstimateStatus;
                 obj.EstimateObj.IsNew = model.EstimateObj.IsNew;
                 obj.EstimateObj.JobKey = model.EstimateObj.JobKey;
@@ -77,7 +78,7 @@ namespace RCScustomer.Controllers
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
         protected override void Dispose(bool disposing)

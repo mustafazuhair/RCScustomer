@@ -21,6 +21,9 @@ namespace RCScustomer.Models
         public Nullable<decimal> TripCharge { get; set; }
         public Nullable<decimal> ServiceCharge { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+        public Nullable<decimal> EmergencyHourlyRate { get; set; }
+        public Nullable<decimal> EmergencyTripCharge { get; set; }
+        public Nullable<decimal> EmergencyServiceCharge { get; set; }
     
         public virtual Trade Trade { get; set; }
     }

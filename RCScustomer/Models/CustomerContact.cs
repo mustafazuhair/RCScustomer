@@ -21,6 +21,8 @@ namespace RCScustomer.Models
             this.Job = new HashSet<Job>();
             this.JobConfiguration = new HashSet<JobConfiguration>();
             this.CustomerContactMesseging = new HashSet<CustomerContactMesseging>();
+            this.CustomerLocation = new HashSet<CustomerLocation>();
+            this.JobRequest = new HashSet<JobRequest>();
         }
     
         public System.Guid ContactKey { get; set; }
@@ -46,5 +48,9 @@ namespace RCScustomer.Models
         public virtual ICollection<JobConfiguration> JobConfiguration { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerContactMesseging> CustomerContactMesseging { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerLocation> CustomerLocation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobRequest> JobRequest { get; set; }
     }
 }

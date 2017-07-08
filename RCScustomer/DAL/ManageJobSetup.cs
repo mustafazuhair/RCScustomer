@@ -322,7 +322,8 @@ namespace RCScustomer.DAL
             _job.CustomerKey = jobEntity.CustomerKey;
             _job.CustomerName = jobEntity.Customer.Cname;
             _job.CContactKey = jobEntity.CContactKey;
-
+            if (jobEntity.CustomerJobStatusKey == null) _job.CustomerJobStatus = "";
+            else _job.CustomerJobStatus = jobEntity.CustomerJobStatus.TName;
             if (jobEntity.CustomerContact != null)
             {
                 _job.CustomerContactName = jobEntity.CustomerContact.Cname;
@@ -343,12 +344,14 @@ namespace RCScustomer.DAL
             _job.Description = jobEntity.Description;
             _job.IVRTrackingNo = jobEntity.IVRTrackingNo;
             _job.IVRPin = jobEntity.IVRPin;
-            _job.ScheduleDate = jobEntity.ScheduleDate.Value.ToShortDateString();
-            _job.ReturnScheduleDate = jobEntity.ReturnScheduleDate.Value.ToShortDateString();
+            if (jobEntity.ScheduleDate == null) _job.ScheduleDate = "";
+            else  _job.ScheduleDate = jobEntity.ScheduleDate.Value.ToShortDateString();
+            if (jobEntity.ReturnScheduleDate == null) _job.ReturnScheduleDate = "";
+            else _job.ReturnScheduleDate = jobEntity.ReturnScheduleDate.Value.ToShortDateString();
             _job.LocationKey = jobEntity.LocationKey;
             _job.LocationName = jobEntity.Location.Lname;
             _job.LocationContactKey = jobEntity.LocationContactKey;
-            _job.LocationContactName = jobEntity.LocationContact.Cname;
+            _job.LocationContactName = jobEntity.CustomerContact.Cname;
             _job.LocationContactAddress = jobEntity.Location.Address;
             _job.LocationContactCityName = jobEntity.Location.CityList.CityName;
             _job.LocationContactStateName = jobEntity.Location.StateList.StateName;

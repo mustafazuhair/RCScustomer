@@ -53,6 +53,18 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> LocationKey { get; set; }
         public Nullable<System.Guid> LocationContactKey { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+        public string VendorDNE { get; set; }
+        public Nullable<System.DateTime> CompletionDate { get; set; }
+        public string RevCustomerDNE { get; set; }
+        public string RevVendorDNE { get; set; }
+        public Nullable<bool> Invoiced { get; set; }
+        public Nullable<bool> Estimates { get; set; }
+        public Nullable<bool> WorkOrder { get; set; }
+        public Nullable<bool> VBill { get; set; }
+        public string PayableStatus { get; set; }
+        public string ReceivableStatus { get; set; }
+        public Nullable<System.Guid> AccountingStatusKey { get; set; }
+        public Nullable<System.Guid> CustomerJobStatusKey { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual CustomerContact CustomerContact { get; set; }
@@ -93,5 +105,6 @@ namespace RCScustomer.Models
         public virtual ICollection<JobFile> JobFile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobSalesInvoiceEstimateStatus> JobSalesInvoiceEstimateStatus { get; set; }
+        public virtual CustomerJobStatus CustomerJobStatus { get; set; }
     }
 }

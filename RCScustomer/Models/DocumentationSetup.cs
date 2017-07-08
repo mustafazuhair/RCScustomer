@@ -23,5 +23,13 @@ namespace RCScustomer.Models
         public string QuoteConfiguration { get; set; }
         public Nullable<bool> IsDelete { get; set; }
         public Nullable<System.Guid> CompanyKey { get; set; }
+        public string EmailBodyWorkOrder { get; set; }
+        public string EmailBodyInvoice { get; set; }
+        public string WorkOrderHeader { get; set; }
+        public string InvoiceHeader { get; set; }
+        public string EstimateHeader { get; set; }
+        public string SubjectWorkOrder { get; set; }
+        public string SubjectEstimate { get; set; }
+        public string SubjectInvoice { get; set; }
     }
 }

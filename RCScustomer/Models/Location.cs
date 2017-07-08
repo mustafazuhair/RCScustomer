@@ -39,6 +39,8 @@ namespace RCScustomer.Models
         public string ZIPcode { get; set; }
         public Nullable<bool> IsDelete { get; set; }
         public Nullable<System.Guid> CompanyKey { get; set; }
+        public string lat { get; set; }
+        public string lng { get; set; }
     
         public virtual CityList CityList { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

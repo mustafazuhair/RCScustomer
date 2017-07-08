@@ -45,6 +45,25 @@ namespace RCScustomer.Models
                 HttpContext.Current.Session[GlobalClass._AnchorID] = value;
             }
         }
+        static private string _UserDetail = "UserDetail";
+        public static CustomerLogin UserDetail
+        {
+            get
+            {
+                if (HttpContext.Current.Session[GlobalClass._UserDetail] == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return (CustomerLogin)(HttpContext.Current.Session[GlobalClass._UserDetail]);
+                }
+            }
+            set
+            {
+                HttpContext.Current.Session[GlobalClass._UserDetail] = value;
+            }
+        }
         static private string _LoginUser = "LoginUser";
         public static CustomerContact LoginUser
         {

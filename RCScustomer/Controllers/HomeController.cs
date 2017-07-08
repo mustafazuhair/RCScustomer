@@ -41,6 +41,7 @@ namespace RCScustomer.Controllers
                 }
                 else
                 {
+                    GlobalClass.UserDetail = temp;
                     CustomerContact obj = db.CustomerContact.Find(temp.ContactKey);
                   
                         Customer customer = db.Customer.Find(temp.CustomerKey);
@@ -74,7 +75,7 @@ namespace RCScustomer.Controllers
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
 

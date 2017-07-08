@@ -35,6 +35,9 @@ namespace RCScustomer.Models
         public string SvcLocationContactPhone { get; set; }
         public Nullable<System.DateTime> EntryDatetime { get; set; }
         public Nullable<bool> IsRequest { get; set; }
+        public Nullable<System.Guid> CContactKey { get; set; }
+        public Nullable<bool> Isviewed { get; set; }
+        public string ServiceNeededByOrOn { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual JobType JobType { get; set; }
@@ -43,5 +46,6 @@ namespace RCScustomer.Models
         public virtual Trade Trade { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobRequestAttachments> JobRequestAttachments { get; set; }
+        public virtual CustomerContact CustomerContact { get; set; }
     }
 }

@@ -200,6 +200,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AssignAccessController.cs" />
     <Compile Include="Controllers\DropdownUtilityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobDetailsController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Controllers\JobRequestController.cs" />
     <Compile Include="Controllers\JobRequestFileController.cs" />
     <Compile Include="Controllers\ShowImageController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="DAL\DashboardSetup.cs" />
     <Compile Include="DAL\JobRequestSetup.cs" />
@@ -241,6 +243,9 @@
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomerJob.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerJobStatus.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomerLabor.cs">
@@ -501,6 +506,7 @@
     <Content Include="Content\datetimepicker-master\tests\input_in_container_fixed_to_bottom_of_viewport.html" />
     <Content Include="Content\datetimepicker-master\tests\input_in_container_fixed_to_top_of_viewport.html" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\RCS-logo-web1.png" />
     <Content Include="Content\ss_logo_small.png" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -767,6 +773,7 @@
     <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\highcharts.js" />
+    <None Include="Properties\PublishProfiles\rcs.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -795,11 +802,14 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\scCustomer.js" />
     <Content Include="Scripts\scGIS.js" />
+    <Content Include="Scripts\scLocation.js" />
     <Content Include="Scripts\scStaff.js" />
     <Content Include="Scripts\scStateCity.js" />
     <Content Include="Scripts\scTrades.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -829,6 +839,8 @@
     <Content Include="Views\JobEstimate\Index.cshtml" />
     <Content Include="Views\JobEstimate\ViewEstimates.cshtml" />
     <Content Include="Views\JobRequest\Details.cshtml" />
+    <Content Include="Views\Staff\Index.cshtml" />
+    <Content Include="Views\AssignAccess\ChangePass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

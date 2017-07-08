@@ -31,12 +31,12 @@ namespace RCScustomer.DAL
                            TradeName=x.Trade.TName,
                            LocationKey = x.LocationKey,
                            ServiceLocation = x.Location.Lname,
-                           Status = x.JobStatus.TName,
+                           Status = x.CustomerJobStatus.TName,
                            EDate = x.EntryDate,
                            SDate = x.ScheduleDate,
                            AccountManager = (from z in db.JobTeam
                                              join y in db.TeamMember on z.TeamKey equals y.ID
-                                             where z.IsDelete == false && y.IsDelete == false && y.IsAccountManager == true
+                                             where z.JobKey==x.JobKey && z.IsDelete == false && y.IsDelete == false && y.IsAccountManager == true
                                              select y.StaffList.PName).FirstOrDefault().ToString(),
                        };
             obj = temp.ToList();

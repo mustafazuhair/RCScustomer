@@ -242,17 +242,23 @@ namespace RCScustomer.Controllers
         {
            
 
-            var users = (from u in db.Location
+            var users = (from u in db.Location join a in db.CustomerLocation on u.LocationKey equals a.LocationKey
 
                          where  u.Lname.ToUpper().Contains(query.ToUpper())
-                         && u.IsDelete == false
+                         && u.IsDelete == false && a.CustomerKey==GlobalClass.LoginUser.CustomerKey
                          orderby u.Lname
                          select new
                          {
                              label = u.Lname,
                              value = u.LocationKey,
                              LocationName = u.Lname,
-                             
+                             LocationContactAddress = u.Address,
+                             LocationContactZipCode = u.ZIPcode,
+                             LocationContactCityName =u.CityList.CityName,
+                             LocationContactStateName = u.StateList.StateName,
+                             CContactKey=a.CContactKey,
+                             ContactName=a.CustomerContact.Cname
+
 
                          }).ToList();
             return Json(users, JsonRequestBehavior.AllowGet);

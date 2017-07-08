@@ -23,6 +23,7 @@ namespace RCScustomer.Models
         public Nullable<bool> Accept { get; set; }
         public Nullable<bool> Decline { get; set; }
         public Nullable<bool> Resubmit { get; set; }
+        public Nullable<bool> IsSeen { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Job Job { get; set; }

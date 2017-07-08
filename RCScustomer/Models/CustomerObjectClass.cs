@@ -6,6 +6,24 @@ using System.Web;
 
 namespace RCScustomer.Models
 {
+    public class CustomerLoginClass
+    {
+        [Display(Name = "Username*")]
+        [Required(ErrorMessage = "Username is required")]
+        public string Username { get; set; }
+        [Display(Name = "Password*")]
+        [Required(ErrorMessage = "Password is required")]
+        public string Password { get; set; }
+        [Display(Name = "Confirm Password*")]
+        [Required(ErrorMessage = "Please enter the Password again.")]
+        [Compare("Password", ErrorMessage = "Your Confirm Password does not match.")]
+        public string ConfirmPassword { get; set; }
+       
+        public Guid? UserKey { get; set; }
+        public CustomerContact ContactObj { get; set; }
+
+     
+    }
     public class TradeChargeClass
     {
         public Nullable<System.Guid> Pkey { get; set; }

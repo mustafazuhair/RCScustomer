@@ -18,18 +18,29 @@ namespace RCScustomer.DAL
                 _job.RequestKey = Guid.NewGuid();
                 _job.LocationKey = obj.LocationKey;
                 _job.CustomerKey = GlobalClass.LoginUser.CustomerKey;
-                _job.LocationContactKey = obj.LocationContactKey;
+                _job.CContactKey = obj.CContactKey;
                 _job.TradeKey = obj.TradeKey;
                 _job.JobPriorityKey = obj.JobPriorityKey;
                 _job.ServiceNeeded = obj.ServiceNeeded;
-                _job.DNEamount = obj.DNEamount;
-                _job.SpecialNote = obj.SpecialNote;
+                if (string.IsNullOrEmpty(obj.ServiceNeededByOrOn)) _job.ServiceNeededByOrOn = "Service Needed by";
+                else _job.ServiceNeededByOrOn = obj.ServiceNeededByOrOn;
+                if (obj.DNEamount == null) _job.DNEamount = 0;
+                else _job.DNEamount = obj.DNEamount;
+                if (string.IsNullOrEmpty(obj.SpecialNote)) _job.SpecialNote = "n/a";
+                else _job.SpecialNote = obj.SpecialNote;
                 _job.ServiceDate = obj.ServiceDate;
-                _job.ServiceByTime = obj.ServiceByTime;
-                _job.SVCLocationContact = obj.SVCLocationContact;
-                _job.SvcLocationContactPhone = obj.SvcLocationContactPhone;
+                if (string.IsNullOrEmpty(obj.ServiceByTime)) _job.ServiceByTime = "--";
+                else _job.ServiceByTime = obj.ServiceByTime;
+
+                if (string.IsNullOrEmpty(obj.SVCLocationContact)) _job.SVCLocationContact = "--";
+                else _job.SVCLocationContact = obj.SVCLocationContact;
+
+                if (string.IsNullOrEmpty(obj.SvcLocationContactPhone)) _job.SvcLocationContactPhone = "--";
+                else _job.SvcLocationContactPhone = obj.SvcLocationContactPhone;
+                
                 _job.EntryDatetime = DateTime.Now;
                 _job.IsRequest =true;
+                _job.Isviewed = false;
                 db.JobRequest.Add(_job);
                 db.SaveChanges();
                 model.flag = 1;
@@ -53,11 +64,12 @@ namespace RCScustomer.DAL
                        select new JobRequestObject
                        {
                            RequestKey = j.RequestKey,
+                           ServiceNeededByOrOn= j.ServiceNeededByOrOn == null ? "Service Needed on" : j.ServiceNeededByOrOn,
                            LocationKey = j.LocationKey,
                            LocationName = j.Location.Lname,
                            CustomerKey = j.CustomerKey,
-                           LocationContactKey = j.LocationContactKey,
-                           LocationContactName = j.LocationContact.Cname,
+                           CContactKey = j.CContactKey,
+                           LocationContactName = j.CustomerContact.Cname,
                            LocationContactAddress = j.Location.Address,
                            LocationContactCityName = j.Location.CityList.CityName,
                            LocationContactStateName = j.Location.StateList.StateName,
@@ -173,48 +185,24 @@ namespace RCScustomer.DAL
         }
         internal JobRequestObject GetJobrequestDetails(Guid requestKey)
         {
-            //JobRequest j = db.JobRequest.Find(requestKey);
-
-            //JobRequestObject model = new JobRequestObject();
-
-            //model.RequestKey = j.RequestKey;
-            //model.LocationKey = j.LocationKey;
-            //model.LocationName = j.Location.Lname;
-            //model.CustomerKey = j.CustomerKey;
-            //model.LocationContactKey = j.LocationContactKey;
-            //model.LocationContactName = j.LocationContact.Cname;
-            //model.LocationContactAddress = j.Location.Address;
-            //model.LocationContactCityName = j.Location.CityList.CityName;
-            //model.LocationContactStateName = j.Location.StateList.StateName;
-            //model.LocationContactZipCode = j.Location.ZIPcode;
-            //model.TradeKey = j.TradeKey;
-            //model.TradeName = j.Trade.TName;
-            //model.JobPriorityKey = j.JobPriorityKey;
-            //model.JobPriority = j.JobType.TName;
-            //model.ServiceNeeded = j.ServiceNeeded;
-            //model.DNEamount = j.DNEamount;
-            //model.SpecialNote = j.SpecialNote;
-            //model.ServiceDate = j.ServiceDate;
-            //model.ServiceByTime = j.ServiceByTime;
-            //model.SVCLocationContact = j.SVCLocationContact;
-            //model.SvcLocationContactPhone = j.SvcLocationContactPhone;
-            //model.EntryDatetime = j.EntryDatetime;
-            //return model;
+            
             JobRequest j = db.JobRequest.Find(requestKey);
 
             JobRequestObject model = new JobRequestObject();
 
             model.RequestKey = j.RequestKey;
+            if (j.ServiceNeededByOrOn == null) model.ServiceNeededByOrOn = "Service Needed by";
+            else model.ServiceNeededByOrOn = j.ServiceNeededByOrOn;
             model.LocationKey = j.LocationKey;
             model.LocationName = j.Location.Lname;
             model.CustomerKey = j.CustomerKey;
             model.CustomerName = j.Customer.Cname;
-            model.LocationContactKey = j.LocationContactKey;
-            model.LocationContactName = j.LocationContact.Cname;
-            model.LocationContactAddress = j.LocationContact.Location.Address;
-            model.LocationContactCityName = j.LocationContact.Location.CityList.CityName;
-            model.LocationContactStateName = j.LocationContact.Location.StateList.StateName;
-            model.LocationContactZipCode = j.LocationContact.Location.ZIPcode;
+            model.CContactKey = j.CContactKey;
+            model.ContactName = j.CustomerContact.Cname;
+            model.LocationContactAddress = j.Location.Address;
+            model.LocationContactCityName = j.Location.CityList.CityName;
+            model.LocationContactStateName = j.Location.StateList.StateName;
+            model.LocationContactZipCode = j.Location.ZIPcode;
 
             model.TradeKey = j.TradeKey;
             model.TradeName = j.Trade.TName;
@@ -268,10 +256,11 @@ namespace RCScustomer.DAL
                  
                 _job.LocationKey = obj.LocationKey;
                 _job.CustomerKey = GlobalClass.LoginUser.CustomerKey;
-                _job.LocationContactKey = obj.LocationContactKey;
+                _job.CContactKey = obj.CContactKey;
                 _job.TradeKey = obj.TradeKey;
                 _job.JobPriorityKey = obj.JobPriorityKey;
                 _job.ServiceNeeded = obj.ServiceNeeded;
+                _job.ServiceNeededByOrOn = obj.ServiceNeededByOrOn;
                 _job.DNEamount = obj.DNEamount;
                 _job.SpecialNote = obj.SpecialNote;
                 _job.ServiceDate = obj.ServiceDate;

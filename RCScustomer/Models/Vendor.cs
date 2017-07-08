@@ -39,6 +39,9 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> CompanyKey { get; set; }
         public Nullable<System.DateTime> GLinsurenceExpiry { get; set; }
         public Nullable<System.DateTime> WCinsurenceExpiry { get; set; }
+        public string lat { get; set; }
+        public string lng { get; set; }
+        public Nullable<long> NetID { get; set; }
     
         public virtual CityList CityList { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

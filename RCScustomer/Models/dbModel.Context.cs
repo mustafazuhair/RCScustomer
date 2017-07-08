@@ -93,5 +93,6 @@ namespace RCScustomer.Models
         public virtual DbSet<JobEmail> JobEmail { get; set; }
         public virtual DbSet<JobFile> JobFile { get; set; }
         public virtual DbSet<JobSalesInvoiceEstimateStatus> JobSalesInvoiceEstimateStatus { get; set; }
+        public virtual DbSet<CustomerJobStatus> CustomerJobStatus { get; set; }
     }
 }

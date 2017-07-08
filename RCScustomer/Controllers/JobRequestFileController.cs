@@ -24,14 +24,14 @@ namespace RCScustomer.Controllers
 
                 model = setup.GetJobFileAttachmentObjects(id);
 
-                ViewBag.DocumentTypeKey = new SelectList(db.DocumentType.Where(m => m.DocumentForID == 2 && m.IsDelete == false && m.CompanyKey == GlobalClass.Company.CompanyKey).OrderBy(m => m.TName), "ID", "TName");
+                ViewBag.DocumentTypeKey = new SelectList(db.DocumentType.Where(m => m.DocumentForID == 6 && m.IsDelete == false && m.CompanyKey == GlobalClass.Company.CompanyKey).OrderBy(m => m.TName), "ID", "TName");
 
                 return View(model);
             }
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
 
@@ -69,14 +69,14 @@ namespace RCScustomer.Controllers
 
                 model = setup.GetJobFileAttachmentObjects(model.RequestObj.RequestKey);
 
-                ViewBag.DocumentTypeKey = new SelectList(db.DocumentType.Where(m => m.DocumentForID == 2 && m.IsDelete == false && m.CompanyKey == GlobalClass.Company.CompanyKey).OrderBy(m => m.TName), "ID", "TName");
+                ViewBag.DocumentTypeKey = new SelectList(db.DocumentType.Where(m => m.DocumentForID == 6 && m.IsDelete == false && m.CompanyKey == GlobalClass.Company.CompanyKey).OrderBy(m => m.TName), "ID", "TName");
 
                 return View(model);
             }
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
     }

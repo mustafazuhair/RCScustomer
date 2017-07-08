@@ -1,0 +1,68 @@
+﻿@model RCScustomer.Models.CustomerObjectClass
+@{
+    ViewBag.Title = "MyProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="panel panel-default ">
+        <div class="panel-heading">My Profile</div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContactObj.Cname, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.ContactObj.Cname)                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContactObj.Title, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.ContactObj.Title)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContactObj.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.ContactObj.Phone)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContactObj.ALTPhone, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.ContactObj.ALTPhone)
+                        </div>
+                    </div>                
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContactObj.FAX, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.ContactObj.FAX)
+                        </div>
+                    </div>    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContactObj.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.ContactObj.Email)
+                        </div>
+                    </div>    
+
+                 
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+

@@ -31,6 +31,11 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> SalesStatusKey { get; set; }
         public Nullable<bool> EstimatesSent { get; set; }
         public Nullable<bool> InvoiceSent { get; set; }
+        public string InvoiceNo { get; set; }
+        public string Terms { get; set; }
+        public string WorksPerformed { get; set; }
+        public string QBrefNo { get; set; }
+        public Nullable<bool> SentToCustomer { get; set; }
     
         public virtual Job Job { get; set; }
         public virtual SalesStatus SalesStatus { get; set; }

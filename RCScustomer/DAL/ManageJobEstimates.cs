@@ -17,7 +17,7 @@ namespace RCScustomer.DAL
         {
             List<EstimateClass> model = new List<EstimateClass>();
             var temp = (from m in db.JobSalesInvoice
-                        where m.IsEstimate == true && m.IsActive == true && m.Job.CustomerKey==GlobalClass.LoginUser.CustomerKey
+                        where m.IsEstimate == true && m.IsActive == true && m.SentToCustomer==true && m.Job.CustomerKey==GlobalClass.LoginUser.CustomerKey
                         select new EstimateClass
                         {
                             LocationName = m.Job.Location.Lname,
@@ -25,7 +25,8 @@ namespace RCScustomer.DAL
                             Jobname = m.Job.JobName,
                             SalesStatusName = m.SalesStatus.TName,
                             EntryDate = m.CreatedDate,
-                            InvoiceKey = m.InvoiceKey
+                            InvoiceKey = m.InvoiceKey,JobKey=m.JobKey,
+                            InvoiceNo=m.InvoiceNo
                         });
             temp = temp.OrderByDescending(m=>m.EntryDate);
             model = temp.ToList();
@@ -53,6 +54,7 @@ namespace RCScustomer.DAL
                 {
                     obj.EstimateObj.IsNew = true;
                     obj.EstimateObj.Remark = "";
+                    obj.EstimateObj.ViewRemark = "";
                     obj.EstimateObj.Accept = false;
                     obj.EstimateObj.Decline = false;
                     obj.EstimateObj.Resubmit = false;
@@ -64,6 +66,7 @@ namespace RCScustomer.DAL
                 {
                     obj.EstimateObj.IsNew = false;
                     obj.EstimateObj.Remark = est.Remark;
+                    obj.EstimateObj.ViewRemark = est.Remark;
                     obj.EstimateObj.Accept = est.Accept;
                     obj.EstimateObj.Decline = est.Decline;
                     obj.EstimateObj.Resubmit = est.Resubmit;
@@ -103,7 +106,8 @@ namespace RCScustomer.DAL
                     obj.config.CustomerPO = custom.ZIPcode;
                     obj.config.CustomerName = custom.Cname;
                     obj.config.IsCustomerDetailVisible = false;
-                    obj.config.JobDate = job.ScheduleDate.Value.ToShortDateString();
+                    if (job.ScheduleDate == null) obj.config.JobDate = "";
+                    else obj.config.JobDate = job.ScheduleDate.Value.ToShortDateString();
                     obj.config.IsCustomerSignVisible = false;
                     obj.config.IsDateVisible = false;
                     obj.config.IsServiceLicationVisible = false;
@@ -128,7 +132,8 @@ namespace RCScustomer.DAL
                     obj.config.CustomerPO = custom.ZIPcode;
                     obj.config.CustomerName = custom.Cname;
                     obj.config.IsCustomerDetailVisible = jc.IsCustomerDetailVisible;
-                    obj.config.JobDate = job.ScheduleDate.Value.ToShortDateString();
+                    if (job.ScheduleDate == null) obj.config.JobDate = "";
+                    else obj.config.JobDate = job.ScheduleDate.Value.ToShortDateString();
                     obj.config.IsCustomerSignVisible = jc.IsCustomerSignVisible;
                     obj.config.IsDateVisible = jc.IsDateVisible;
                     obj.config.IsServiceLicationVisible = jc.IsServiceLicationVisible;
@@ -196,6 +201,7 @@ namespace RCScustomer.DAL
                     st.Accept = true;
                     st.Decline = false;
                     st.Resubmit = false;
+                    st.Remark =GlobalClass.LoginUser.Cname+" accepted this quote. "+ st.Remark;
                 }
                 if (model.EstimateStatus == 2)
                 {
@@ -209,15 +215,16 @@ namespace RCScustomer.DAL
                     st.Decline = false;
                     st.Resubmit = true;
                 }
+                st.IsSeen = false;
                 db.JobSalesInvoiceEstimateStatus.Add(st);
                 db.SaveChanges();
-                obj.key = model.EstimateObj.JobKey;
+                obj.key = model.EstimateObj.InvoiceKey;
                 obj.flag = 1;
                 obj.mess = "Data has been Saved";
             }
             catch(Exception ex)
             {
-                obj.flag = 1;
+                obj.flag = 0;
                 obj.mess = ex.ToString();
             }
             return obj;
@@ -267,10 +274,7 @@ namespace RCScustomer.DAL
                     obj.config.CustomerPO = custom.ZIPcode;
                     obj.config.CustomerName = custom.Cname;
                     obj.config.IsCustomerDetailVisible = false;
-                    obj.config.JobDate = job.ScheduleDate.Value.ToShortDateString();
-                    obj.config.IsCustomerSignVisible = false;
-                    obj.config.IsDateVisible = false;
-                    obj.config.IsServiceLicationVisible = false;
+                  
                 }
                 else
                 {
@@ -292,10 +296,7 @@ namespace RCScustomer.DAL
                     obj.config.CustomerPO = custom.ZIPcode;
                     obj.config.CustomerName = custom.Cname;
                     obj.config.IsCustomerDetailVisible = jc.IsCustomerDetailVisible;
-                    obj.config.JobDate = job.ScheduleDate.Value.ToShortDateString();
-                    obj.config.IsCustomerSignVisible = jc.IsCustomerSignVisible;
-                    obj.config.IsDateVisible = jc.IsDateVisible;
-                    obj.config.IsServiceLicationVisible = jc.IsServiceLicationVisible;
+                   
                 }
                 #endregion
 

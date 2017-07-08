@@ -18,7 +18,7 @@
                     </li>
 
                     <li>
-                        <a href="@Url.Action("FilesandAttachments", "JobDetails",new { id=Model.JobKey})">Files and Attachments</a>
+                        <a href="@Url.Action("FilesandAttachments", "JobDetails",new { id=Model.JobKey})">Attach Documents</a>
                     </li>
 
                 </ul>
@@ -101,7 +101,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @readonly = "readonly"  })
                                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -126,18 +126,24 @@
                                 @Html.LabelFor(model => model.TradeName, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
                                     @*@Html.DropDownList("TradeKey", null, htmlAttributes: new { id = "TradeKey", @required = "required", @class = "form-control" })*@
-                                    @Html.EditorFor(model => model.TradeName, new { htmlAttributes = new { id = "TradeName", @class = "form-control", disabled = "disabled" } })
+                                    @Html.EditorFor(model => model.TradeName, new { htmlAttributes = new { id = "TradeName", @class = "form-control", @readonly = "readonly" } })
                                     @Html.HiddenFor(model => model.TradeKey, new { id = "TradeKey" })
                                     @Html.ValidationMessageFor(model => model.TradeKey, "", new { @class = "text-danger" })
 
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CustomerJobStatus, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.CustomerJobStatus, new { htmlAttributes = new { id = "CustomerJobStatus", @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.CustomerJobStatus, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.JobStatusName, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
                                    
-                                    @Html.EditorFor(model => model.JobStatusName, new { htmlAttributes = new { id = "JobStatusName", @class = "form-control" } })
+                                    @Html.EditorFor(model => model.JobStatusName, new { htmlAttributes = new { id = "JobStatusName", @class = "form-control", @readonly = "readonly" } })
                                     @Html.HiddenFor(model => model.JobStatusKey, new { id = "JobStatusKey" })
                                     @Html.ValidationMessageFor(model => model.JobStatusKey, "", new { @class = "text-danger" })
 
@@ -147,7 +153,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.EntryDate, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">                                   
-                                        @Html.EditorFor(model => model.EntryDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })                             
+                                        @Html.EditorFor(model => model.EntryDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })                             
                                 </div>
                             </div>
 

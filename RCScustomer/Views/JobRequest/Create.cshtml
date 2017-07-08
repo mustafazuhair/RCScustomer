@@ -9,9 +9,22 @@
 
 @section scripts
 {
-    <script src="~/Scripts/scStateCity.js"></script>
+   <script src="~/Scripts/scLocation.js"></script>
+<script src="~/Scripts/scTrades.js"></script>
 }
 <script type="text/javascript">
+    
+
+    $(window).on('beforeunload', function (e) {
+       
+      
+        if (($("#mainlink").val() == "")   || ($("#goback").val() == "") || ($("#Cancel").val() == "") || ($("#Next").val() == "") || ($("#Close").val() == "") || ($("#Save").val() == ""))
+        {
+            return true;
+        }
+        else e=null; // i.e; if form state change show warning box, else don't show it.
+    });
+
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : event.keyCode;
         if (charCode != 46 && charCode > 31
@@ -28,6 +41,47 @@
             yearRange: 'c-80:c+900'
         });
     });
+
+    $(document).ready(function () {
+        $('#Next').click(function (e) {
+            $(window).off('beforeunload');
+
+        });
+        $('#Save').click(function (e) {
+            $(window).off('beforeunload');
+
+        });
+        $('#Close').click(function (e) {
+            $(window).off('beforeunload');
+
+        });
+       
+        $('#SaveCloseTab1').click(function (e) {
+            $(window).off('beforeunload');
+
+        });
+        $('#Cancel').click(function (e) {
+            $(window).off('beforeunload');
+
+        }); $('#Cancel1').click(function (e) {
+            $(window).off('beforeunload');
+
+        });
+
+
+        $('#mainlink').click(function (e) {
+            $('#m1').removeClass('active');
+          
+            $('#m2').addClass('active');
+          
+        });
+        $('#goback').click(function (e) {
+            $('#m2').removeClass('active');
+
+            $('#m1').addClass('active');
+
+        });
+    });
 </script>
 
 
@@ -41,14 +95,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <ul class="nav nav-pills">
-                    <li class="active">
+                    <li id="m1" class="active">
                         <a href="#1a" data-toggle="pill">Main</a>
                     </li>
-                    <li>
+                    <li id="m2">
                         <a href="#2a" data-toggle="pill">Optional Information</a>
                     </li>
                     <li>
-                        <a href="#3a" data-toggle="pill">Files and attachment</a>
+                        <a href="#3a" data-toggle="pill">Attach Documents</a>
                     </li>
                     
                 </ul>
@@ -76,39 +130,26 @@
                                         @Html.EditorFor(model => model.LocationName, new { htmlAttributes = new { id = "LocationName", @class = "form-control" } })
                                         @Html.HiddenFor(model => model.LocationKey, new { id = "LocationKey" })
                                         @Html.ValidationMessageFor(model => model.LocationKey, "", new { @class = "text-danger" })
-
-                                    </div>
-                                 
-                                </div>
-
-                                
+                                    </div>                                 
+                                </div>                                
                             </div>
-
                             <div class="col-md-6">
-
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.LocationContactName, htmlAttributes: new { @class = "control-label col-md-3" })
-                                    <div class="col-md-7">
-                                        @*@Html.DropDownList("LocationKey", null, htmlAttributes: new { id = "LocationKey", @required = "required", @class = "form-control" })*@
-                                        @Html.EditorFor(model => model.LocationContactName, new { htmlAttributes = new { id = "LocationContactName", @class = "form-control" } })
-                                        @Html.HiddenFor(model => model.LocationContactKey, new { id = "LocationContactKey" })
-                                        @Html.ValidationMessageFor(model => model.LocationContactKey, "", new { @class = "text-danger" })
-
+                                    @Html.LabelFor(model => model.ContactName, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">                                 
+                                        @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { id = "ContactName", @class = "form-control", @readonly = "readonly" } })
+                                        @Html.HiddenFor(model => model.CContactKey, new { id = "CContactKey" })
+                                        @Html.ValidationMessageFor(model => model.CContactKey, "", new { @class = "text-danger" })
                                     </div>
-
                                 </div>
-
-
-
                             </div>
-
 
                             <div class="col-md-6">
 
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.LocationContactAddress, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.LocationContactAddress, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        @Html.EditorFor(model => model.LocationContactAddress, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                         @Html.ValidationMessageFor(model => model.LocationContactAddress, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -118,7 +159,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.LocationContactCityName, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.LocationContactCityName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        @Html.EditorFor(model => model.LocationContactCityName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                         @Html.ValidationMessageFor(model => model.LocationContactCityName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -128,7 +169,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.LocationContactStateName, htmlAttributes: new { @class = "control-label col-md-4" })
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.LocationContactStateName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        @Html.EditorFor(model => model.LocationContactStateName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                         @Html.ValidationMessageFor(model => model.LocationContactStateName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -136,7 +177,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.LocationContactZipCode, htmlAttributes: new { @class = "control-label col-md-4" })
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.LocationContactZipCode, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        @Html.EditorFor(model => model.LocationContactZipCode, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                         @Html.ValidationMessageFor(model => model.LocationContactZipCode, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -150,9 +191,9 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.TradeName, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @*@Html.DropDownList("TradeKey", null, htmlAttributes: new { id = "TradeKey", @required = "required", @class = "form-control" })*@
-                                        @Html.EditorFor(model => model.TradeName, new { htmlAttributes = new { id = "TradeName", @class = "form-control" } })
-                                        @Html.HiddenFor(model => model.TradeKey, new { id = "TradeKey" })
+                                        @Html.DropDownList("TradeKey", null, "---CHOOSE TRADE---", htmlAttributes: new { id = "TradeKey", @required = "required", @class = "form-control" })
+                                        @*@Html.EditorFor(model => model.TradeName, new { htmlAttributes = new { id = "TradeName", @class = "form-control" } })
+                                        @Html.HiddenFor(model => model.TradeKey, new { id = "TradeKey" })*@
                                         @Html.ValidationMessageFor(model => model.TradeKey, "", new { @class = "text-danger" })
 
                                     </div>
@@ -173,7 +214,7 @@
                                     @Html.LabelFor(model => model.ServiceNeeded, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                       
-                                        @Html.EditorFor(model => model.ServiceNeeded, new { htmlAttributes = new { id = "ServiceNeeded", @class = "form-control" } })
+                                        @Html.TextAreaFor(model => model.ServiceNeeded,  new { id = "ServiceNeeded", @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.ServiceNeeded, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -184,7 +225,10 @@
 
 
                     <div class="panel-footer">
-                        <a href="#2a" data-toggle="pill" class="btn btn-primary">Next >></a>
+                        <a href="#2a" data-toggle="pill" id="mainlink" class="btn btn-primary">Next >></a>
+
+                        <input type="submit" id="SaveCloseTab1" name="SaveCloseTab1" value="Save and Close" class="btn btn-primary" />
+                        <input type="submit" id="Cancel1" name="Cancel1" value="Cancel" class="btn btn-primary" />
                     </div>
                 </div>
             </div>
@@ -204,16 +248,19 @@
                                     <div class="col-md-7">
                                         @Html.EditorFor(model => model.DNEamount, new { htmlAttributes = new { id = "DNEamount", @class = "form-control" } })
                                     </div>
-
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ServiceDate, htmlAttributes: new { @class = "control-label col-md-3" })
-                                    <div class="col-md-7">
-                                        @Html.EditorFor(model => model.ServiceDate, new { htmlAttributes = new { id = "ServiceDate", @class = "form-control datepicker" } })
-                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.RadioButtonFor(model => model.ServiceNeededByOrOn, "Service Needed by") Service Needed by
+                                        @Html.RadioButtonFor(model => model.ServiceNeededByOrOn, "Service Needed On") Service Needed On
+                                        @Html.ValidationMessageFor(model => model.ServiceNeededByOrOn, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.ServiceDate, new { htmlAttributes = new { id = "ServiceDate", @class = "form-control datepicker" } })
+                                        </div>
 
-                                </div>
+                                    </div>
 
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ServiceByTime, htmlAttributes: new { @class = "control-label col-md-3" })
@@ -231,7 +278,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SpecialNote, htmlAttributes: new { @class = "control-label col-md-4" })
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.SpecialNote, new { htmlAttributes = new { id = "SpecialNote", @class = "form-control" } })
+                                        @Html.TextAreaFor(model => model.SpecialNote, new { id = "SpecialNote", @class = "form-control" })
                                     </div>
 
                                 </div>
@@ -256,9 +303,15 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <a href="#1a" data-toggle="pill" class="btn btn-primary"><< Back</a>
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                    </div>
+                        <a href="#1a" id="goback" data-toggle="pill" class="btn btn-primary"><< Back</a>
+                        <input type="submit" id="Save" name="Save" value="Save" class="btn btn-primary" />
+
+                        <input type="submit" id="Close" name="Close" value="Save and Close" class="btn btn-primary" />
+
+                        <input type="submit" id="Next" name="Next" value="Next>>" class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="CHOOSE NEXT FOR ADDING ATTACHMENTS OR SAVE AND CLOSE TO SUBMIT NOW." />
+                        <input type="submit" id="Cancel" name="Cancel" value="Cancel" class="btn btn-primary" />
+                    
+                     </div>
                 </div>
             </div>
         </div>

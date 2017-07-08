@@ -13,6 +13,9 @@ namespace RCScustomer.Models
         [Display(Name = "Customer Name*")]
         [Required(ErrorMessage = "Customer Name is required")]
         public string CustomerName { get; set; }
+        [Display(Name = "Customer Job Status")]
+        [Required(ErrorMessage = "Customer Job Status is required")]
+        public string CustomerJobStatus { get; set; }
 
         [Display(Name = "Service Location*")]
         [Required(ErrorMessage = "Service Location is required")]

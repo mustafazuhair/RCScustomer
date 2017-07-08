@@ -67,7 +67,7 @@
                     
 
                     <li>
-                        <a href="@Url.Action("FilesandAttachments", "JobDetails",new { id=Model.Job.JobKey})">Files and Attachments</a>
+                        <a href="@Url.Action("FilesandAttachments", "JobDetails",new { id=Model.Job.JobKey})">Attach Documents</a>
                     </li>
 
                 </ul>
@@ -117,6 +117,7 @@
                         @*<input type="submit" id="savenEmail" name="savenEmail" value="Add Activity & email" class="btn btn-primary" />*@
                         <input type="submit" id="save" name="save" value="Add Activity" class="btn btn-primary" />
                         <input type="submit" id="refresh" name="refresh" value="Refresh" class="btn btn-primary" />
+                        <a href="@Url.Action("FilesandAttachments", "JobDetails",new { id=Model.Job.JobKey})" class="btn btn-primary" title="CHOOSE NEXT FOR ADDING ATTACHMENTS OR SAVE AND CLOSE TO SUBMIT NOW.">>>Next</a>
                     </div>
                 </div>
             </div>

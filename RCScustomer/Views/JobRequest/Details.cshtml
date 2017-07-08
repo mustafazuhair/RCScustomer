@@ -50,9 +50,8 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.LocationContactName, htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-7">
-                                @Html.EditorFor(model => model.LocationContactName, new { htmlAttributes = new { id = "LocationContactName", @class = "form-control", disabled = "disabled" } })
-                                @Html.HiddenFor(model => model.LocationContactKey, new { id = "LocationContactKey" })
-                                @Html.ValidationMessageFor(model => model.LocationContactKey, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { id = "ContactName", @class = "form-control", disabled = "disabled" } })
+                              
                             </div>
                         </div>
                     </div>
@@ -143,7 +142,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.ServiceDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                            @Html.DisplayFor(model => model.ServiceNeededByOrOn)
                             <div class="col-md-7">
                                 @Html.EditorFor(model => model.ServiceDate, new { htmlAttributes = new { id = "ServiceDate", @class = "form-control", disabled = "disabled" } })
                             </div>

@@ -30,6 +30,7 @@
                 <th>Customer Job Name</th>
                 <th>Status</th>
                 <th>Entry Date</th>
+                <th>Invoice No</th>
                 <th>View</th>
                
             </tr>
@@ -48,7 +49,8 @@
                         @Html.DisplayFor(modelItem => item.TradeName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Jobname)
+                        <a href="@Url.Action("ViewJobDetails", "JobDetails", new { id = item.JobKey })">@Html.DisplayFor(modelItem => item.Jobname)</a>
+                 
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SalesStatusName)
@@ -57,7 +59,9 @@
                     <td>
                         @string.Format("{0:D}",item.EntryDate)
                     </td>
-
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvoiceNo)
+                    </td>
 
                     <td>
                        

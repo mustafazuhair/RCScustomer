@@ -126,6 +126,16 @@
           <Property Name="CustomerKey" Type="uniqueidentifier" />
           <Property Name="JobKey" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="CustomerJobStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TName" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CompanyKey" Type="uniqueidentifier" />
+          <Property Name="Jlevel" Type="int" />
+        </EntityType>
         <EntityType Name="CustomerLabor">
           <Key>
             <PropertyRef Name="Labor" />
@@ -146,6 +156,7 @@
           <Property Name="CustomerKey" Type="uniqueidentifier" />
           <Property Name="LocationKey" Type="uniqueidentifier" />
           <Property Name="IsDelete" Type="bit" />
+          <Property Name="CContactKey" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="CustomerLogin">
           <Key>
@@ -222,6 +233,14 @@
           <Property Name="QuoteConfiguration" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CompanyKey" Type="uniqueidentifier" />
+          <Property Name="EmailBodyWorkOrder" Type="nvarchar(max)" />
+          <Property Name="EmailBodyInvoice" Type="nvarchar(max)" />
+          <Property Name="WorkOrderHeader" Type="nvarchar(max)" />
+          <Property Name="InvoiceHeader" Type="nvarchar(max)" />
+          <Property Name="EstimateHeader" Type="nvarchar(max)" />
+          <Property Name="SubjectWorkOrder" Type="nvarchar(max)" />
+          <Property Name="SubjectEstimate" Type="nvarchar(max)" />
+          <Property Name="SubjectInvoice" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="DocumentFor">
           <Key>
@@ -323,6 +342,18 @@
           <Property Name="LocationKey" Type="uniqueidentifier" />
           <Property Name="LocationContactKey" Type="uniqueidentifier" />
           <Property Name="IsDelete" Type="bit" />
+          <Property Name="VendorDNE" Type="nvarchar(max)" />
+          <Property Name="CompletionDate" Type="datetime" />
+          <Property Name="RevCustomerDNE" Type="nvarchar(max)" />
+          <Property Name="RevVendorDNE" Type="nvarchar(max)" />
+          <Property Name="Invoiced" Type="bit" />
+          <Property Name="Estimates" Type="bit" />
+          <Property Name="WorkOrder" Type="bit" />
+          <Property Name="VBill" Type="bit" />
+          <Property Name="PayableStatus" Type="nvarchar(max)" />
+          <Property Name="ReceivableStatus" Type="nvarchar(max)" />
+          <Property Name="AccountingStatusKey" Type="uniqueidentifier" />
+          <Property Name="CustomerJobStatusKey" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="JobAccountManager">
           <Key>
@@ -379,6 +410,7 @@
           <Property Name="FileContent" Type="image" />
           <Property Name="FileType" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" />
+          <Property Name="FileName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="JobLocation">
           <Key>
@@ -414,6 +446,9 @@
           <Property Name="SvcLocationContactPhone" Type="nvarchar(max)" />
           <Property Name="EntryDatetime" Type="datetime" />
           <Property Name="IsRequest" Type="bit" />
+          <Property Name="CContactKey" Type="uniqueidentifier" />
+          <Property Name="Isviewed" Type="bit" />
+          <Property Name="ServiceNeededByOrOn" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="JobRequestAttachments">
           <Key>
@@ -440,6 +475,11 @@
           <Property Name="SalesStatusKey" Type="uniqueidentifier" />
           <Property Name="EstimatesSent" Type="bit" />
           <Property Name="InvoiceSent" Type="bit" />
+          <Property Name="InvoiceNo" Type="nvarchar(max)" />
+          <Property Name="Terms" Type="nvarchar(max)" />
+          <Property Name="WorksPerformed" Type="nvarchar(max)" />
+          <Property Name="QBrefNo" Type="nvarchar(max)" />
+          <Property Name="SentToCustomer" Type="bit" />
         </EntityType>
         <EntityType Name="JobSalesInvoiceDetail">
           <Key>
@@ -467,6 +507,7 @@
           <Property Name="Accept" Type="bit" />
           <Property Name="Decline" Type="bit" />
           <Property Name="Resubmit" Type="bit" />
+          <Property Name="IsSeen" Type="bit" />
         </EntityType>
         <EntityType Name="JobSignOff">
           <Key>
@@ -603,6 +644,8 @@
           <Property Name="IsVendor" Type="bit" />
           <Property Name="IsVisitDate" Type="bit" />
           <Property Name="IsReturnDate" Type="bit" />
+          <Property Name="IsVendorPh" Type="bit" />
+          <Property Name="IsLocationPh" Type="bit" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -619,6 +662,8 @@
           <Property Name="ZIPcode" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CompanyKey" Type="uniqueidentifier" />
+          <Property Name="lat" Type="nvarchar(max)" />
+          <Property Name="lng" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="LocationAttachement">
           <Key>
@@ -830,6 +875,9 @@
           <Property Name="CompanyKey" Type="uniqueidentifier" />
           <Property Name="GLinsurenceExpiry" Type="datetime" />
           <Property Name="WCinsurenceExpiry" Type="datetime" />
+          <Property Name="lat" Type="nvarchar(max)" />
+          <Property Name="lng" Type="nvarchar(max)" />
+          <Property Name="NetID" Type="bigint" />
         </EntityType>
         <EntityType Name="VendorAttachement">
           <Key>
@@ -902,6 +950,9 @@
           <Property Name="TripCharge" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ServiceCharge" Type="decimal" Precision="18" Scale="2" />
           <Property Name="IsDelete" Type="bit" />
+          <Property Name="EmergencyHourlyRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EmergencyTripCharge" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EmergencyServiceCharge" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="VendorTradeCharge">
           <Key>
@@ -1193,6 +1244,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CustomerLocation_CustomerContact">
+          <End Role="CustomerContact" Type="Self.CustomerContact" Multiplicity="0..1" />
+          <End Role="CustomerLocation" Type="Self.CustomerLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerContact">
+              <PropertyRef Name="ContactKey" />
+            </Principal>
+            <Dependent Role="CustomerLocation">
+              <PropertyRef Name="CContactKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CustomerLocation_Location">
           <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
           <End Role="CustomerLocation" Type="Self.CustomerLocation" Multiplicity="*" />
@@ -1421,6 +1484,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Job_CustomerJobStatus">
+          <End Role="CustomerJobStatus" Type="Self.CustomerJobStatus" Multiplicity="0..1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerJobStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CustomerJobStatusKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Job_JobStatus">
           <End Role="JobStatus" Type="Self.JobStatus" Multiplicity="0..1" />
           <End Role="Job" Type="Self.Job" Multiplicity="*" />
@@ -1646,6 +1721,18 @@
             </Principal>
             <Dependent Role="JobRequest">
               <PropertyRef Name="CustomerKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRequest_CustomerContact">
+          <End Role="CustomerContact" Type="Self.CustomerContact" Multiplicity="0..1" />
+          <End Role="JobRequest" Type="Self.JobRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerContact">
+              <PropertyRef Name="ContactKey" />
+            </Principal>
+            <Dependent Role="JobRequest">
+              <PropertyRef Name="CContactKey" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2499,6 +2586,7 @@
           <EntitySet Name="CustomerContact" EntityType="Self.CustomerContact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerContactMesseging" EntityType="Self.CustomerContactMesseging" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerJob" EntityType="Self.CustomerJob" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerJobStatus" EntityType="Self.CustomerJobStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerLabor" EntityType="Self.CustomerLabor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerLocation" EntityType="Self.CustomerLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerLogin" EntityType="Self.CustomerLogin" Schema="dbo" store:Type="Tables" />
@@ -2646,6 +2734,10 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="CustomerLocation" EntitySet="CustomerLocation" />
           </AssociationSet>
+          <AssociationSet Name="FK_CustomerLocation_CustomerContact" Association="Self.FK_CustomerLocation_CustomerContact">
+            <End Role="CustomerContact" EntitySet="CustomerContact" />
+            <End Role="CustomerLocation" EntitySet="CustomerLocation" />
+          </AssociationSet>
           <AssociationSet Name="FK_CustomerLocation_Location" Association="Self.FK_CustomerLocation_Location">
             <End Role="Location" EntitySet="Location" />
             <End Role="CustomerLocation" EntitySet="CustomerLocation" />
@@ -2722,6 +2814,10 @@
             <End Role="CustomerContact" EntitySet="CustomerContact" />
             <End Role="Job" EntitySet="Job" />
           </AssociationSet>
+          <AssociationSet Name="FK_Job_CustomerJobStatus" Association="Self.FK_Job_CustomerJobStatus">
+            <End Role="CustomerJobStatus" EntitySet="CustomerJobStatus" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
           <AssociationSet Name="FK_Job_JobStatus" Association="Self.FK_Job_JobStatus">
             <End Role="JobStatus" EntitySet="JobStatus" />
             <End Role="Job" EntitySet="Job" />
@@ -2796,6 +2892,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_JobRequest_Customer" Association="Self.FK_JobRequest_Customer">
             <End Role="Customer" EntitySet="Customer" />
+            <End Role="JobRequest" EntitySet="JobRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRequest_CustomerContact" Association="Self.FK_JobRequest_CustomerContact">
+            <End Role="CustomerContact" EntitySet="CustomerContact" />
             <End Role="JobRequest" EntitySet="JobRequest" />
           </AssociationSet>
           <AssociationSet Name="FK_JobRequest_JobType" Association="Self.FK_JobRequest_JobType">
@@ -3672,6 +3772,19 @@
             <End Role="JobSalesInvoice" EntitySet="JobSalesInvoice" />
             <End Role="JobSalesInvoiceEstimateStatus" EntitySet="JobSalesInvoiceEstimateStatus" />
           </AssociationSet>
+          <AssociationSet Name="FK_CustomerLocation_CustomerContact" Association="RCSdbModel.FK_CustomerLocation_CustomerContact">
+            <End Role="CustomerContact" EntitySet="CustomerContact" />
+            <End Role="CustomerLocation" EntitySet="CustomerLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRequest_CustomerContact" Association="RCSdbModel.FK_JobRequest_CustomerContact">
+            <End Role="CustomerContact" EntitySet="CustomerContact" />
+            <End Role="JobRequest" EntitySet="JobRequest" />
+          </AssociationSet>
+          <EntitySet Name="CustomerJobStatus" EntityType="RCSdbModel.CustomerJobStatus" />
+          <AssociationSet Name="FK_Job_CustomerJobStatus" Association="RCSdbModel.FK_Job_CustomerJobStatus">
+            <End Role="CustomerJobStatus" EntitySet="CustomerJobStatus" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CityList">
           <Key>
@@ -3817,6 +3930,8 @@
           <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_Job_CustomerContact" FromRole="CustomerContact" ToRole="Job" />
           <NavigationProperty Name="JobConfiguration" Relationship="RCSdbModel.FK_JobConfiguration_CustomerContact" FromRole="CustomerContact" ToRole="JobConfiguration" />
           <NavigationProperty Name="CustomerContactMesseging" Relationship="RCSdbModel.FK_CustomerContactMesseging_CustomerContact" FromRole="CustomerContact" ToRole="CustomerContactMesseging" />
+          <NavigationProperty Name="CustomerLocation" Relationship="RCSdbModel.FK_CustomerLocation_CustomerContact" FromRole="CustomerContact" ToRole="CustomerLocation" />
+          <NavigationProperty Name="JobRequest" Relationship="RCSdbModel.FK_JobRequest_CustomerContact" FromRole="CustomerContact" ToRole="JobRequest" />
         </EntityType>
         <EntityType Name="CustomerJob">
           <Key>
@@ -3850,6 +3965,8 @@
           <Property Name="IsDelete" Type="Boolean" />
           <NavigationProperty Name="Customer" Relationship="RCSdbModel.FK_CustomerLocation_Customer" FromRole="CustomerLocation" ToRole="Customer" />
           <NavigationProperty Name="Location" Relationship="RCSdbModel.FK_CustomerLocation_Location" FromRole="CustomerLocation" ToRole="Location" />
+          <Property Name="CContactKey" Type="Guid" />
+          <NavigationProperty Name="CustomerContact" Relationship="RCSdbModel.FK_CustomerLocation_CustomerContact" FromRole="CustomerLocation" ToRole="CustomerContact" />
         </EntityType>
         <EntityType Name="CustomerLogin">
           <Key>
@@ -3937,6 +4054,14 @@
           <Property Name="QuoteConfiguration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CompanyKey" Type="Guid" />
+          <Property Name="EmailBodyWorkOrder" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailBodyInvoice" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WorkOrderHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EstimateHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectWorkOrder" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectEstimate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectInvoice" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DocumentFor">
           <Key>
@@ -4057,6 +4182,19 @@
           <Property Name="IsDelete" Type="Boolean" />
           <NavigationProperty Name="JobFile" Relationship="RCSdbModel.FK_JobFile_Job" FromRole="Job" ToRole="JobFile" />
           <NavigationProperty Name="JobSalesInvoiceEstimateStatus" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Job" FromRole="Job" ToRole="JobSalesInvoiceEstimateStatus" />
+          <Property Name="VendorDNE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompletionDate" Type="DateTime" Precision="3" />
+          <Property Name="RevCustomerDNE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RevVendorDNE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Invoiced" Type="Boolean" />
+          <Property Name="Estimates" Type="Boolean" />
+          <Property Name="WorkOrder" Type="Boolean" />
+          <Property Name="VBill" Type="Boolean" />
+          <Property Name="PayableStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReceivableStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AccountingStatusKey" Type="Guid" />
+          <Property Name="CustomerJobStatusKey" Type="Guid" />
+          <NavigationProperty Name="CustomerJobStatus" Relationship="RCSdbModel.FK_Job_CustomerJobStatus" FromRole="Job" ToRole="CustomerJobStatus" />
         </EntityType>
         <EntityType Name="JobAccountManager">
           <Key>
@@ -4134,6 +4272,11 @@
           <NavigationProperty Name="StaffList" Relationship="RCSdbModel.FK_JobSalesInvoice_StaffList" FromRole="JobSalesInvoice" ToRole="StaffList" />
           <NavigationProperty Name="JobSalesInvoiceDetail" Relationship="RCSdbModel.FK_JobSalesInvoiceDetail_JobSalesInvoice" FromRole="JobSalesInvoice" ToRole="JobSalesInvoiceDetail" />
           <NavigationProperty Name="JobSalesInvoiceEstimateStatus" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice" FromRole="JobSalesInvoice" ToRole="JobSalesInvoiceEstimateStatus" />
+          <Property Name="InvoiceNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Terms" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WorksPerformed" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QBrefNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SentToCustomer" Type="Boolean" />
         </EntityType>
         <EntityType Name="JobSalesInvoiceDetail">
           <Key>
@@ -4307,6 +4450,8 @@
           <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_JobWorkOrder_Job" FromRole="JobWorkOrder" ToRole="Job" />
           <NavigationProperty Name="Location" Relationship="RCSdbModel.FK_JobWorkOrder_Location" FromRole="JobWorkOrder" ToRole="Location" />
           <NavigationProperty Name="Vendor" Relationship="RCSdbModel.FK_JobWorkOrder_Vendor" FromRole="JobWorkOrder" ToRole="Vendor" />
+          <Property Name="IsVendorPh" Type="Boolean" />
+          <Property Name="IsLocationPh" Type="Boolean" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -4334,6 +4479,8 @@
           <NavigationProperty Name="LocationContact" Relationship="RCSdbModel.FK_LocationContact_Location" FromRole="Location" ToRole="LocationContact" />
           <NavigationProperty Name="LocationNotes" Relationship="RCSdbModel.FK_LocationNotes_Location" FromRole="Location" ToRole="LocationNotes" />
           <NavigationProperty Name="JobRequest" Relationship="RCSdbModel.FK_JobRequest_Location" FromRole="Location" ToRole="JobRequest" />
+          <Property Name="lat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lng" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LocationAttachement">
           <Key>
@@ -4622,6 +4769,9 @@
           <NavigationProperty Name="VendorMesseging" Relationship="RCSdbModel.FK_VendorMesseging_Vendor" FromRole="Vendor" ToRole="VendorMesseging" />
           <NavigationProperty Name="VendorNotes" Relationship="RCSdbModel.FK_VendorNotes_Vendor" FromRole="Vendor" ToRole="VendorNotes" />
           <NavigationProperty Name="VendorTradeCharge" Relationship="RCSdbModel.FK_VendorTradeCharge_Vendor" FromRole="Vendor" ToRole="VendorTradeCharge" />
+          <Property Name="lat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lng" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NetID" Type="Int64" />
         </EntityType>
         <EntityType Name="VendorAttachement">
           <Key>
@@ -4705,6 +4855,9 @@
           <Property Name="ServiceCharge" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="IsDelete" Type="Boolean" />
           <NavigationProperty Name="Trade" Relationship="RCSdbModel.FK_VendorTrade_Trade" FromRole="VendorTrade" ToRole="Trade" />
+          <Property Name="EmergencyHourlyRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EmergencyTripCharge" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EmergencyServiceCharge" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="VendorTradeCharge">
           <Key>
@@ -6125,6 +6278,10 @@
           <NavigationProperty Name="LocationContact" Relationship="RCSdbModel.FK_JobRequest_LocationContact" FromRole="JobRequest" ToRole="LocationContact" />
           <NavigationProperty Name="Trade" Relationship="RCSdbModel.FK_JobRequest_Trade" FromRole="JobRequest" ToRole="Trade" />
           <NavigationProperty Name="JobRequestAttachments" Relationship="RCSdbModel.FK_JobRequestAttachments_JobRequest" FromRole="JobRequest" ToRole="JobRequestAttachments" />
+          <Property Name="CContactKey" Type="Guid" />
+          <NavigationProperty Name="CustomerContact" Relationship="RCSdbModel.FK_JobRequest_CustomerContact" FromRole="JobRequest" ToRole="CustomerContact" />
+          <Property Name="Isviewed" Type="Boolean" />
+          <Property Name="ServiceNeededByOrOn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="JobRequestAttachments">
           <Key>
@@ -6303,6 +6460,7 @@
           <NavigationProperty Name="DocumentType" Relationship="RCSdbModel.FK_JobFile_DocumentType" FromRole="JobFile" ToRole="DocumentType" />
           <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_JobFile_Job" FromRole="JobFile" ToRole="Job" />
           <NavigationProperty Name="StaffList" Relationship="RCSdbModel.FK_JobFile_StaffList" FromRole="JobFile" ToRole="StaffList" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_JobFile_DocumentType">
           <End Type="RCSdbModel.DocumentType" Role="DocumentType" Multiplicity="0..1" />
@@ -6380,6 +6538,7 @@
           <NavigationProperty Name="Customer" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Customer" FromRole="JobSalesInvoiceEstimateStatus" ToRole="Customer" />
           <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_Job" FromRole="JobSalesInvoiceEstimateStatus" ToRole="Job" />
           <NavigationProperty Name="JobSalesInvoice" Relationship="RCSdbModel.FK_JobSalesInvoiceEstimateStatus_JobSalesInvoice" FromRole="JobSalesInvoiceEstimateStatus" ToRole="JobSalesInvoice" />
+          <Property Name="IsSeen" Type="Boolean" />
         </EntityType>
         <Association Name="FK_JobSalesInvoiceEstimateStatus_Customer">
           <End Type="RCSdbModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -6414,6 +6573,53 @@
             </Principal>
             <Dependent Role="JobSalesInvoiceEstimateStatus">
               <PropertyRef Name="InvoiceKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerLocation_CustomerContact">
+          <End Type="RCSdbModel.CustomerContact" Role="CustomerContact" Multiplicity="0..1" />
+          <End Type="RCSdbModel.CustomerLocation" Role="CustomerLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerContact">
+              <PropertyRef Name="ContactKey" />
+            </Principal>
+            <Dependent Role="CustomerLocation">
+              <PropertyRef Name="CContactKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRequest_CustomerContact">
+          <End Type="RCSdbModel.CustomerContact" Role="CustomerContact" Multiplicity="0..1" />
+          <End Type="RCSdbModel.JobRequest" Role="JobRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerContact">
+              <PropertyRef Name="ContactKey" />
+            </Principal>
+            <Dependent Role="JobRequest">
+              <PropertyRef Name="CContactKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CustomerJobStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="TName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CompanyKey" Type="Guid" />
+          <Property Name="Jlevel" Type="Int32" />
+          <NavigationProperty Name="Job" Relationship="RCSdbModel.FK_Job_CustomerJobStatus" FromRole="CustomerJobStatus" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK_Job_CustomerJobStatus">
+          <End Type="RCSdbModel.CustomerJobStatus" Role="CustomerJobStatus" Multiplicity="0..1" />
+          <End Type="RCSdbModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerJobStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CustomerJobStatusKey" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6554,6 +6760,7 @@
           <EntitySetMapping Name="CustomerLocation">
             <EntityTypeMapping TypeName="RCSdbModel.CustomerLocation">
               <MappingFragment StoreEntitySet="CustomerLocation">
+                <ScalarProperty Name="CContactKey" ColumnName="CContactKey" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="LocationKey" ColumnName="LocationKey" />
                 <ScalarProperty Name="CustomerKey" ColumnName="CustomerKey" />
@@ -6631,6 +6838,14 @@
           <EntitySetMapping Name="DocumentationSetup">
             <EntityTypeMapping TypeName="RCSdbModel.DocumentationSetup">
               <MappingFragment StoreEntitySet="DocumentationSetup">
+                <ScalarProperty Name="SubjectInvoice" ColumnName="SubjectInvoice" />
+                <ScalarProperty Name="SubjectEstimate" ColumnName="SubjectEstimate" />
+                <ScalarProperty Name="SubjectWorkOrder" ColumnName="SubjectWorkOrder" />
+                <ScalarProperty Name="EstimateHeader" ColumnName="EstimateHeader" />
+                <ScalarProperty Name="InvoiceHeader" ColumnName="InvoiceHeader" />
+                <ScalarProperty Name="WorkOrderHeader" ColumnName="WorkOrderHeader" />
+                <ScalarProperty Name="EmailBodyInvoice" ColumnName="EmailBodyInvoice" />
+                <ScalarProperty Name="EmailBodyWorkOrder" ColumnName="EmailBodyWorkOrder" />
                 <ScalarProperty Name="CompanyKey" ColumnName="CompanyKey" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="QuoteConfiguration" ColumnName="QuoteConfiguration" />
@@ -6714,6 +6929,18 @@
           <EntitySetMapping Name="Job">
             <EntityTypeMapping TypeName="RCSdbModel.Job">
               <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="CustomerJobStatusKey" ColumnName="CustomerJobStatusKey" />
+                <ScalarProperty Name="AccountingStatusKey" ColumnName="AccountingStatusKey" />
+                <ScalarProperty Name="ReceivableStatus" ColumnName="ReceivableStatus" />
+                <ScalarProperty Name="PayableStatus" ColumnName="PayableStatus" />
+                <ScalarProperty Name="VBill" ColumnName="VBill" />
+                <ScalarProperty Name="WorkOrder" ColumnName="WorkOrder" />
+                <ScalarProperty Name="Estimates" ColumnName="Estimates" />
+                <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
+                <ScalarProperty Name="RevVendorDNE" ColumnName="RevVendorDNE" />
+                <ScalarProperty Name="RevCustomerDNE" ColumnName="RevCustomerDNE" />
+                <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
+                <ScalarProperty Name="VendorDNE" ColumnName="VendorDNE" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="LocationContactKey" ColumnName="LocationContactKey" />
                 <ScalarProperty Name="LocationKey" ColumnName="LocationKey" />
@@ -6788,6 +7015,11 @@
           <EntitySetMapping Name="JobSalesInvoice">
             <EntityTypeMapping TypeName="RCSdbModel.JobSalesInvoice">
               <MappingFragment StoreEntitySet="JobSalesInvoice">
+                <ScalarProperty Name="SentToCustomer" ColumnName="SentToCustomer" />
+                <ScalarProperty Name="QBrefNo" ColumnName="QBrefNo" />
+                <ScalarProperty Name="WorksPerformed" ColumnName="WorksPerformed" />
+                <ScalarProperty Name="Terms" ColumnName="Terms" />
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
                 <ScalarProperty Name="InvoiceSent" ColumnName="InvoiceSent" />
                 <ScalarProperty Name="EstimatesSent" ColumnName="EstimatesSent" />
                 <ScalarProperty Name="SalesStatusKey" ColumnName="SalesStatusKey" />
@@ -6919,6 +7151,8 @@
           <EntitySetMapping Name="JobWorkOrder">
             <EntityTypeMapping TypeName="RCSdbModel.JobWorkOrder">
               <MappingFragment StoreEntitySet="JobWorkOrder">
+                <ScalarProperty Name="IsLocationPh" ColumnName="IsLocationPh" />
+                <ScalarProperty Name="IsVendorPh" ColumnName="IsVendorPh" />
                 <ScalarProperty Name="IsReturnDate" ColumnName="IsReturnDate" />
                 <ScalarProperty Name="IsVisitDate" ColumnName="IsVisitDate" />
                 <ScalarProperty Name="IsVendor" ColumnName="IsVendor" />
@@ -6962,6 +7196,8 @@
           <EntitySetMapping Name="Location">
             <EntityTypeMapping TypeName="RCSdbModel.Location">
               <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="lng" ColumnName="lng" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
                 <ScalarProperty Name="CompanyKey" ColumnName="CompanyKey" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="ZIPcode" ColumnName="ZIPcode" />
@@ -7188,6 +7424,9 @@
           <EntitySetMapping Name="Vendor">
             <EntityTypeMapping TypeName="RCSdbModel.Vendor">
               <MappingFragment StoreEntitySet="Vendor">
+                <ScalarProperty Name="NetID" ColumnName="NetID" />
+                <ScalarProperty Name="lng" ColumnName="lng" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
                 <ScalarProperty Name="WCinsurenceExpiry" ColumnName="WCinsurenceExpiry" />
                 <ScalarProperty Name="GLinsurenceExpiry" ColumnName="GLinsurenceExpiry" />
                 <ScalarProperty Name="CompanyKey" ColumnName="CompanyKey" />
@@ -7271,6 +7510,9 @@
           <EntitySetMapping Name="VendorTrade">
             <EntityTypeMapping TypeName="RCSdbModel.VendorTrade">
               <MappingFragment StoreEntitySet="VendorTrade">
+                <ScalarProperty Name="EmergencyServiceCharge" ColumnName="EmergencyServiceCharge" />
+                <ScalarProperty Name="EmergencyTripCharge" ColumnName="EmergencyTripCharge" />
+                <ScalarProperty Name="EmergencyHourlyRate" ColumnName="EmergencyHourlyRate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="ServiceCharge" ColumnName="ServiceCharge" />
                 <ScalarProperty Name="TripCharge" ColumnName="TripCharge" />
@@ -7327,6 +7569,9 @@
           <EntitySetMapping Name="JobRequest">
             <EntityTypeMapping TypeName="RCSdbModel.JobRequest">
               <MappingFragment StoreEntitySet="JobRequest">
+                <ScalarProperty Name="ServiceNeededByOrOn" ColumnName="ServiceNeededByOrOn" />
+                <ScalarProperty Name="Isviewed" ColumnName="Isviewed" />
+                <ScalarProperty Name="CContactKey" ColumnName="CContactKey" />
                 <ScalarProperty Name="IsRequest" ColumnName="IsRequest" />
                 <ScalarProperty Name="EntryDatetime" ColumnName="EntryDatetime" />
                 <ScalarProperty Name="SvcLocationContactPhone" ColumnName="SvcLocationContactPhone" />
@@ -7386,6 +7631,7 @@
           <EntitySetMapping Name="JobFile">
             <EntityTypeMapping TypeName="RCSdbModel.JobFile">
               <MappingFragment StoreEntitySet="JobFile">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="FileType" ColumnName="FileType" />
                 <ScalarProperty Name="FileContent" ColumnName="FileContent" />
@@ -7403,6 +7649,7 @@
           <EntitySetMapping Name="JobSalesInvoiceEstimateStatus">
             <EntityTypeMapping TypeName="RCSdbModel.JobSalesInvoiceEstimateStatus">
               <MappingFragment StoreEntitySet="JobSalesInvoiceEstimateStatus">
+                <ScalarProperty Name="IsSeen" ColumnName="IsSeen" />
                 <ScalarProperty Name="Resubmit" ColumnName="Resubmit" />
                 <ScalarProperty Name="Decline" ColumnName="Decline" />
                 <ScalarProperty Name="Accept" ColumnName="Accept" />
@@ -7412,6 +7659,17 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="InvoiceKey" ColumnName="InvoiceKey" />
                 <ScalarProperty Name="Pkey" ColumnName="Pkey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerJobStatus">
+            <EntityTypeMapping TypeName="RCSdbModel.CustomerJobStatus">
+              <MappingFragment StoreEntitySet="CustomerJobStatus">
+                <ScalarProperty Name="Jlevel" ColumnName="Jlevel" />
+                <ScalarProperty Name="CompanyKey" ColumnName="CompanyKey" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TName" ColumnName="TName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

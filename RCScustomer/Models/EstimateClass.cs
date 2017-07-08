@@ -98,6 +98,8 @@ namespace RCScustomer.Models
         public Nullable<System.Guid> JobKey { get; set; }
         [Required(ErrorMessage = "Note is Compulsory.")]
         public string Remark { get; set; }
+        public string InvoiceNo { get; set; }
+        public string ViewRemark { get; set; }
         public Nullable<bool> Accept { get; set; }
         public Nullable<bool> Decline { get; set; }
         public Nullable<bool> Resubmit { get; set; }

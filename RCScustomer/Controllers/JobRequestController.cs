@@ -26,7 +26,7 @@ namespace RCScustomer.Controllers
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
         public ActionResult Details(Guid id)
@@ -34,14 +34,16 @@ namespace RCScustomer.Controllers
             if (GlobalClass.SystemSession)
             {
                 JobRequestObject model = new JobRequestObject();
-                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+              
                 model = manage.GetJobrequestDetails(id);
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName",model.JobPriorityKey);
+             
                 return View(model);
             }
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
        
@@ -50,49 +52,54 @@ namespace RCScustomer.Controllers
         {
             if (GlobalClass.SystemSession)
             {
-                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+                Guid PriorityKey = Guid.Parse("98611896-68b9-42ae-b429-644069ae8587");
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName", PriorityKey);
+                ViewBag.TradeKey = new SelectList(db.Trade.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
                 return View();
             }
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(JobRequestObject model)
+        public ActionResult Create(JobRequestObject model,string Save, string Close,string Next,string SaveCloseTab1,string Cancel, string Cancel1)
         {
 
 
             if (GlobalClass.SystemSession)
             {
 
-                foreach (ModelState modelState in ViewData.ModelState.Values)
-                {
-                    foreach (ModelError error in modelState.Errors)
-                    {
-                        //DoSomethingWith(error);
-                    }
-                }
-
+                if (!string.IsNullOrEmpty(Cancel)) return RedirectToAction("Index", "Home");
+                if (!string.IsNullOrEmpty(Cancel1)) return RedirectToAction("Index", "Home");
                 if (ModelState.IsValid)
                 {
-                    DataReturn data = manage.SaveMainData(model);
-                    ViewBag.mess = data.mess;
-                    if (data.flag == 1)
-                        return RedirectToAction("EditJobRequest", new { id = data.key });
+                    
+                   
+                        DataReturn data = manage.SaveMainData(model);
+                        ViewBag.mess = data.mess;
+                        if (data.flag == 1)
+                        {
+                            if (!string.IsNullOrEmpty(Save)) return RedirectToAction("EditJobRequest", new { id = data.key });
+                            else if (!string.IsNullOrEmpty(SaveCloseTab1)) return RedirectToAction("EditJobRequest", new { id = data.key });
+                            else if (!string.IsNullOrEmpty(Next)) return RedirectToAction("Index", "JobRequestFile", new { id = data.key });
+                            else return RedirectToAction("Index", "Home");
+                        }
+                    
                 }
-                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName");
+                ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName",model.JobPriorityKey);
+                ViewBag.TradeKey = new SelectList(db.Trade.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName",model.TradeKey);
                 return View(model);
 
             }
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
 
@@ -106,12 +113,13 @@ namespace RCScustomer.Controllers
                 JobRequestObject model = new JobRequestObject();
                 model = manage.GetJobrequestDetails(id);
                 ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName",model.JobPriorityKey);
+                ViewBag.TradeKey = new SelectList(db.Trade.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName", model.TradeKey);
                 return View(model);
             }
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
 
@@ -119,7 +127,7 @@ namespace RCScustomer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditJobRequest(JobRequestObject model)
+        public ActionResult EditJobRequest(JobRequestObject model, string Save, string Close)
         {
             if (GlobalClass.SystemSession)
             {
@@ -128,16 +136,19 @@ namespace RCScustomer.Controllers
                     DataReturn data = manage.UpdateMainData(model);
                     ViewBag.mess = data.mess;
                     if (data.flag == 1)
-                        model = manage.GetJobrequestDetails(model.RequestKey);
+                        if (!string.IsNullOrEmpty(Save)) model = manage.GetJobrequestDetails(model.RequestKey);
+                        else return RedirectToAction("Index", "Home");
+                   
                 }
                 ViewBag.JobPriorityKey = new SelectList(db.JobType.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName",model.JobPriorityKey);
+                ViewBag.TradeKey = new SelectList(db.Trade.Where(m => m.IsDelete == false).OrderBy(m => m.TName), "ID", "TName", model.TradeKey);
                 return View(model);
                
             }
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
 
@@ -159,7 +170,7 @@ namespace RCScustomer.Controllers
             else
             {
                 Exception e = new Exception("Sorry, your Session has Expired");
-                return View("Error", new HandleErrorInfo(e, "UserHome", "Logout"));
+                return View("Error", new HandleErrorInfo(e, "Home", "Logout"));
             }
         }
 

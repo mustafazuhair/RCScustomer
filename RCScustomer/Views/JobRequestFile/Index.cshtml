@@ -4,7 +4,13 @@
     ViewBag.Title = "Job Request";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#fileid").on('change',function(){
+        alert("FILE IS UPLOADED, PLEASE CHOOSE: “SAVE FILE NOW");
+    });
+});
+</script>
 @using (Html.BeginForm("Index", "JobRequestFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -53,7 +59,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.DocumentTypeKey, "Upload File", htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-9">
-                                    <input type="file" name="file" />
+                                    <input type="file" name="file" id="fileid" />
                                 </div>
                             </div>
 
@@ -64,7 +70,7 @@
                 </div>
 
                 <div class="panel-footer">
-                    <input type="submit" name="Save" id="Save" value="Save this File" class="btn btn-primary" />
+                    <input type="submit" name="Save" id="Save" value="SAVE FILE NOW" class="btn btn-primary" />
                     @Html.ActionLink("Refresh", "Index", "JobRequestFile", new { id = Model.RequestObj.RequestKey }, new { @class = "btn btn-primary" })
                 </div>
             </div>
