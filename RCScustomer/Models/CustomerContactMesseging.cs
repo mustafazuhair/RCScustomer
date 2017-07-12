@@ -23,6 +23,8 @@ namespace RCScustomer.Models
         public Nullable<bool> IsDelete { get; set; }
         public string Remarks { get; set; }
         public Nullable<System.Guid> CustomerKey { get; set; }
+        public string AddedByName { get; set; }
+        public Nullable<bool> IsMessegeNew { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual CustomerContact CustomerContact { get; set; }
