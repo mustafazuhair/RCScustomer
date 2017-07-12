@@ -74,7 +74,6 @@ namespace RCScustomer.Controllers
                 model = manage.LoadCustomerMessegingData(id);
                 ViewBag.mess = "MY RCS JOB " + model.Job.JobName+" - Activities.";
                 ViewBag.title = "Activities Related to JOB - " + model.Job.JobName;
-
                 return View(model);
             }
             else
