@@ -41,7 +41,7 @@ namespace RCScustomer.DAL
                 invoice.FileContent = model.FileContent;
                 invoice.FileType = model.FileType;
                 invoice.IsDelete = false;
-                invoice.IsFileNew = false;
+                invoice.IsFileNew = true;
                 db.JobFile.Add(invoice);
                 db.SaveChanges();
 
@@ -178,7 +178,7 @@ namespace RCScustomer.DAL
                 cust.IsDelete = false;
                 cust.Remarks = "";
                 cust.CustomerKey = obj.VendorKey;
-                cust.IsMessegeNew = false;
+                cust.IsMessegeNew = true;
 
                 db.CustomerContactMesseging.Add(cust);
                 db.SaveChanges();
@@ -205,7 +205,7 @@ namespace RCScustomer.DAL
                
                 cust.AddedOn = obj.mainObj.AddedOn;
                 cust.Comment = obj.mainObj.Comment;
-               
+                cust.IsMessegeNew = true;
                 cust.Remarks = "Updated on "+System.DateTime.Now.ToString()+" by "+GlobalClass.LoginUser.Cname;
                
                 db.SaveChanges();
