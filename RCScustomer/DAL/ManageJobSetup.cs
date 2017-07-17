@@ -27,7 +27,6 @@ namespace RCScustomer.DAL
                 }
                 JobFile invoice = new JobFile();
                 Job job = db.Job.Find(model.JobKey);
-
                 invoice.FileKey = Guid.NewGuid();
                 invoice.JobKey = (Guid)model.JobKey;
                 invoice.DocumentTypeKey = model.DocumentTypeKey;
